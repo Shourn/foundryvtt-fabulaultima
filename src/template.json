@@ -1,0 +1,89 @@
+{
+  "Actor": {
+    "types": [
+      "pc"
+    ],
+    "templates": {
+      "resources": {
+        "hp": {
+          "min": 0,
+          "value": 10,
+          "max": 10
+        },
+        "mp": {
+          "min": 0,
+          "value": 10,
+          "max": 10
+        }
+      },
+      "attributes": {
+        "dexterity": {
+          "min": 1,
+          "value": 1,
+          "max": 4
+        },
+        "insight": {
+          "min": 1,
+          "value": 1,
+          "max": 4
+        },
+        "might": {
+          "min": 1,
+          "value": 1,
+          "max": 4
+        },
+        "willpower": {
+          "min": 1,
+          "value": 1,
+          "max": 4
+        }
+      },
+      "defenses": {
+        "initiative_mod": 0,
+        "defense": 0,
+        "magic_defense": 0
+      }
+    },
+    "pc": {
+      "templates": [
+        "resources",
+        "attributes",
+        "defenses"
+      ]
+    }
+  },
+  "Item": {
+    "types": [
+      "weapon",
+      "armor"
+    ],
+    "templates": {
+      "description": {
+        "description": ""
+      }
+    },
+    "weapon": {
+      "templates": [
+        "description"
+      ],
+      "accuracy": {
+        "attribute1": "dexterity",
+        "attribute2": "dexterity",
+        "damage": 0
+      }
+    },
+    "armor": {
+      "templates": [
+        "description"
+      ],
+      "defense": {
+        "attribute": "dexterity",
+        "mod": 0
+      },
+      "magic_defense": {
+        "attribute": "insight",
+        "mod": 0
+      }
+    }
+  }
+}

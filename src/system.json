@@ -1,0 +1,32 @@
+{
+  "id": "fabulaultima",
+  "title": "Fabula Ultima - TTJRPG",
+  "description": "A system for playing the Fabula Ultima TTJRPG in the Foundry Virtual Tabletop environment.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10"
+  },
+  "authors": [
+    {
+      "name": "Shourn",
+      "url": "n/a",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "fabula_ultima.mjs"
+  ],
+  "styles": [
+
+  ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ]
+}
