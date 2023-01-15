@@ -17,6 +17,8 @@
 // Import TypeScript modules
 import { registerSettings } from './settings';
 import { preloadTemplates } from './preloadTemplates';
+import FUItemSheet from "./item/FUItemSheet";
+import FUCharacterSheet from "./character/FUCharacterSheet";
 
 // Initialize system
 Hooks.once('init', async () => {
@@ -31,6 +33,15 @@ Hooks.once('init', async () => {
   await preloadTemplates();
 
   // Register custom sheets (if any)
+  Actors.registerSheet("fabulaultima", FUCharacterSheet, {
+    makeDefault: true,
+    label: "FabulaUltima.SheetCharacter"
+  })
+
+  Items.registerSheet("fabulaultima", FUItemSheet, {
+    makeDefault: true,
+    label: "FabulaUltima.SheetItem"
+  })
 });
 
 // Setup system

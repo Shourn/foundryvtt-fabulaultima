@@ -15,7 +15,7 @@
     }
   ],
   "esmodules": [
-    "fabula_ultima.mjs"
+    "module/fabulaultima.js"
   ],
   "styles": [
 

@@ -2,10 +2,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]> {
-  const templatePaths: string[] = [
-    // Add paths to "systems/fabulaultima/templates"
-  ];
+export const TEMPLATES = {
+  // Add paths to "systems/fabulaultima/templates"
+  characterPlayer: "systems/fabulaultima/templates/character_pc.hbs",
+  itemWeapon: "systems/fabulaultima/templates/item_weapon.hbs"
+} as const;
 
-  return loadTemplates(templatePaths);
+
+export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]> {
+
+  return loadTemplates(Object.values(TEMPLATES));
 }
