@@ -1,0 +1,15 @@
+<form class="flexcol">
+    <div>
+        My Template is loaded!
+        {{log this}}
+    </div>
+    {{> 'resources' this}}
+    <div>
+        <ul>
+            {{#each data.system}}
+                {{log this}}
+                <li><span>{{@key}}</span>:<input name="{{@key}}" value="{{this}}" /></li>
+            {{/each}}
+        </ul>
+    </div>
+</form>

@@ -1,0 +1,125 @@
+<form class="standard-form fabula-ultima">
+    <header class="sheet-header form-group">
+        <section class="form-group-stacked">
+            <fieldset>
+                <h1 class="form-fields">
+                    <img class="profile-img" src="{{data.img}}" data-edit="img" title="{{data.name}}"/>
+                    <input id="{{fu-id 'name'}}" name="name" type="text" value="{{data.name}}" placeholder="Name"/>
+                </h1>
+            </fieldset>
+            <fieldset class="form-fields">
+                <div>
+                    <div class="form-fields">
+                        <label for="{{fu-id 'level'}}">Level</label>
+                        <input id="{{fu-id 'level'}}" name="system.level" type="number" value="{{system.level}}">
+                    </div>
+                    <div class="form-fields">
+                        <label for="{{fu-id 'rank'}}">Rank</label>
+                        <select id="{{fu-id 'rank'}}" name="system.rank">
+                            {{selectOptions constants.rank selected=system.rank localize=true}}
+                        </select>
+                    </div>
+                    {{#if system.isChampion}}
+                        <div class="form-fields">
+                            <label for="{{fu-id 'soldiers'}}">Replaces Soldiers:</label>
+                            <input id="{{fu-id 'soldiers'}}" name="system.replacesSoldiers" type="number" min="1"
+                                   value="{{system.replacesSoldiers}}">
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <div class="form-fields">
+                        <label for="{{fu-id 'species'}}">Species</label>
+                        <select id="{{fu-id 'species'}}" name="system.species">
+                            {{selectOptions constants.species selected=system.species localize=true}}
+                        </select>
+                    </div>
+                    <div class="form-fields">
+                        <label for="{{fu-id 'villain'}}">Villain</label>
+                        <select id="{{fu-id 'villain'}}" name="system.villain">
+                            {{selectOptions constants.villain selected=system.villain localize=true}}
+                        </select>
+                    </div>
+                    {{#if system.isVillain}}
+                        <div class="form-fields">
+                            <label for="{{fu-id 'ultima-points'}}">Ultima Points:</label>
+                            <input id="{{fu-id 'ultima-points'}}" name="system.ultimaPoints" type="number" min="0"
+                                   max="15" value="{{system.ultimaPoints}}">
+                        </div>
+                    {{/if}}
+
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-fields">
+                    <label for="{{fu-id 'traits'}}">Traits</label>
+                    <input id="{{fu-id 'traits'}}" name="system.traits" type="text" value="{{system.traits}}">
+                </div>
+                <div class="form-fields">
+                    <label for="{{fu-id 'description'}}">Description</label>
+                    <textarea id="{{fu-id 'description'}}" name="system.description"
+                              style="resize: vertical">{{system.description}}</textarea>
+                </div>
+            </fieldset>
+        </section>
+    </header>
+    <section class="form-group">
+        {{#each constants.attributes as | attribute |}}
+            {{#with (lookup ../data.system.attributes @key) as | value | }}
+                <fieldset class="form-fields">
+                    <label for="{{fu-id @key}}">{{localize attribute.short}}</label>
+                    <select id="{{fu-id @key}}" name="system.attributes.{{@key}}.base">
+                        {{selectOptions ../../constants.attributeDice selected=value.base localize=true}}
+                    </select>
+                    <span>({{localize value.current}})</span>
+                </fieldset>
+            {{/with}}
+        {{/each}}
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label for="{{fu-id 'hp'}}">HP</label>
+            <input id="{{fu-id 'hp'}}" type="number" name="system.hp.value" value="{{system.hp.value}}">
+            <span class="sep">/</span>
+            <input type="text" readonly value="{{system.hp.max}}">
+            (<input type="text" readonly value="{{system.hp.crisis}}">)
+        </fieldset>
+        <fieldset class="form-fields">
+            <label for="{{fu-id 'mp'}}">MP</label>
+            <input id="{{fu-id 'mp'}}" type="number" name="system.mp.value" value="{{system.mp.value}}">
+            <span class="sep">/</span>
+            <input type="text" readonly value="{{system.mp.max}}"/>
+        </fieldset>
+        {{#each data.system.defenses}}
+            <fieldset class="form-fields">
+                <label>{{localize (concat 'FABULA_ULTIMA.defenses.' @key '.short')}}</label>
+                <select name="system.defenses.{{@key}}.attribute">
+                    <option value="none"></option>
+                    {{selectOptions ../constants.attributes selected=this.attribute localize=true labelAttr='short'}}
+                </select>
+                <span class="sep">+</span>
+                <input name="system.defenses.{{@key}}.bonus" type="number" value="{{this.bonus}}">
+                <span class="sep">=</span>
+                <input readonly type="number" value="{{this.current}}">
+            </fieldset>
+        {{/each}}
+        <fieldset class="form-fields">
+            <label for="{{fu-id 'initiative'}}">{{localize 'FABULA_ULTIMA.initiative.short' }}</label>
+            <input id="{{fu-id 'initiative'}}" name="system.initiative" type="number"
+                   value="{{system.initiative}}"/>
+        </fieldset>
+    </section>
+    <section class="form-group">
+        {{#each system.affinities}}
+            <fieldset>
+                <label>{{localize (concat 'FABULA_ULTIMA.damageType.' @key)}}</label>
+                <select name="system.affinities.{{@key}}">
+                    {{selectOptions ../constants.affinities selected=this localize=true labelAttr='short'}}
+                </select>
+            </fieldset>
+        {{/each}}
+    </section>
+    <div>
+        My Template is loaded!
+    </div>
+</form>
