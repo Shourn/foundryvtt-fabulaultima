@@ -1,7 +1,7 @@
 import Templates from "../templates.mjs";
-import {affinities, attributeDice, attributes, damageTypes, rank, species, villain} from "../FUConstants.mjs";
+import {affinities, attributeDice, attributes, damageTypes, rank, species, villain} from "../Constants.mjs";
 
-export class FUNpcSheet extends ActorSheet {
+export class NpcSheet extends ActorSheet {
     get template() {
         return Templates.actorNpc;
     }

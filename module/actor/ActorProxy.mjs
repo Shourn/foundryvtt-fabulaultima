@@ -1,14 +1,14 @@
 
-import {FUCharacter} from "./FUCharacter.mjs";
-import {FUNpc} from "./FUNpc.mjs";
+import {Character} from "./Character.mjs";
+import {Npc} from "./Npc.mjs";
 
 //Provide a type string to class object mapping to keep our code clean
 const actorMappings = {
-    character: FUCharacter,
-    npc: FUNpc,
+    character: Character,
+    npc: Npc,
 };
 
-export const FUActorProxy = new Proxy(function () {}, {
+export const ActorProxy = new Proxy(function () {}, {
     //Will intercept calls to the "new" operator
     construct: function (target, args) {
         const [data] = args;
@@ -30,7 +30,7 @@ export const FUActorProxy = new Proxy(function () {}, {
                 return function (data, options) {
                     if (data.constructor === Array) {
                         //Array of data, this happens when creating Actors imported from a compendium
-                        return data.map(i => FUActorProxy.create(i, options));
+                        return data.map(i => ActorProxy.create(i, options));
                     }
 
                     if (!actorMappings.hasOwnProperty(data.type))

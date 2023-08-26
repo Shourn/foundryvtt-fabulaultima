@@ -1,7 +1,7 @@
-import {affinities, attributeDice, attributes} from "../FUConstants.mjs";
+import {affinities, attributeDice, attributes} from "../Constants.mjs";
 import {clamp} from "../utils/helper.mjs";
 
-export class FUCommonData extends foundry.abstract.TypeDataModel {
+export class CommonData extends foundry.abstract.TypeDataModel {
 
     static defineSchema() {
         const {NumberField, StringField, SchemaField} = foundry.data.fields

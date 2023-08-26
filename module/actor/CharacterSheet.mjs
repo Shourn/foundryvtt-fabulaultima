@@ -1,6 +1,6 @@
 import Templates from "../templates.mjs";
 
-export class FUCharacterSheet extends ActorSheet {
+export class CharacterSheet extends ActorSheet {
     get template() {
         return Templates.actorCharacter;
     }

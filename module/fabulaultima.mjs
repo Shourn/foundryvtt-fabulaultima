@@ -1,10 +1,10 @@
-import FUItemSheet from "./item/FUItemSheet.mjs";
+import ItemSheet from "./item/ItemSheet.mjs";
 import {preloadTemplates} from "./templates.mjs";
-import {FUCharacterData} from "./actor/FUCharacterData.mjs";
-import {FUNpcData} from "./actor/FUNpcData.mjs";
-import {FUActorProxy} from "./actor/FUActorProxy.mjs";
-import {FUCharacterSheet} from "./actor/FUCharacterSheet.mjs";
-import {FUNpcSheet} from "./actor/FUNpcSheet.mjs";
+import {CharacterData} from "./actor/CharacterData.mjs";
+import {NpcData} from "./actor/NpcData.mjs";
+import {ActorProxy} from "./actor/ActorProxy.mjs";
+import {CharacterSheet} from "./actor/CharacterSheet.mjs";
+import {NpcSheet} from "./actor/NpcSheet.mjs";
 import {Mutex} from "./utils/Mutex.mjs";
 
 Hooks.once('init', async () => {
@@ -14,23 +14,23 @@ Hooks.once('init', async () => {
     await preloadTemplates();
     // Register custom sheets (if any)
 
-    CONFIG.Actor.documentClass = FUActorProxy;
-    CONFIG.Actor.dataModels.character = FUCharacterData;
-    CONFIG.Actor.dataModels.npc = FUNpcData;
+    CONFIG.Actor.documentClass = ActorProxy;
+    CONFIG.Actor.dataModels.character = CharacterData;
+    CONFIG.Actor.dataModels.npc = NpcData;
 
-    Actors.registerSheet("fabulaultima", FUCharacterSheet, {
+    Actors.registerSheet("fabulaultima", CharacterSheet, {
         types: ["character"],
         makeDefault: true,
         label: "FabulaUltima.DefaultCharacter"
     });
 
-    Actors.registerSheet("fabulaultima", FUNpcSheet, {
+    Actors.registerSheet("fabulaultima", NpcSheet, {
         types: ["npc"],
         makeDefault: true,
         label: "FabulaUltima.DefaultNpc"
     });
 
-    Items.registerSheet("fabulaultima", FUItemSheet, {
+    Items.registerSheet("fabulaultima", ItemSheet, {
         makeDefault: true,
         label: "FabulaUltima.SheetItem"
     });

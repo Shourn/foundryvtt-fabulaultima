@@ -1,7 +1,7 @@
-import {FUCommonData} from "./FUCommonData.mjs";
-import {FUItem} from "../item/FUItem.mjs";
+import {CommonData} from "./CommonData.mjs";
+import {Item} from "../item/Item.mjs";
 
-export class FUCharacterData extends FUCommonData {
+export class CharacterData extends CommonData {
     static defineSchema() {
         const {
             NumberField,
@@ -35,10 +35,10 @@ export class FUCharacterData extends FUCommonData {
                 ranged: new BooleanField({initial: false})
             }),
             equipment: new SchemaField({
-                accessory: new ForeignDocumentField(FUItem),
-                armor: new ForeignDocumentField(FUItem),
-                mainHand: new ForeignDocumentField(FUItem),
-                offHand: new ForeignDocumentField(FUItem)
+                accessory: new ForeignDocumentField(Item),
+                armor: new ForeignDocumentField(Item),
+                mainHand: new ForeignDocumentField(Item),
+                offHand: new ForeignDocumentField(Item)
             }),
             zenit: new NumberField({initial: 500, positive: true, integer: true}),
             inventoryPoints: new SchemaField({

@@ -1,4 +1,4 @@
-import {FUCommonData} from "./FUCommonData.mjs";
+import {CommonData} from "./CommonData.mjs";
 import {
     attackTypes,
     attributes,
@@ -8,10 +8,10 @@ import {
     species,
     statusEffects,
     villain
-} from "../FUConstants.mjs";
+} from "../Constants.mjs";
 import {clamp} from "../utils/helper.mjs";
 
-export class FUNpcData extends FUCommonData {
+export class NpcData extends CommonData {
     static defineSchema() {
         const {
             NumberField,
