@@ -1,14 +1,14 @@
 import ItemSheet from "./item/ItemSheet.mjs";
-import {preloadTemplates} from "./templates.mjs";
+import {preloadTemplates} from "./Templates.mjs";
 import {CharacterData} from "./actor/CharacterData.mjs";
 import {NpcData} from "./actor/NpcData.mjs";
 import {ActorProxy} from "./actor/ActorProxy.mjs";
 import {CharacterSheet} from "./actor/CharacterSheet.mjs";
 import {NpcSheet} from "./actor/NpcSheet.mjs";
-import {Mutex} from "./utils/Mutex.mjs";
+
+console.log("at least something is happening")
 
 Hooks.once('init', async () => {
-
     console.log('fabulaultima | Initializing fabulaultima');
     // Preload Handlebars templates
     await preloadTemplates();

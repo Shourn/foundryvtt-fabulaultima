@@ -1,5 +1,14 @@
-import Templates from "../templates.mjs";
-import {affinities, attributeDice, attributes, damageTypes, rank, species, villain} from "../Constants.mjs";
+import Templates from "../Templates.mjs";
+import {
+    affinities,
+    attackTypes,
+    attributeDice,
+    attributes,
+    damageTypes,
+    rank, rollVariables,
+    species, statusEffects,
+    villain
+} from "../Constants.mjs";
 
 export class NpcSheet extends ActorSheet {
     get template() {
@@ -28,7 +37,11 @@ export class NpcSheet extends ActorSheet {
                 affinities: this.toObject(affinities, value => ({
                     short: `FABULA_ULTIMA.affinity.${value}.short`,
                     full: `FABULA_ULTIMA.affinity.${value}.full`
-                }))
+                })),
+                attackTypes: this.toObject(attackTypes, value => `FABULA_ULTIMA.attackType.${value}`),
+                rollVariables: this.toObject(rollVariables, value => `FABULA_ULTIMA.rollVariables.${value}`),
+                damageTypes: this.toObject(damageTypes, value => `FABULA_ULTIMA.damageType.${value}`),
+                statusEffects: this.toObject(statusEffects, value => `FABULA_ULTIMA.statusEffect.${value}`)
             }
         };
     }

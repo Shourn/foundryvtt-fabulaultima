@@ -32,15 +32,13 @@ export class NpcData extends CommonData {
                     attackType: new StringField({initial: attackTypes[0], choices: attackTypes}),
                     name: new StringField({initial: ""}),
                     check: new SchemaField({
-                        die1: new StringField({initial: attributes[0], choices: attributes}),
-                        die2: new StringField({initial: attributes[0], choices: attributes}),
+                        attribute1: new StringField({initial: attributes[0], choices: attributes}),
+                        attribute2: new StringField({initial: attributes[0], choices: attributes}),
                         bonus: new NumberField({initial: 0, min: 0})
                     }),
                     damage: new SchemaField({
-                        calculation: new SchemaField({
-                            variable: new StringField({initial: rollVariables[0], choices: rollVariables}),
-                            flat: new NumberField({initial: 0, min: 0})
-                        }),
+                        roll: new StringField({initial: rollVariables[0], choices: rollVariables}),
+                        bonus: new NumberField({initial: 0, min: 0}),
                         type: new StringField({initial: "physical", choices: damageTypes})
                     }),
                     status: new StringField({choices: statusEffects})

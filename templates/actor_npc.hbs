@@ -122,7 +122,29 @@
     <section class="form-group-stacked">
         {{#each system.attacks}}
             <fieldset>
-
+                <select name="system.attacks.{{@index}}.attackType">
+                    {{selectOptions ../constants.attackTypes selected=attackType localize=true}}
+                </select>
+                <input name="system.attacks.{{@index}}.name" type="text" value="{{name}}">
+                <span class="sep"></span>
+                <select name="system.attacks.{{@index}}.check.attribute1">
+                    {{selectOptions ../constants.attributes selected=check.attribute1 localize=true}}
+                </select>
+                <select name="system.attacks.{{@index}}.check.attribute2">
+                    {{selectOptions ../constants.attributes selected=check.attribute2 localize=true}}
+                </select>
+                <input name="system.attacks.{{@index}}.check.bonus" type="number" value="{{check.bonus}}">
+                <span class="sep"></span>
+                <select name="system.attacks.{{@index}}.damage.roll">
+                    {{selectOptions ../constants.rollVariables selected=damage.roll localize=true}}
+                </select>
+                <input name="system.attacks.{{@index}}.damage.bonus" type="number" value="{{damage.bonus}}">
+                <select name="system.attacks.{{@index}}.damage.type">
+                    {{selectOptions ../constants.damageTypes selected=damage.type localize=true}}
+                </select>
+                <select name="system.attacks.{{@index}}.status">
+                    {{selectOptions ../constants.statusEffects selected=status localize=true}}
+                </select>
             </fieldset>
         {{/each}}
     </section>
