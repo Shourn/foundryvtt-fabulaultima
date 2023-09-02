@@ -1,2 +1,9 @@
+@import "item_attack.css";
+@import "item_spell.css";
+
 .fabula-ultima {
+}
+
+.fabula-ultima .editor {
+    min-height: 5rem;
 }

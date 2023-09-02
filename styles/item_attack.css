@@ -1,0 +1,4 @@
+.fabula-ultima.item-attack .status-select option[selected] {
+    font-style: italic;
+    font-weight: bold;
+}

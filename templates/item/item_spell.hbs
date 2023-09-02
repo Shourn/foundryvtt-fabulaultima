@@ -1,0 +1,70 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
+    </header>
+    <hr/>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.mp.short'}}</label>
+            <input name="system.cost" type="number" value="{{system.cost}}">
+            <select name="system.costType">
+                {{selectOptions constants.costTypes selected=system.costType localize=true}}
+            </select>
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.spell.target.type'}}</label>
+            <select name="system.targetType">
+                {{selectOptions constants.targetTypes selected=system.targetType localize=true}}
+            </select>
+            <label>{{localize 'FABULA_ULTIMA.sheet.spell.target.max'}}</label>
+            <input name="system.maxTargets" type="number" value="{{system.maxTargets}}">
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.spell.duration'}}</label>
+            <select name="system.duration">
+                {{selectOptions constants.durations selected=system.duration localize=true}}
+            </select>
+        </fieldset>
+        <fieldset class="form-fields">
+            <input name="system.offensive" type="checkbox" {{checked system.offensive}}>
+            <label class="checkbox">{{localize 'FABULA_ULTIMA.sheet.spell.offensive'}}</label>
+        </fieldset>
+    </section>
+    {{#if system.offensive}}
+        <section class="form-group">
+            <fieldset class="form-fields">
+                <label>{{localize 'FABULA_ULTIMA.sheet.spell.check'}}</label>
+                {{> checkConfig }}
+            </fieldset>
+        </section>
+        <section class="form-group">
+            <fieldset class="form-fields">
+                <label>{{localize 'FABULA_ULTIMA.sheet.spell.damage'}}</label>
+                {{> damageConfig }}
+            </fieldset>
+        </section>
+    {{/if}}
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.spell.status'}}</label>
+            <select name="system.statusChoice">
+                {{selectOptions constants.statusChoices selected=system.statusChoice localize=true}}
+            </select>
+            <select name="system.status" multiple class="status-select" size="6">
+                {{selectOptions constants.statusEffects selected=system.status localize=true}}
+            </select>
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.spell.opportunity'}}</label>
+            <input name="system.opportunity" type="text" value="{{system.opportunity}}">
+        </fieldset>
+    </section>
+    <section class="form-group-stacked">
+        <fieldset class="form-fields">
+            {{editor system.description target='system.description' button=true}}
+        </fieldset>
+    </section>
+</form>

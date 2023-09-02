@@ -9,63 +9,23 @@
   },
   "Item": {
     "types": [
+      "attack",
       "accessory",
       "armor",
       "misc",
       "shield",
+      "spell",
       "weapon"
     ],
     "htmlFields": [
       "description"
     ],
-    "templates": {
-      "common": {
-        "name": "",
-        "description": "",
-        "price": 0
-      }
-    },
-    "accessory": {
-      "templates": [
-        "common"
-      ]
-    },
-    "armor": {
-      "templates": [
-        "common"
-      ],
-      "defense": {
-        "base": "dexterity",
-        "mod": 0
-      },
-      "magicDefense": {
-        "base": "insight",
-        "mod": 0
-      },
-      "initiativeMod": 0,
-      "martial": false
-    },
-    "shield": {
-      "templates": [
-        "common"
-      ],
-      "defense": {
-        "mod": 0
-      },
-      "magicDefense": {
-        "mod": 0
-      },
-      "initiativeMod": 0
-    },
-    "weapon": {
-      "templates": [
-        "common"
-      ],
-      "accuracy": {
-        "attribute1": "dexterity",
-        "attribute2": "dexterity",
-        "damage": 0
-      }
-    }
+    "attack": {},
+    "accessory": {},
+    "armor": {},
+    "misc": {},
+    "shield": {},
+    "spell": {},
+    "weapon": {}
   }
 }

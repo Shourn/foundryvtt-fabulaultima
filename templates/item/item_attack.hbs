@@ -1,0 +1,46 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
+    </header>
+    <hr/>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.attack.type'}}</label>
+            <select name="system.attackType">
+                {{selectOptions constants.attackTypes selected=system.attackType localize=true}}
+            </select>
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.attack.defense'}}</label>
+            <select name="system.defense">
+                {{selectOptions constants.defenses selected=system.defense localize=true labelAttr='short'}}
+            </select>
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.attack.check'}}</label>
+            {{> checkConfig}}
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.sheet.attack.damage'}}</label>
+            {{> damageConfig}}
+        </fieldset>
+    </section>
+    <section class="form-group-stacked">
+        <fieldset class="form-group-stacked">
+            <div class="form-fields">
+                <label>{{localize 'FABULA_ULTIMA.sheet.attack.status'}}</label>
+            </div>
+            <select name="system.statusChoice">
+                {{selectOptions constants.statusChoices selected=system.statusChoice localize=true}}
+            </select>
+            <select name="system.status" multiple class="status-select" size="6">
+                {{selectOptions constants.statusEffects selected=system.status localize=true}}
+            </select>
+        </fieldset>
+    </section>
+</form>

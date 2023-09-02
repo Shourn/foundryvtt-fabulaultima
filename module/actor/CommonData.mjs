@@ -1,6 +1,23 @@
 import {affinities, attributeDice, attributes} from "../Constants.mjs";
 import {clamp} from "../utils/helper.mjs";
+import {AttributesSchema} from "../schema/AttributesSchema.mjs";
+import {AffinitiesSchema} from "../schema/AffinitiesSchema.mjs";
+import {DefensiveStatisticSchema} from "../schema/DefensiveStatisticSchema.mjs";
 
+/**
+ * @property {number} level
+ * @property {Object} hp
+ * @property {number} hp.value
+ * @property {number} hp.max
+ * @property {number} hp.crisis
+ * @property {number} mp.value
+ * @property {number} mp.max
+ * @property {Attributes} attributes
+ * @property {Object} defenses
+ * @property {DefensiveStatistic} defenses.defense
+ * @property {DefensiveStatistic} defenses.magicDefense
+ * @property {Affinities}
+ */
 export class CommonData extends foundry.abstract.TypeDataModel {
 
     static defineSchema() {
@@ -16,91 +33,12 @@ export class CommonData extends foundry.abstract.TypeDataModel {
                 value: new NumberField({initial: 45, positive: true, integer: true}),
                 max: new NumberField({initial: 45, positive: true, integer: true})
             }),
-            attributes: new SchemaField({
-                dexterity: new SchemaField({
-                    base: new StringField({initial: attributeDice[1], choices: attributeDice}),
-                    current: new StringField({initial: attributeDice[1], choices: attributeDice})
-                }),
-                insight: new SchemaField({
-                    base: new StringField({initial: attributeDice[1], choices: attributeDice}),
-                    current: new StringField({initial: attributeDice[1], choices: attributeDice})
-                }),
-                might: new SchemaField({
-                    base: new StringField({initial: attributeDice[1], choices: attributeDice}),
-                    current: new StringField({initial: attributeDice[1], choices: attributeDice})
-                }),
-                willpower: new SchemaField({
-                    base: new StringField({initial: attributeDice[1], choices: attributeDice}),
-                    current: new StringField({initial: attributeDice[1], choices: attributeDice})
-                })
-            }),
+            attributes: new AttributesSchema(),
             defenses: new SchemaField({
-                defense: new SchemaField({
-                    attribute: new StringField({
-                        initial: "dexterity",
-                        choices: ["none", ...attributes],
-                        nullable: true
-                    }),
-                    bonus: new NumberField({initial: 0, integer: true}),
-                    current: new NumberField({initial: 8, integer: true})
-                }),
-                magicDefense: new SchemaField({
-                    attribute: new StringField({
-                        initial: "insight",
-                        choices: ["none", ...attributes],
-                        nullable: true
-                    }),
-                    bonus: new NumberField({initial: 0, integer: true}),
-                    current: new NumberField({initial: 8, integer: true})
-                })
+                defense: new DefensiveStatisticSchema({attribute: "dexterity"}),
+                magicDefense: new DefensiveStatisticSchema({attribute: "insight"})
             }),
-            affinities: new SchemaField({
-                physical: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                air: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                bolt: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                dark: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                earth: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                fire: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                ice: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                light: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                }),
-                poison: new StringField({
-                    initial: "none",
-                    required: true,
-                    choices: affinities
-                })
-            })
+            affinities: new AffinitiesSchema()
         }
     }
 
@@ -124,7 +62,7 @@ export class CommonData extends foundry.abstract.TypeDataModel {
 
     calculateDefense(statistic) {
         const base = statistic.attribute === "none" ? 0 : this.getDieSize(this.attributes[statistic.attribute].current);
-        statistic.current = base + statistic.bonus;
+        statistic.current = base + statistic.modifier;
     }
 
     getDieSize(dice) {
@@ -151,7 +89,7 @@ export class CommonData extends foundry.abstract.TypeDataModel {
         this.mp.value = clamp(this.mp.value, this.mp.max);
     }
 
-    inCrisis(){
+    inCrisis() {
         return this.hp.value <= this.hp.crisis;
     }
 }

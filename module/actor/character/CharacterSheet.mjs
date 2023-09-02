@@ -1,4 +1,4 @@
-import Templates from "../Templates.mjs";
+import Templates from "../../Templates.mjs";
 
 export class CharacterSheet extends ActorSheet {
     get template() {

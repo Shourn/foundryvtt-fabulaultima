@@ -1,6 +1,10 @@
-import {CommonData} from "./CommonData.mjs";
-import {Item} from "../item/Item.mjs";
+import {CommonData} from "../CommonData.mjs";
+import {Accessory} from "../../item/accessory/Accessory.mjs";
+import {Armor} from "../../item/armor/Armor.mjs";
 
+/**
+ * @alias PlayerCharacterData
+ */
 export class CharacterData extends CommonData {
     static defineSchema() {
         const {
@@ -35,8 +39,8 @@ export class CharacterData extends CommonData {
                 ranged: new BooleanField({initial: false})
             }),
             equipment: new SchemaField({
-                accessory: new ForeignDocumentField(Item),
-                armor: new ForeignDocumentField(Item),
+                accessory: new ForeignDocumentField(Accessory),
+                armor: new ForeignDocumentField(Armor),
                 mainHand: new ForeignDocumentField(Item),
                 offHand: new ForeignDocumentField(Item)
             }),

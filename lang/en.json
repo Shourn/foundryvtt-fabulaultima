@@ -1,6 +1,7 @@
 {
   "FABULA_ULTIMA": {
     "system": "Fabula Ultima TTJRPG",
+    "noValue": "-",
     "species": {
       "beast": "Beast",
       "construct": "Construct",
@@ -35,7 +36,7 @@
         "full": "Insight"
       }
     },
-    "defenses": {
+    "defense": {
       "defense": {
         "short": "DEF",
         "full": "Defense"
@@ -78,6 +79,17 @@
       "light": "Light",
       "poison": "Poison"
     },
+    "damageTypeIcons": {
+      "physical": "fa-sword",
+      "air": "fa-wind",
+      "bolt": "fa-bolt",
+      "dark": "fa-book-dead",
+      "earth": "fa-hill-rockslide",
+      "fire": "fa-fire-alt",
+      "ice": "fa-snowflakes",
+      "light": "fa-sun-alt",
+      "poison": "fa-flask-poison"
+    },
     "villain": {
       "no": "No",
       "minor": "Minor",
@@ -92,6 +104,122 @@
     "initiative": {
       "short": "Init.",
       "full": "Initiative"
+    },
+    "npc": {
+      "attack": {
+        "label": "Attacks",
+        "name": "Name",
+        "type": "Type",
+        "check": {
+          "attribute1": "Attr. +",
+          "attribute2": "Attr. +",
+          "bonus": "Bonus"
+        },
+        "damage": {
+          "roll": "Roll +",
+          "bonus": "Bonus",
+          "type": "Type"
+        },
+        "status": "Status"
+      },
+      "spell": {
+        "name": "Name",
+        "cost": "Cost",
+        "check": "Check",
+        "damage": "Damage",
+        "status": "Status"
+      }
+    },
+    "tab": {
+      "attacks": "Attacks",
+      "spells": "Spells",
+      "actions": "Other Actions",
+      "description": "Description"
+    },
+    "modifier": {
+      "short": "Mod.",
+      "full": "Modifier"
+    },
+    "dialog": {
+      "check": {
+        "roll": "Roll Check",
+        "title": "Check"
+      }
+    },
+    "attackType": {
+      "melee": "Melee",
+      "ranged": "Ranged"
+    },
+    "rollType": {
+      "highRoll": {
+        "short": "HR",
+        "full": "High Roll"
+      },
+      "lowRoll": {
+        "short": "LR",
+        "full": "Low Roll"
+      },
+      "none": {
+        "short": "-",
+        "full": "None"
+      }
+    },
+    "sheet": {
+      "attack": {
+        "type": "Type",
+        "defense": "Against",
+        "check": "Check",
+        "damage": "Damage",
+        "status": "Status"
+      },
+      "spell": {
+        "target": {
+          "type": "Target",
+          "max": "up to"
+        },
+        "check": "Check",
+        "damage": "Damage",
+        "duration": "Duration",
+        "offensive": "is Offensive",
+        "status": "Status",
+        "opportunity": "Opportunity",
+        "description": "Description"
+      }
+    },
+    "statusEffect": {
+      "dazed": "Dazed",
+      "enraged": "Enraged",
+      "poisoned": "Poisoned",
+      "shaken": "Shaken",
+      "slow": "Slow",
+      "weak": "Weak"
+    },
+    "statusChoice": {
+      "and": "AND",
+      "or": "OR"
+    },
+    "mp": {
+      "short": "MP",
+      "full": "Mind Points"
+    },
+    "hp": {
+      "short": "HP",
+      "full": "Hit Points"
+    },
+    "costType": {
+      "total": "Total",
+      "target": "per Target"
+    },
+    "targetType": {
+      "creature": "Creature",
+      "self": "Self",
+      "weapon": "Weapon",
+      "special": "Special"
+    },
+    "duration": {
+      "instant": "Instantaneous",
+      "scene": "Scene"
     }
   }
 }
+

@@ -1,15 +1,6 @@
-import {CommonData} from "./CommonData.mjs";
-import {
-    attackTypes,
-    attributes,
-    damageTypes,
-    rank,
-    rollVariables,
-    species,
-    statusEffects,
-    villain
-} from "../Constants.mjs";
-import {clamp} from "../utils/helper.mjs";
+import {CommonData} from "../CommonData.mjs";
+import {rank, species, villain} from "../../Constants.mjs";
+import {Attack} from "../../item/attack/Attack.mjs";
 
 export class NpcData extends CommonData {
     static defineSchema() {
@@ -28,21 +19,6 @@ export class NpcData extends CommonData {
                 description: new StringField({initial: ""}),
                 traits: new StringField({initial: ""}),
                 initiative: new NumberField({initial: 0, integer: true}),
-                attacks: new ArrayField(new SchemaField({
-                    attackType: new StringField({initial: attackTypes[0], choices: attackTypes}),
-                    name: new StringField({initial: ""}),
-                    check: new SchemaField({
-                        attribute1: new StringField({initial: attributes[0], choices: attributes}),
-                        attribute2: new StringField({initial: attributes[0], choices: attributes}),
-                        bonus: new NumberField({initial: 0, min: 0})
-                    }),
-                    damage: new SchemaField({
-                        roll: new StringField({initial: rollVariables[0], choices: rollVariables}),
-                        bonus: new NumberField({initial: 0, min: 0}),
-                        type: new StringField({initial: "physical", choices: damageTypes})
-                    }),
-                    status: new StringField({choices: statusEffects})
-                })),
                 otherActions: new ArrayField(new SchemaField({
                     name: new StringField({initial: ""}),
                     description: new StringField({initial: ""})
@@ -56,7 +32,7 @@ export class NpcData extends CommonData {
         this.replacesSoldiers = this.rank === "soldier" ? 1 : this.rank === "elite" ? 2 : Math.max(2, this.replacesSoldiers)
         super.prepareBaseData();
         this.initiative = (this.getDieSize(this.attributes.dexterity.base) + this.getDieSize(this.attributes.insight.base)) / 2;
-        if (this.isChampion()){
+        if (this.isChampion){
             this.initiative = this.initiative + this.replacesSoldiers;
         }
     }
@@ -71,17 +47,18 @@ export class NpcData extends CommonData {
 
     prepareMp() {
         this.mp.max = this.level + this.getDieSize(this.attributes.willpower.base) * 5;
-        if (this.isChampion()){
+        if (this.isChampion){
             this.mp.max = this.mp.max * 2;
         }
         super.prepareMp();
     }
 
-    isChampion(){
+    get isChampion(){
         return this.rank === "champion";
     }
 
-    isVillain(){
+    get isVillain(){
         return this.villain !== "no";
     }
+
 }

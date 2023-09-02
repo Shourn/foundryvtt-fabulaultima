@@ -1,35 +1,26 @@
+
 const Templates = {
     // Add paths to "systems/fabulaultima/templates"
-    actorCharacter: "systems/fabulaultima/templates/actor_character.hbs",
-    actorNpc: "systems/fabulaultima/templates/actor_npc.hbs",
-    itemWeapon: "systems/fabulaultima/templates/item_weapon.hbs"
+    actorCharacter: "systems/fabulaultima/templates/actor/actor_character.hbs",
+    actorNpc: "systems/fabulaultima/templates/actor/actor_npc.hbs",
+    itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs",
+    itemAttack: "systems/fabulaultima/templates/item/item_attack.hbs",
+    chatAttack: "systems/fabulaultima/templates/chat/chat_attack.hbs",
+    dialogCheck: "systems/fabulaultima/templates/dialog/dialog_check.hbs",
+    itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
+    chatSpell: "systems/fabulaultima/templates/chat/chat_spell.hbs"
 };
 
 const Partials = {
-    resources: "systems/fabulaultima/templates/partials/character_resources.hbs",
-    attributeSelect: "systems/fabulaultima/templates/partials/attribute_select.hbs"
+    check: "systems/fabulaultima/templates/partials/partial_check.hbs",
+    checkConfig: "systems/fabulaultima/templates/partials/partial_check_config.hbs",
+    damage: "systems/fabulaultima/templates/partials/partial_damage.hbs",
+    damageConfig: "systems/fabulaultima/templates/partials/partial_damage_config.hbs",
 }
 
 export default Templates
 
 export async function preloadTemplates() {
-
-    Handlebars.registerHelper("fu-id", function (prefix, options) {
-        if (typeof prefix !== "string"){
-            throw new TypeError("")
-        }
-        let context = options.data;
-        while (context) {
-            if (context.root.document?._id) {
-                return prefix + "-" + context.root.document._id;
-            }
-            context = context._parent;
-        }
-    })
-
-    Handlebars.registerHelper("fu-die-size", function (dieSize) {
-        return HandlebarsHelpers.localize(`FABULA_ULTIMA.dieSize.${dieSize}`, {})
-    })
 
     const templates = await loadTemplates(Object.values(Templates));
     const partials = await loadTemplates(Partials);

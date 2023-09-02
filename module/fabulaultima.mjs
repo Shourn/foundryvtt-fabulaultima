@@ -1,10 +1,16 @@
-import ItemSheet from "./item/ItemSheet.mjs";
 import {preloadTemplates} from "./Templates.mjs";
-import {CharacterData} from "./actor/CharacterData.mjs";
-import {NpcData} from "./actor/NpcData.mjs";
+import {CharacterData} from "./actor/character/CharacterData.mjs";
+import {NpcData} from "./actor/npc/NpcData.mjs";
 import {ActorProxy} from "./actor/ActorProxy.mjs";
-import {CharacterSheet} from "./actor/CharacterSheet.mjs";
-import {NpcSheet} from "./actor/NpcSheet.mjs";
+import {CharacterSheet} from "./actor/character/CharacterSheet.mjs";
+import {NpcSheet} from "./actor/npc/NpcSheet.mjs";
+import {ItemProxy} from "./item/ItemProxy.mjs";
+import {AttackData} from "./item/attack/AttackData.mjs";
+import {SystemRoll} from "./roll/SystemRoll.mjs";
+import {AttackSheet} from "./item/attack/AttackSheet.mjs";
+import {SpellData} from "./item/spell/SpellData.mjs";
+import {SpellSheet} from "./item/spell/SpellSheet.mjs";
+import {SYSTEM_ID} from "./System.mjs";
 
 console.log("at least something is happening")
 
@@ -18,22 +24,39 @@ Hooks.once('init', async () => {
     CONFIG.Actor.dataModels.character = CharacterData;
     CONFIG.Actor.dataModels.npc = NpcData;
 
-    Actors.registerSheet("fabulaultima", CharacterSheet, {
+    // noinspection JSCheckFunctionSignatures
+    Actors.registerSheet(SYSTEM_ID, CharacterSheet, {
         types: ["character"],
         makeDefault: true,
         label: "FabulaUltima.DefaultCharacter"
     });
 
-    Actors.registerSheet("fabulaultima", NpcSheet, {
+    // noinspection JSCheckFunctionSignatures
+    Actors.registerSheet(SYSTEM_ID, NpcSheet, {
         types: ["npc"],
         makeDefault: true,
         label: "FabulaUltima.DefaultNpc"
     });
 
-    Items.registerSheet("fabulaultima", ItemSheet, {
+    CONFIG.Item.documentClass = ItemProxy;
+    CONFIG.Item.dataModels.attack = AttackData;
+    CONFIG.Item.dataModels.spell = SpellData;
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, AttackSheet, {
+        types: ["attack"],
         makeDefault: true,
-        label: "FabulaUltima.SheetItem"
-    });
+        label: "FabulaUltima.DefaultAttack"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, SpellSheet, {
+        types: ["spell"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultSpell"
+    })
+
+    CONFIG.Dice.rolls.push(SystemRoll)
 
 });
 // Setup system
