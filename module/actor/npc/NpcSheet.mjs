@@ -1,37 +1,5 @@
 import Templates from "../../Templates.mjs";
-import {
-    affinities,
-    attackTypes,
-    attributeDice,
-    attributes,
-    damageTypes,
-    rank,
-    rollTypes,
-    species,
-    statusEffects,
-    villain
-} from "../../Constants.mjs";
-import {promptCheck, toObject} from "../../utils/helper.mjs";
-
-
-const constants = {
-    species: toObject(species, value => `FABULA_ULTIMA.species.${value}`),
-    rank: toObject(rank, value => `FABULA_ULTIMA.rank.${value}`),
-    villain: toObject(villain, value => `FABULA_ULTIMA.villain.${value}`),
-    attributeDice: toObject(attributeDice, value => `FABULA_ULTIMA.attributeDice.${value}`),
-    attributes: toObject(attributes, value => ({
-        short: `FABULA_ULTIMA.attribute.${value}.short`,
-        full: `FABULA_ULTIMA.attribute.${value}.full`
-    })),
-    affinities: toObject(affinities, value => ({
-        short: `FABULA_ULTIMA.affinity.${value}.short`,
-        full: `FABULA_ULTIMA.affinity.${value}.full`
-    })),
-    attackTypes: toObject(attackTypes, value => `FABULA_ULTIMA.attackType.${value}`),
-    rollVariables: toObject(rollTypes, value => `FABULA_ULTIMA.rollVariables.${value}`),
-    damageTypes: toObject(damageTypes, value => `FABULA_ULTIMA.damageType.${value}`),
-    statusEffects: toObject(statusEffects, value => `FABULA_ULTIMA.statusEffect.${value}`)
-};
+import {promptCheck} from "../../utils/helper.mjs";
 
 
 export class NpcSheet extends ActorSheet {
@@ -47,8 +15,8 @@ export class NpcSheet extends ActorSheet {
     }
 
     getData(options = {}) {
-        let data = super.getData(options);
-        const object = foundry.utils.mergeObject({constants, system: data.actor.system}, data);
+        const data = super.getData(options);
+        const object = foundry.utils.mergeObject({system: data.actor.system}, data);
         console.log(object)
         return object;
     }

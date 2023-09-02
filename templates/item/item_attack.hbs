@@ -8,13 +8,13 @@
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.attack.type'}}</label>
             <select name="system.attackType">
-                {{selectOptions constants.attackTypes selected=system.attackType localize=true}}
+                {{selectOptions (fu-attackTypes) selected=system.attackType localize=true}}
             </select>
         </fieldset>
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.attack.defense'}}</label>
             <select name="system.defense">
-                {{selectOptions constants.defenses selected=system.defense localize=true labelAttr='short'}}
+                {{selectOptions (fu-defenses) selected=system.defense localize=true labelAttr='short'}}
             </select>
         </fieldset>
     </section>
@@ -36,10 +36,10 @@
                 <label>{{localize 'FABULA_ULTIMA.sheet.attack.status'}}</label>
             </div>
             <select name="system.statusChoice">
-                {{selectOptions constants.statusChoices selected=system.statusChoice localize=true}}
+                {{selectOptions (fu-statusChoices) selected=system.statusChoice localize=true}}
             </select>
             <select name="system.status" multiple class="status-select" size="6">
-                {{selectOptions constants.statusEffects selected=system.status localize=true}}
+                {{selectOptions (fu-statusEffects) selected=system.status localize=true}}
             </select>
         </fieldset>
     </section>

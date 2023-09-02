@@ -1,0 +1,10 @@
+{{! Expects Affinities object }}
+{{#each this}}
+    <fieldset>
+        <label>{{localize (concat 'FABULA_ULTIMA.damageType.' @key)}}<i
+                class="fas {{localize (concat 'FABULA_ULTIMA.damageTypeIcons.' @key)}}"></i></label>
+        <select name="system.affinities.{{@key}}">
+            {{selectOptions (fu-affinities) selected=this localize=true labelAttr='short'}}
+        </select>
+    </fieldset>
+{{/each}}

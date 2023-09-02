@@ -1,10 +1,10 @@
 <span class="sep">[</span>
 <select name="system.damage.roll">
-    {{selectOptions constants.rollTypes selected=system.damage.roll localize=true labelAttr='short'}}
+    {{selectOptions (fu-rollTypes) selected=system.damage.roll localize=true labelAttr='short'}}
 </select>
 <span class="sep">+</span>
 <input name="system.damage.bonus" type="number" value="{{system.damage.bonus}}"/>
 <span class="sep">]</span>
 <select name="system.damage.type">
-    {{selectOptions constants.damageTypes selected=system.damage.type localize=true}}
+    {{selectOptions (fu-damageTypes) selected=system.damage.type localize=true}}
 </select>

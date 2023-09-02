@@ -1,0 +1,54 @@
+{{! expects Spell }}
+<fieldset data-item-id="{{id}}" class="flexrow">
+    <img src="{{img}}" title="{{name}}" height="24" width="24" class="flex0"/>
+    <div>{{name}}</div>
+    {{#with system}}
+        {{log this}}
+        <div>{{cost}}</div>
+        <div>
+            {{#if offensive}}
+                <span>[</span>
+                <span>{{check.attr1}}</span>
+                <span>+</span>
+                <span>{{check.attr2}}</span>
+                <span>]</span>
+                <span>+</span>
+                <span>{{check.modifier}}</span>
+            {{/if}}
+        </div>
+        <div>
+            {{#if offensive}}
+                <span>[</span>
+                <span>{{damage.rollType}}</span>
+                <span>+</span>
+                <span>{{damage.bonus}}</span>
+                <span>]</span>
+                <div>{{damage.type}}</div>
+            {{/if}}
+        </div>
+        <div>
+            {{#if status}}
+                {{status}}
+            {{else}}
+                {{localize 'FABULA_ULTIMA.noValue'}}
+            {{/if}}
+        </div>
+        <div class="flex0">
+            <a class="{{#if ../sheetSettings.isObserver}}disabled{{/if}}"
+               title="{{localize 'FABULA_ULTIMA.roll.attack'}}"
+               data-action="roll" data-type="item">
+                <i class="fas fa-dice-d20"></i>
+            </a>
+            <a class="{{#if ../sheetSettings.isObserver}}disabled{{/if}}"
+               title="{{localize 'FABULA_ULTIMA.edit.attack'}}" data-action="edit"
+               data-type="item">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a class="{{#if ../sheetSettings.isObserver}}disabled{{/if}}"
+               title="{{localize 'FABULA_ULTIMA.delete.attack'}}"
+               data-action="delete" data-type="item">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+    {{/with}}
+</fieldset>

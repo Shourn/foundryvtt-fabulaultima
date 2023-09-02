@@ -7,3 +7,19 @@
 .fabula-ultima .editor {
     min-height: 5rem;
 }
+
+.fabula-ultima .status-select option[selected] {
+    font-weight: bold;
+}
+
+.fabula-ultima .status-select option::before {
+    font-family: FontAwesome;
+    content: "\f096";
+    width: 1.3em;
+    text-align: center;
+    display: inline-block;
+}
+
+.fabula-ultima .status-select option[selected]::before {
+    content: "\f046";
+}

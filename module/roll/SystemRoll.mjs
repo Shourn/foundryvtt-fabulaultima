@@ -8,7 +8,7 @@ export class SystemRoll extends Roll {
     /**
      * @param {Check} check
      * @param {Attributes} attributes
-     * @returns {SystemRoll}
+     * @returns {Promise<SystemRoll>}
      */
     static async rollCheck(check, attributes) {
         return new SystemRoll(

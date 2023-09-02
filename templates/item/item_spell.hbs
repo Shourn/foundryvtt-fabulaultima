@@ -9,13 +9,13 @@
             <label>{{localize 'FABULA_ULTIMA.mp.short'}}</label>
             <input name="system.cost" type="number" value="{{system.cost}}">
             <select name="system.costType">
-                {{selectOptions constants.costTypes selected=system.costType localize=true}}
+                {{selectOptions (fu-costTypes) selected=system.costType localize=true}}
             </select>
         </fieldset>
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.target.type'}}</label>
             <select name="system.targetType">
-                {{selectOptions constants.targetTypes selected=system.targetType localize=true}}
+                {{selectOptions (fu-targetTypes) selected=system.targetType localize=true}}
             </select>
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.target.max'}}</label>
             <input name="system.maxTargets" type="number" value="{{system.maxTargets}}">
@@ -23,7 +23,7 @@
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.duration'}}</label>
             <select name="system.duration">
-                {{selectOptions constants.durations selected=system.duration localize=true}}
+                {{selectOptions (fu-durations) selected=system.duration localize=true}}
             </select>
         </fieldset>
         <fieldset class="form-fields">
@@ -49,10 +49,10 @@
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.status'}}</label>
             <select name="system.statusChoice">
-                {{selectOptions constants.statusChoices selected=system.statusChoice localize=true}}
+                {{selectOptions (fu-statusChoices) selected=system.statusChoice localize=true}}
             </select>
             <select name="system.status" multiple class="status-select" size="6">
-                {{selectOptions constants.statusEffects selected=system.status localize=true}}
+                {{selectOptions (fu-statusEffects) selected=system.status localize=true}}
             </select>
         </fieldset>
     </section>
