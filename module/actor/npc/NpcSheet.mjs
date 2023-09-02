@@ -16,9 +16,7 @@ export class NpcSheet extends ActorSheet {
 
     getData(options = {}) {
         const data = super.getData(options);
-        const object = foundry.utils.mergeObject({system: data.actor.system}, data);
-        console.log(object)
-        return object;
+        return foundry.utils.mergeObject({system: data.actor.system}, data);
     }
 
 
@@ -28,9 +26,6 @@ export class NpcSheet extends ActorSheet {
     get actor() {
         // noinspection JSValidateTypes
         return super.actor;
-    }
-    _getSubmitData(updateData = {}) {
-        return super._getSubmitData(updateData);
     }
 
     activateListeners(html) {

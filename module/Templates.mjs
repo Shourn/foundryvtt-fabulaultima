@@ -20,7 +20,8 @@ const Partials = {
     // affinities: "",
     affinitiesConfig: "systems/fabulaultima/templates/partials/partial_affinities_config.hbs",
     spellDisplay: "systems/fabulaultima/templates/partials/partial_spell_display.hbs",
-    attackDisplay: "systems/fabulaultima/templates/partials/partial_attack_display.hbs"
+    attackDisplay: "systems/fabulaultima/templates/partials/partial_attack_display.hbs",
+    attributeConfig: "systems/fabulaultima/templates/partials/partial_attribute_config.hbs"
 }
 
 export default Templates

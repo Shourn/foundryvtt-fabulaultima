@@ -1,15 +1,97 @@
-<form class="flexcol">
-    <div>
-        My Template is loaded!
-        {{log this}}
-    </div>
-    {{> 'resources' this}}
-    <div>
-        <ul>
-            {{#each data.system}}
-                {{log this}}
-                <li><span>{{@key}}</span>:<input name="{{@key}}" value="{{this}}" /></li>
-            {{/each}}
-        </ul>
-    </div>
+{{! expects Character }}
+{{log this}}
+<form class="standard-form fabula-ultima {{cssClass}}" autocomplete="off">
+    <header class="sheet-header form-group">
+        <fieldset>
+            <h1 class="form-fields">
+                <img class="profile-img" src="{{data.img}}" data-edit="img" title="{{data.name}}"/>
+                <input name="name" type="text" value="{{data.name}}" placeholder="Name"/>
+                <input name="system.pronouns" type="text" value="{{system.pronouns}}" placeholder="Pronouns"/>
+            </h1>
+        </fieldset>
+    </header>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>Identity</label>
+            <input name="system.traits.identity" type="text" value="{{system.traits.identity}}">
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>Theme</label>
+            <input name="system.traits.theme" type="text" value="{{system.traits.theme}}">
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>Origin</label>
+            <input name="system.traits.origin" type="text" value="{{system.traits.origin}}">
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>Level</label>
+            <input name="system.level" type="number" value="{{system.level}}">
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>Experience Points</label>
+            <input name="system.experience" type="number" value="{{system.experience}}">
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>Fabula Points</label>
+            <input name="system.fabulaPoints" type="number" value="{{system.fabulaPoints}}">
+        </fieldset>
+    </section>
+    <section class="form-group">
+        {{> attributeConfig system.attributes}}
+        <fieldset style="flex: 0">
+            <a class="button" data-action="roll" data-type="check">
+                <label>
+                    <i class="fas fa-dice"></i>
+                </label>
+            </a>
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>HP</label>
+            <input type="number" name="system.hp.value" value="{{system.hp.value}}" min="0">
+            <span class="sep">/</span>
+            <input type="text" readonly value="{{system.hp.max}}">
+            (<input type="text" readonly value="{{system.hp.crisis}}">)
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>MP</label>
+            <input type="number" name="system.mp.value" value="{{system.mp.value}}" min="0">
+            <span class="sep">/</span>
+            <input type="text" readonly value="{{system.mp.max}}"/>
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>IP</label>
+            <input type="number" name="system.inventoryPoints.value" value="{{system.inventoryPoints.value}}" min="0">
+            <span class="sep">/</span>
+            <input type="text" readonly value="{{system.inventoryPoints.max}}"/>
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.initiativeModifier.short' }}</label>
+            <input name="system.initiativeModifier" type="number" readonly
+                   value="{{system.initiativeModifier}}"/>
+        </fieldset>
+    </section>
+    <section class="form-group">
+        {{#each data.system.defenses}}
+            <fieldset class="form-fields">
+                <label>{{localize (concat 'FABULA_ULTIMA.defense.' @key '.short')}}</label>
+                <select name="system.defenses.{{@key}}.attribute">
+                    <option value="none"></option>
+                    {{selectOptions (fu-attributes) selected=this.attribute localize=true labelAttr='short'}}
+                </select>
+                <span class="sep">+</span>
+                <input name="system.defenses.{{@key}}.modifier" type="number" value="{{this.modifier}}">
+                <span class="sep">=</span>
+                <input readonly type="number" value="{{this.current}}">
+            </fieldset>
+        {{/each}}
+    </section>
+    <section>
+
+    </section>
 </form>

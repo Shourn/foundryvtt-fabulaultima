@@ -89,7 +89,7 @@ export class CommonData extends foundry.abstract.TypeDataModel {
         this.mp.value = clamp(this.mp.value, this.mp.max);
     }
 
-    inCrisis() {
+    get inCrisis() {
         return this.hp.value <= this.hp.crisis;
     }
 }

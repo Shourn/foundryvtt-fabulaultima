@@ -1,0 +1,29 @@
+{{! expects Attributes }}
+<fieldset class="form-fields">
+    <label>{{localize 'FABULA_ULTIMA.attribute.might.short'}}</label>
+    <select name="system.attributes.might.base">
+        {{selectOptions (fu-attributeDice) selected=might.base localize=true}}
+    </select>
+    <span>({{localize might.current}})</span>
+</fieldset>
+<fieldset class="form-fields">
+    <label>{{localize 'FABULA_ULTIMA.attribute.willpower.short'}}</label>
+    <select name="system.attributes.willpower.base">
+        {{selectOptions (fu-attributeDice) selected=willpower.base localize=true}}
+    </select>
+    <span>({{localize willpower.current}})</span>
+</fieldset>
+<fieldset class="form-fields">
+    <label>{{localize 'FABULA_ULTIMA.attribute.dexterity.short'}}</label>
+    <select name="system.attributes.dexterity.base">
+        {{selectOptions (fu-attributeDice) selected=dexterity.base localize=true}}
+    </select>
+    <span>({{localize dexterity.current}})</span>
+</fieldset>
+<fieldset class="form-fields">
+    <label>{{localize 'FABULA_ULTIMA.attribute.insight.short'}}</label>
+    <select name="system.attributes.insight.base">
+        {{selectOptions (fu-attributeDice) selected=insight.base localize=true}}
+    </select>
+    <span>({{localize insight.current}})</span>
+</fieldset>

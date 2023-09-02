@@ -1,9 +1,47 @@
 import {CommonData} from "../CommonData.mjs";
 import {Accessory} from "../../item/accessory/Accessory.mjs";
 import {Armor} from "../../item/armor/Armor.mjs";
+import {feelings1, feelings2, feelings3} from "../../Constants.mjs";
+
+/**
+ * @typedef Bond
+ * @property {string} with
+ * @property {Feeling1} feeling1
+ * @property {Feeling2} feeling2
+ * @property {Feeling3} feeling3
+ */
+
+/**
+ * @typedef Proficiencies
+ * @property {boolean} armor
+ * @property {boolean} shields
+ * @property {boolean} melee
+ * @property {boolean} ranged
+ */
+
+/**
+ * @typedef Equipment
+ * @property {Accessory} [accessory]
+ * @property {Armor} [armor]
+ * @property {Weapon} [mainHand]
+ * @property {Weapon, Shield} [offHand]
+ */
 
 /**
  * @alias PlayerCharacterData
+ * @extends CommonData
+ * @property {string} pronouns
+ * @property {{identity: string, theme: string, origin: string}} traits
+ * @property {Bond[]} bonds
+ * @property {number} fabulaPoints
+ * @property {number} experience
+ * @property {number} initiativeModifier
+ * @property {Proficiencies} proficiencies
+ * @property {Equipment} equipment
+ * @property {number} zenit
+ * @property {Object} inventoryPoints
+ * @property {number} inventoryPoints.value
+ * @property {number} inventoryPoints.max
  */
 export class CharacterData extends CommonData {
     static defineSchema() {
@@ -14,7 +52,6 @@ export class CharacterData extends CommonData {
             SchemaField,
             ArrayField,
             ForeignDocumentField
-
         } = foundry.data.fields
         return Object.assign({}, super.defineSchema(), {
             pronouns: new StringField({initial: "They/Them"}),
@@ -24,14 +61,14 @@ export class CharacterData extends CommonData {
                 origin: new StringField({initial: ""})
             }),
             bonds: new ArrayField(new SchemaField({
-                bond: new StringField({initial: ""}),
-                feeling1: new StringField({initial: "none", choices: ["none", "admiration", "inferiority"]}),
-                feeling2: new StringField({initial: "none", choices: ["none", "loyalty", "mistrust"]}),
-                feeling3: new StringField({initial: "none", choices: ["none", "affection", "hatred"]}),
+                with: new StringField({initial: ""}),
+                feeling1: new StringField({initial: "none", choices: feelings1}),
+                feeling2: new StringField({initial: "none", choices: feelings2}),
+                feeling3: new StringField({initial: "none", choices: feelings3}),
             }), {initial: []}),
-            fabulaPoints: new NumberField({initial: 1, positive: true, integer: true}),
+            fabulaPoints: new NumberField({initial: 1, min: 0, integer: true}),
             experience: new NumberField({initial: 0, min: 0, integer: true}),
-            initiativeMod: new NumberField({initial: 0, integer: true}),
+            initiativeModifier: new NumberField({initial: 0, integer: true}),
             proficiencies: new SchemaField({
                 armor: new BooleanField({initial: false}),
                 shields: new BooleanField({initial: false}),
@@ -46,10 +83,21 @@ export class CharacterData extends CommonData {
             }),
             zenit: new NumberField({initial: 500, positive: true, integer: true}),
             inventoryPoints: new SchemaField({
-                value: new NumberField({min: 0, initial: 6, max: 6, integer: true}),
-                max: new NumberField({min: 0, initial: 6, max: 6, integer: true})
+                value: new NumberField({initial: 6, min: 0, max: 6, integer: true}),
+                max: new NumberField({initial: 6, min: 0, max: 6, integer: true})
             })
         })
+    }
+
+    prepareHp() {
+        this.hp.max = this.level + this.getDieSize(this.attributes.might.base) * 5;
+        super.prepareHp();
+    }
+
+
+    prepareMp() {
+        this.mp.max = this.level + this.getDieSize(this.attributes.willpower.base) * 5;
+        super.prepareMp();
     }
 
 }

@@ -117,3 +117,25 @@ export const durations = Object.freeze(["instant", "scene"])
  * @type {Readonly<CostType[]>}
  */
 export const costTypes = Object.freeze(["total", "target"])
+
+/**
+ * @typedef {"none", "admiration", "inferiority"} Feeling1
+ */
+/**
+ * @type {Readonly<Feeling1[]>}
+ */
+export const feelings1 = Object.freeze(["none", "admiration", "inferiority"])
+/**
+ * @typedef {"none", "loyalty", "mistrust"} Feeling2
+ */
+/**
+ * @type {Readonly<Feeling2[]>}
+ */
+export const feelings2 = Object.freeze(["none", "loyalty", "mistrust"])
+/**
+ * @typedef {"none", "affection", "hatred"} Feeling3
+ */
+/**
+ * @type {Readonly<Feeling3[]>}
+ */
+export const feelings3 = Object.freeze(["none", "affection", "hatred"])
