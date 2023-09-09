@@ -69,7 +69,10 @@ export async function promptCheck(actor) {
         const roll = await SystemRoll.rollCheck(result, actor.system.attributes);
 
         return roll.toMessage({
-                speaker: ChatMessage.getSpeaker({actor})
+                speaker: ChatMessage.getSpeaker({actor}),
+                content: await renderTemplate(Templates.chatCheck, {
+                    result: roll,
+                })
             })
     } catch (e) {
         // TODO
@@ -91,4 +94,19 @@ export function getDamage(damage, roll) {
         total: base + bonus,
         type: `FABULA_ULTIMA.damageType.${damage.type}`
     };
+}
+
+/**
+ *
+ * @param {jQuery} jquery
+ */
+export function registerCollapse(jquery) {
+    const collapseTriggers = jquery.find("[data-collapse-toggle]");
+    console.log(collapseTriggers)
+    collapseTriggers.click(event => {
+        const collapseId = $(event.currentTarget).data("collapseToggle");
+        const collapse = jquery.find(`.collapse[data-collapse="${collapseId}"]`);
+        console.log(collapse)
+        collapse.toggleClass("show");
+    })
 }

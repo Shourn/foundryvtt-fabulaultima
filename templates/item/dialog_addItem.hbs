@@ -1,0 +1,6 @@
+{{! expects Object {types: {"type": "translation"}} }}
+{{log this}}
+<label>{{localize 'FABULA_ULTIMA.dialog.addItem.label'}}</label>
+<select name="type">
+    {{selectOptions types localize=true}}
+</select>

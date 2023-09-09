@@ -35,7 +35,6 @@ import {feelings1, feelings2, feelings3} from "../../Constants.mjs";
  * @property {Bond[]} bonds
  * @property {number} fabulaPoints
  * @property {number} experience
- * @property {number} initiativeModifier
  * @property {Proficiencies} proficiencies
  * @property {Equipment} equipment
  * @property {number} zenit
@@ -68,7 +67,6 @@ export class CharacterData extends CommonData {
             }), {initial: []}),
             fabulaPoints: new NumberField({initial: 1, min: 0, integer: true}),
             experience: new NumberField({initial: 0, min: 0, integer: true}),
-            initiativeModifier: new NumberField({initial: 0, integer: true}),
             proficiencies: new SchemaField({
                 armor: new BooleanField({initial: false}),
                 shields: new BooleanField({initial: false}),
@@ -89,15 +87,15 @@ export class CharacterData extends CommonData {
         })
     }
 
-    prepareHp() {
+
+    prepareBaseData() {
+        super.prepareBaseData();
+    }
+
+
+    prepareDerivedData() {
+        super.prepareDerivedData();
         this.hp.max = this.level + this.getDieSize(this.attributes.might.base) * 5;
-        super.prepareHp();
-    }
-
-
-    prepareMp() {
         this.mp.max = this.level + this.getDieSize(this.attributes.willpower.base) * 5;
-        super.prepareMp();
     }
-
 }

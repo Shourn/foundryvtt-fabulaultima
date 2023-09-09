@@ -1,14 +1,20 @@
 import Templates from "../../Templates.mjs";
 
 
+/**
+ * @extends {ItemSheet}
+ */
 export class SpellSheet extends ItemSheet {
 
     static get defaultOptions() {
         const defaultOptions = super.defaultOptions;
         return foundry.utils.mergeObject(defaultOptions, {
-            template: Templates.itemSpell,
             classes: [...defaultOptions.classes, "fabula-ultima", "item-spell"]
         });
+    }
+
+    get template() {
+        return Templates.itemSpell;
     }
 
     getData(options = {}) {

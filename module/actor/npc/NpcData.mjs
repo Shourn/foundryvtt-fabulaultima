@@ -26,36 +26,30 @@ export class NpcData extends CommonData {
                 replacesSoldiers: new NumberField({initial: 1, positive: true, integer: true}),
                 species: new StringField({initial: species[0], choices: species}),
                 description: new StringField({initial: ""}),
-                traits: new StringField({initial: ""}),
-                initiative: new NumberField({initial: 0, integer: true})
+                traits: new StringField({initial: ""})
             }
         )
     }
 
 
     prepareBaseData() {
-        this.replacesSoldiers = this.rank === "soldier" ? 1 : this.rank === "elite" ? 2 : Math.max(2, this.replacesSoldiers)
         super.prepareBaseData();
-        this.initiative = (this.getDieSize(this.attributes.dexterity.base) + this.getDieSize(this.attributes.insight.base)) / 2;
-        if (this.isChampion) {
-            this.initiative = this.initiative + this.replacesSoldiers;
-        }
     }
 
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        this.replacesSoldiers = this.rank === "soldier" ? 1 : this.rank === "elite" ? 2 : Math.max(2, this.replacesSoldiers)
 
-    prepareHp() {
         this.hp.max = this.level * 2 + this.getDieSize(this.attributes.might.base) * 5;
         this.hp.max = this.hp.max * this.replacesSoldiers;
-        super.prepareHp();
-    }
-
-
-    prepareMp() {
         this.mp.max = this.level + this.getDieSize(this.attributes.willpower.base) * 5;
+
+        this.initiative = ((this.getDieSize(this.attributes.dexterity.base) + this.getDieSize(this.attributes.insight.base)) / 2) + this.initiativeModifier;
+
         if (this.isChampion) {
+            this.initiative = this.initiative + this.replacesSoldiers;
             this.mp.max = this.mp.max * 2;
         }
-        super.prepareMp();
     }
 
     get isChampion() {

@@ -1,5 +1,6 @@
 @import "item_attack.css";
 @import "item_spell.css";
+@import "actor_character.css";
 
 .fabula-ultima {
 }
@@ -22,4 +23,15 @@
 
 .fabula-ultima .status-select option[selected]::before {
     content: "\f046";
+}
+
+.fabula-ultima .collapse {
+    visibility: collapse;
+    height: 0;
+    transition: height 500ms ease-in;
+}
+
+.fabula-ultima .collapse.show {
+    visibility: initial;
+    height: initial;
 }

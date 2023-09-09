@@ -4,12 +4,17 @@ const Templates = {
     // Add paths to "systems/fabulaultima/templates"
     actorCharacter: "systems/fabulaultima/templates/actor/actor_character.hbs",
     actorNpc: "systems/fabulaultima/templates/actor/actor_npc.hbs",
-    itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs",
-    itemAttack: "systems/fabulaultima/templates/item/item_attack.hbs",
     chatAttack: "systems/fabulaultima/templates/chat/chat_attack.hbs",
+    chatCheck: "systems/fabulaultima/templates/chat/chat_check.hbs",
+    chatSpell: "systems/fabulaultima/templates/chat/chat_spell.hbs",
+    dialogAddItem: "systems/fabulaultima/templates/item/dialog_addItem.hbs",
     dialogCheck: "systems/fabulaultima/templates/dialog/dialog_check.hbs",
+    itemAccessory: "systems/fabulaultima/templates/item/item_accessory.hbs",
+    itemArmor: "systems/fabulaultima/templates/item/item_armor.hbs",
+    itemAttack: "systems/fabulaultima/templates/item/item_attack.hbs",
     itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
-    chatSpell: "systems/fabulaultima/templates/chat/chat_spell.hbs"
+    itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs"
+
 };
 
 const Partials = {
@@ -32,7 +37,7 @@ export async function preloadTemplates() {
         const translation = Translations[key];
         const helper = `fu-${key}`;
         Handlebars.registerHelper(helper, () => {
-            console.log(helper, translation)
+            // console.log(helper, translation)
             return translation;
         })
     }

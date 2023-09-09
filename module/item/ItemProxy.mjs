@@ -8,9 +8,9 @@ import {Attack} from "./attack/Attack.mjs";
 import {Spell} from "./spell/Spell.mjs";
 
 export const itemMappings = {
-    "attack": Attack,
     "accessory": Accessory,
     "armor": Armor,
+    "attack": Attack,
     "misc": MiscItem,
     "shield": Shield,
     "spell": Spell,

@@ -46,3 +46,9 @@ export const costTypes = toObject(c.costTypes, value => `FABULA_ULTIMA.costType.
 export const targetTypes = toObject(c.targetTypes, value => `FABULA_ULTIMA.targetType.${value}`)
 
 export const durations = toObject(c.durations, value => `FABULA_ULTIMA.duration.${value}`)
+
+export const feelings1 = toObject(c.feelings1, value => `FABULA_ULTIMA.feeling.${value}`)
+
+export const feelings2 = toObject(c.feelings2, value => `FABULA_ULTIMA.feeling.${value}`)
+
+export const feelings3 = toObject(c.feelings3, value => `FABULA_ULTIMA.feeling.${value}`)

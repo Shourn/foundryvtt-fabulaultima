@@ -134,7 +134,11 @@
       "attacks": "Attacks",
       "spells": "Spells",
       "actions": "Other Actions",
-      "description": "Description"
+      "description": "Description",
+      "equipment": "Equipment",
+      "bonds": "Bonds",
+      "effects": "Effects",
+      "jobs": "Classes"
     },
     "modifier": {
       "short": "Mod.",
@@ -219,7 +223,21 @@
     "duration": {
       "instant": "Instantaneous",
       "scene": "Scene"
+    },
+    "proficiencies": {
+      "label": "Proficiencies",
+      "armor": "Martial Armor",
+      "shields": "Martial Shields",
+      "melee": "Martial Melee Weapons",
+      "ranged": "Martial Ranged Weapons"
+    },
+    "effect": {
+      "label": "Effect",
+      "source": "Source",
+      "duration": "Duration",
+      "create": "Create Effect"
     }
+
   }
 }
 

@@ -1,9 +1,26 @@
-import {affinities, attributeDice, attributes} from "../Constants.mjs";
+import {attributeDice, attributes} from "../Constants.mjs";
 import {clamp} from "../utils/helper.mjs";
-import {AttributesSchema} from "../schema/AttributesSchema.mjs";
 import {AffinitiesSchema} from "../schema/AffinitiesSchema.mjs";
-import {DefensiveStatisticSchema} from "../schema/DefensiveStatisticSchema.mjs";
 
+
+/**
+ * @typedef Attributes
+ * @property {AttributeValue} dexterity
+ * @property {AttributeValue} insight
+ * @property {AttributeValue} might
+ * @property {AttributeValue} willpower
+ */
+/**
+ * @typedef DefensiveStatistic
+ * @property {Attribute | "none"} attribute
+ * @property {number} modifier
+ * @property {number} current
+ */
+/**
+ * @typedef AttributeValue
+ * @property {AttributeDie} base
+ * @property {AttributeDie} current
+ */
 /**
  * @property {number} level
  * @property {Object} hp
@@ -16,7 +33,9 @@ import {DefensiveStatisticSchema} from "../schema/DefensiveStatisticSchema.mjs";
  * @property {Object} defenses
  * @property {DefensiveStatistic} defenses.defense
  * @property {DefensiveStatistic} defenses.magicDefense
+ * @property {number} initiativeModifier
  * @property {Affinities}
+ * @extends TypeDataModel
  */
 export class CommonData extends foundry.abstract.TypeDataModel {
 
@@ -27,40 +46,61 @@ export class CommonData extends foundry.abstract.TypeDataModel {
             hp: new SchemaField({
                 value: new NumberField({initial: 45, min: 0, positive: true, integer: true}),
                 max: new NumberField({initial: 45, min: 0, positive: true, integer: true}),
-                crisis: new NumberField({initial: 22, positive: true, integer: true})
             }),
             mp: new SchemaField({
                 value: new NumberField({initial: 45, positive: true, integer: true}),
                 max: new NumberField({initial: 45, positive: true, integer: true})
             }),
-            attributes: new AttributesSchema(),
-            defenses: new SchemaField({
-                defense: new DefensiveStatisticSchema({attribute: "dexterity"}),
-                magicDefense: new DefensiveStatisticSchema({attribute: "insight"})
+            attributes: new SchemaField({
+                dexterity: new SchemaField({
+                    base: new StringField({initial: "d8", choices: attributeDice})
+                }),
+                insight: new SchemaField({
+                    base: new StringField({initial: "d8", choices: attributeDice})
+                }),
+                might: new SchemaField({
+                    base: new StringField({initial: "d8", choices: attributeDice}),
+                }),
+                willpower: new SchemaField({
+                    base: new StringField({initial: "d8", choices: attributeDice}),
+                })
             }),
+            defenses: new SchemaField({
+                defense: new SchemaField({
+                    attribute: new StringField({
+                        initial: "dexterity",
+                        choices: ["none", ...attributes],
+                        nullable: true
+                    }),
+                    modifier: new NumberField({initial: 0, integer: true})
+                }),
+                magicDefense: new SchemaField({
+                    attribute: new StringField({
+                        initial: "insight",
+                        choices: ["none", ...attributes],
+                        nullable: true
+                    }),
+                    modifier: new NumberField({initial: 0, integer: true})
+                })
+            }),
+            initiativeModifier: new NumberField({initial: 0, integer: true}),
             affinities: new AffinitiesSchema()
         }
     }
 
     prepareBaseData() {
-        this.prepareHp()
-        this.prepareMp()
-        this.syncAttribute(this.attributes.might)
-        this.syncAttribute(this.attributes.dexterity)
-        this.syncAttribute(this.attributes.insight)
-        this.syncAttribute(this.attributes.willpower)
-        this.calculateDefense(this.defenses.defense);
-        this.calculateDefense(this.defenses.magicDefense);
-    }
-
-    syncAttribute(attribute) {
-        attribute.current = attribute.base;
+        this.hp.crisis = Math.floor(this.hp.max / 2);
+        this.attributes.might.current = this.attributes.might.base;
+        this.attributes.dexterity.current = this.attributes.dexterity.base;
+        this.attributes.insight.current = this.attributes.insight.base;
+        this.attributes.willpower.current = this.attributes.willpower.base;
     }
 
     prepareDerivedData() {
+        this.deriveDefense(this.defenses.defense);
+        this.deriveDefense(this.defenses.magicDefense);
     }
-
-    calculateDefense(statistic) {
+    deriveDefense(statistic) {
         const base = statistic.attribute === "none" ? 0 : this.getDieSize(this.attributes[statistic.attribute].current);
         statistic.current = base + statistic.modifier;
     }
@@ -79,16 +119,6 @@ export class CommonData extends foundry.abstract.TypeDataModel {
                 return NaN;
         }
     }
-
-    prepareHp() {
-        this.hp.crisis = Math.floor(this.hp.max / 2);
-        this.hp.value = clamp(this.hp.value, this.hp.max);
-    }
-
-    prepareMp() {
-        this.mp.value = clamp(this.mp.value, this.mp.max);
-    }
-
     get inCrisis() {
         return this.hp.value <= this.hp.crisis;
     }

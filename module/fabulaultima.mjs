@@ -11,15 +11,12 @@ import {AttackSheet} from "./item/attack/AttackSheet.mjs";
 import {SpellData} from "./item/spell/SpellData.mjs";
 import {SpellSheet} from "./item/spell/SpellSheet.mjs";
 import {SYSTEM_ID} from "./System.mjs";
+import {AccessoryData} from "./item/accessory/AccessoryData.mjs";
+import {AccessorySheet} from "./item/accessory/AccessorySheet.mjs";
 
 console.log("at least something is happening")
 
-Hooks.once('init', async () => {
-    console.log('fabulaultima | Initializing fabulaultima');
-    // Preload Handlebars templates
-    await preloadTemplates();
-    // Register custom sheets (if any)
-
+function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
     CONFIG.Actor.dataModels.character = CharacterData;
     CONFIG.Actor.dataModels.npc = NpcData;
@@ -37,10 +34,16 @@ Hooks.once('init', async () => {
         makeDefault: true,
         label: "FabulaUltima.DefaultNpc"
     });
+}
 
+function initItems() {
     CONFIG.Item.documentClass = ItemProxy;
     CONFIG.Item.dataModels.attack = AttackData;
+    CONFIG.Item.typeLabels.attack = "FABULA_ULTIMA.item.attack"
     CONFIG.Item.dataModels.spell = SpellData;
+    CONFIG.Item.typeLabels.attack = "FABULA_ULTIMA.item.spell"
+    CONFIG.Item.dataModels.accessory = AccessoryData;
+    CONFIG.Item.typeLabels.attack = "FABULA_ULTIMA.item.accessory"
 
     // noinspection JSCheckFunctionSignatures
     Items.registerSheet(SYSTEM_ID, AttackSheet, {
@@ -55,6 +58,25 @@ Hooks.once('init', async () => {
         makeDefault: true,
         label: "FabulaUltima.DefaultSpell"
     })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, AccessorySheet, {
+        types: ["accessory"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultAccessory"
+    })
+}
+
+Hooks.once('init', async () => {
+    console.log('fabulaultima | Initializing fabulaultima');
+    // Preload Handlebars templates
+    await preloadTemplates();
+    // Register custom sheets (if any)
+    initActors();
+
+    initItems();
+
+    CONFIG.ActiveEffect.legacyTransferral = false;
 
     CONFIG.Dice.rolls.push(SystemRoll)
 
