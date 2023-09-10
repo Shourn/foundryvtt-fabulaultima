@@ -110,24 +110,18 @@
         "label": "Attacks",
         "name": "Name",
         "type": "Type",
-        "check": {
-          "attribute1": "Attr. +",
-          "attribute2": "Attr. +",
-          "bonus": "Bonus"
-        },
-        "damage": {
-          "roll": "Roll +",
-          "bonus": "Bonus",
-          "type": "Type"
-        },
-        "status": "Status"
+        "defense": "Defense",
+        "check": "Check",
+        "damage": "Damage",
+        "quality": "Quality"
       },
       "spell": {
         "name": "Name",
         "cost": "Cost",
+        "costPerTarget": " x T",
         "check": "Check",
         "damage": "Damage",
-        "status": "Status"
+        "effect": "Effect"
       }
     },
     "tab": {
@@ -169,12 +163,14 @@
       }
     },
     "sheet": {
-      "attack": {
+      "weapon": {
         "type": "Type",
         "defense": "Against",
         "check": "Check",
         "damage": "Damage",
-        "status": "Status"
+        "status": "Status",
+        "category": "Category",
+        "quality": "Quality"
       },
       "spell": {
         "target": {
@@ -236,8 +232,30 @@
       "source": "Source",
       "duration": "Duration",
       "create": "Create Effect"
+    },
+    "weaponCategory": {
+      "arcane": "Arcane",
+      "bow": "Bow",
+      "brawling": "Brawling",
+      "dagger": "Dagger",
+      "firearm": "Firearm",
+      "flail": "Flail",
+      "heavy": "Heavy",
+      "spear": "Spear",
+      "sword": "Sword",
+      "thrown": "Thrown",
+      "special": "Special"
+    },
+    "item": {
+      "accessory": "Accessory",
+      "armor": "Armor",
+      "job": "Class",
+      "misc": "Misc. Item",
+      "shield": "Shield",
+      "spell": "Spell",
+      "skill": "Skill",
+      "weapon": "Weapon"
     }
-
   }
 }
 

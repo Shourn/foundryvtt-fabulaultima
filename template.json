@@ -9,19 +9,18 @@
   },
   "Item": {
     "types": [
-      "attack",
       "accessory",
       "armor",
       "job",
       "misc",
       "shield",
       "spell",
+      "skill",
       "weapon"
     ],
     "htmlFields": [
       "description"
     ],
-    "attack": {},
     "accessory": {},
     "armor": {},
     "job": {},

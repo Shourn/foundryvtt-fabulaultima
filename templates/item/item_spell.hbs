@@ -45,26 +45,18 @@
             </fieldset>
         </section>
     {{/if}}
-    <section class="form-group">
+
+    <section class="form-group-stacked">
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.sheet.spell.status'}}</label>
-            <select name="system.statusChoice">
-                {{selectOptions (fu-statusChoices) selected=system.statusChoice localize=true}}
-            </select>
-            <select name="system.status" multiple class="status-select" size="6">
-                {{selectOptions (fu-statusEffects) selected=system.status localize=true}}
-            </select>
+            <label>{{localize 'FABULA_ULTIMA.sheet.spell.effect'}}</label>
+            <input name="system.effect" type="text" value="{{system.effect}}">
         </fieldset>
-    </section>
-    <section class="form-group">
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.opportunity'}}</label>
             <input name="system.opportunity" type="text" value="{{system.opportunity}}">
         </fieldset>
-    </section>
-    <section class="form-group-stacked">
         <fieldset class="form-fields">
-            {{editor enrichedHtml.description target='system.description' button=true}}
+            {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
         </fieldset>
     </section>
 </form>

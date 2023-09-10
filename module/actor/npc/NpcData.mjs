@@ -1,6 +1,5 @@
 import {CommonData} from "../CommonData.mjs";
 import {rank, species, villain} from "../../Constants.mjs";
-import {Attack} from "../../item/attack/Attack.mjs";
 
 /**
  * @extends CommonData

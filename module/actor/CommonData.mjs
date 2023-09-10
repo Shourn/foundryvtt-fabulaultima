@@ -1,6 +1,4 @@
-import {attributeDice, attributes} from "../Constants.mjs";
-import {clamp} from "../utils/helper.mjs";
-import {AffinitiesSchema} from "../schema/AffinitiesSchema.mjs";
+import {affinities, attributeDice, attributes} from "../Constants.mjs";
 
 
 /**
@@ -20,6 +18,17 @@ import {AffinitiesSchema} from "../schema/AffinitiesSchema.mjs";
  * @typedef AttributeValue
  * @property {AttributeDie} base
  * @property {AttributeDie} current
+ */
+/**
+ * @typedef Affinities
+ * @property {Affinity} physical
+ * @property {Affinity} air
+ * @property {Affinity} bolt
+ * @property {Affinity} dark
+ * @property {Affinity} earth
+ * @property {Affinity} fire
+ * @property {Affinity} light
+ * @property {Affinity} poison
  */
 /**
  * @property {number} level
@@ -84,8 +93,61 @@ export class CommonData extends foundry.abstract.TypeDataModel {
                 })
             }),
             initiativeModifier: new NumberField({initial: 0, integer: true}),
-            affinities: new AffinitiesSchema()
+            affinities: new SchemaField({
+                physical: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                air: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                bolt: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                dark: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                earth: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                fire: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                ice: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                light: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                }),
+                poison: new StringField({
+                    initial: "none",
+                    required: true,
+                    choices: affinities
+                })
+            })
         }
+    }
+
+    /**
+     * @returns {FUActor}
+     */
+    get parent(){
+        return super.parent;
     }
 
     prepareBaseData() {
@@ -97,6 +159,7 @@ export class CommonData extends foundry.abstract.TypeDataModel {
     }
 
     prepareDerivedData() {
+        this.deriveAttributes();
         this.deriveDefense(this.defenses.defense);
         this.deriveDefense(this.defenses.magicDefense);
     }
@@ -121,5 +184,31 @@ export class CommonData extends foundry.abstract.TypeDataModel {
     }
     get inCrisis() {
         return this.hp.value <= this.hp.crisis;
+    }
+
+    deriveAttributes() {
+        const statuses = this.parent.statuses;
+        if (statuses.has("slow")) this.reduceDieSize(this.attributes.dexterity);
+        if (statuses.has("dazed")) this.reduceDieSize(this.attributes.insight);
+        if (statuses.has("weak")) this.reduceDieSize(this.attributes.might);
+        if (statuses.has("shaken")) this.reduceDieSize(this.attributes.willpower);
+
+        if (statuses.has("enraged")){
+            this.reduceDieSize(this.attributes.dexterity);
+            this.reduceDieSize(this.attributes.insight);
+        }
+
+        if (statuses.has("poisoned")){
+            this.reduceDieSize(this.attributes.might);
+            this.reduceDieSize(this.attributes.willpower);
+        }
+    }
+
+    /**
+     * @param {AttributeValue} attribute
+     */
+    reduceDieSize(attribute) {
+        const index = attributeDice.indexOf(attribute.current);
+        attribute.current = attributeDice[Math.max(0, index - 1)]
     }
 }

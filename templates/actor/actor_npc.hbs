@@ -59,17 +59,7 @@
         </section>
     </header>
     <section class="form-group">
-        {{#each (fu-attributes) as | attribute |}}
-            {{#with (lookup ../data.system.attributes @key) as | value | }}
-                <fieldset class="form-fields">
-                    <label>{{localize attribute.short}}</label>
-                    <select name="system.attributes.{{@key}}.base">
-                        {{selectOptions (fu-attributeDice) selected=value.base localize=true}}
-                    </select>
-                    <span>({{localize value.current}})</span>
-                </fieldset>
-            {{/with}}
-        {{/each}}
+        {{> attributeConfig system.attributes}}
         <fieldset style="flex: 0">
             <a class="button" data-action="roll" data-type="check">
                 <label>
@@ -92,17 +82,19 @@
             <span class="sep">/</span>
             <input type="text" readonly value="{{system.mp.max}}"/>
         </fieldset>
-        {{#each data.system.defenses}}
+        {{log @root}}
+        {{#each system.defenses as | defense |}}
+            {{log defense}}
             <fieldset class="form-fields">
                 <label>{{localize (concat 'FABULA_ULTIMA.defense.' @key '.short')}}</label>
                 <select name="system.defenses.{{@key}}.attribute">
                     <option value="none"></option>
-                    {{selectOptions (fu-attributes) selected=this.attribute localize=true labelAttr='short'}}
+                    {{selectOptions (fu-attributes) selected=defense.attribute localize=true labelAttr='short'}}
                 </select>
                 <span class="sep">+</span>
-                <input name="system.defenses.{{@key}}.modifier" type="number" value="{{this.modifier}}">
+                <input name="system.defenses.{{@key}}.modifier" type="number" value="{{defense.modifier}}">
                 <span class="sep">=</span>
-                <input readonly type="number" value="{{this.current}}">
+                <input readonly type="number" value="{{defense.current}}">
             </fieldset>
         {{/each}}
         <fieldset class="form-fields">
@@ -127,26 +119,23 @@
                         <div class="flex0" style="min-width: 24px"></div>
                         <div>{{localize 'FABULA_ULTIMA.npc.attack.name'}}</div>
                         <div>{{localize 'FABULA_ULTIMA.npc.attack.type'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.check.attribute1'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.check.attribute2'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.check.bonus'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.damage.roll'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.damage.bonus'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.damage.type'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.status'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.npc.attack.defense'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.npc.attack.check'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.npc.attack.damage'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.npc.attack.quality'}}</div>
                         <div class="flex0">
-                            <a class="item-control item-create {{#if sheetSettings.isObserver}}disabled{{/if}}"
-                               title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}" data-action="create"
-                               data-type="item"
-                               data-document-type="attack">
+                            <a class="{{#if sheetSettings.isObserver}}disabled{{/if}}"
+                               title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}"
+                               data-action="create"
+                               data-type="weapon">
                                 <i class="fas fa-plus"></i>
                             </a>
                         </div>
                     </fieldset>
                 </li>
-                {{#each actor.itemTypes.attack}}
+                {{#each actor.itemTypes.weapon}}
                     <li class="flexrow">
-                        {{> attackDisplay }}
+                        {{> weaponDisplay }}
                     </li>
                 {{/each}}
             </ol>
@@ -160,12 +149,12 @@
                         <div>{{localize 'FABULA_ULTIMA.npc.spell.cost'}}</div>
                         <div>{{localize 'FABULA_ULTIMA.npc.spell.check'}}</div>
                         <div>{{localize 'FABULA_ULTIMA.npc.spell.damage'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.spell.status'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.npc.spell.effect'}}</div>
                         <div class="flex0">
-                            <a class="item-control item-create {{#if sheetSettings.isObserver}}disabled{{/if}}"
-                               title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}" data-action="create"
-                               data-type="item"
-                               data-document-type="spell">
+                            <a class="{{#if sheetSettings.isObserver}}disabled{{/if}}"
+                               title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}"
+                               data-action="create"
+                               data-type="spell">
                                 <i class="fas fa-plus"></i>
                             </a>
                         </div>
@@ -179,7 +168,7 @@
             </ol>
         </section>
         <section class="tab" data-tab="description" data-group="primary">
-            {{editor system.description target='system.description' button=true}}
+            {{editor system.description target='system.description' engine="prosemirror" button=true}}
         </section>
     </div>
 </form>

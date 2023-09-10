@@ -11,7 +11,6 @@ const Templates = {
     dialogCheck: "systems/fabulaultima/templates/dialog/dialog_check.hbs",
     itemAccessory: "systems/fabulaultima/templates/item/item_accessory.hbs",
     itemArmor: "systems/fabulaultima/templates/item/item_armor.hbs",
-    itemAttack: "systems/fabulaultima/templates/item/item_attack.hbs",
     itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
     itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs"
 
@@ -25,7 +24,7 @@ const Partials = {
     // affinities: "",
     affinitiesConfig: "systems/fabulaultima/templates/partials/partial_affinities_config.hbs",
     spellDisplay: "systems/fabulaultima/templates/partials/partial_spell_display.hbs",
-    attackDisplay: "systems/fabulaultima/templates/partials/partial_attack_display.hbs",
+    weaponDisplay: "systems/fabulaultima/templates/partials/partial_weapon_display.hbs",
     attributeConfig: "systems/fabulaultima/templates/partials/partial_attribute_config.hbs"
 }
 

@@ -52,3 +52,5 @@ export const feelings1 = toObject(c.feelings1, value => `FABULA_ULTIMA.feeling.$
 export const feelings2 = toObject(c.feelings2, value => `FABULA_ULTIMA.feeling.${value}`)
 
 export const feelings3 = toObject(c.feelings3, value => `FABULA_ULTIMA.feeling.${value}`)
+
+export const weaponCategories = toObject(c.weaponCategories, value => `FABULA_ULTIMA.weaponCategory.${value}`)

@@ -1,23 +1,24 @@
-{{! expects Spell }}
+{{! expects Weapon }}
 <fieldset data-item-id="{{id}}" class="flexrow">
     <img src="{{img}}" title="{{name}}" height="24" width="24" class="flex0"/>
     <div>{{name}}</div>
-    <div>{{system.cost}} {{localize "FABULA_ULTIMA.mp.short"}}{{#unless system.fixCost}}{{localize "FABULA_ULTIMA.npc.spell.costPerTarget"}}{{/unless}}</div>
-    <div>{{#if system.offensive}}{{>check}}{{/if}}</div>
-    <div>{{#if system.offensive}}{{>damage}}{{/if}}</div>
-    <div>{{system.effect}}</div>
+    <div>{{localize (concat "FABULA_ULTIMA.attackType." system.attackType)}}</div>
+    <div>{{localize (concat "FABULA_ULTIMA.defense." system.defense ".short")}}</div>
+    <div>{{>check}}</div>
+    <div>{{>damage}}</div>
+    <div>{{system.quality}}</div>
     <div class="flex0">
-        <a class="{{#if ../sheetSettings.isObserver}}disabled{{/if}}"
+        <a class="{{#if @root/sheetSettings.isObserver}}disabled{{/if}}"
            title="{{localize 'FABULA_ULTIMA.roll.attack'}}"
            data-action="roll" data-type="item">
             <i class="fas fa-dice-d20"></i>
         </a>
-        <a class="{{#if ../sheetSettings.isObserver}}disabled{{/if}}"
+        <a class="{{#if @root/sheetSettings.isObserver}}disabled{{/if}}"
            title="{{localize 'FABULA_ULTIMA.edit.attack'}}" data-action="edit"
            data-type="item">
             <i class="fas fa-edit"></i>
         </a>
-        <a class="{{#if ../sheetSettings.isObserver}}disabled{{/if}}"
+        <a class="{{#if @root/sheetSettings.isObserver}}disabled{{/if}}"
            title="{{localize 'FABULA_ULTIMA.delete.attack'}}"
            data-action="delete" data-type="item">
             <i class="fas fa-trash"></i>

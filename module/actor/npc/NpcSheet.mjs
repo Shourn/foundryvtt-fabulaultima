@@ -31,7 +31,8 @@ export class NpcSheet extends ActorSheet {
     activateListeners(html) {
         super.activateListeners(html);
 
-        html.find("*[data-action=create][data-type=item]").click((event) => this.createItem(event))
+        html.find("*[data-action=create][data-type=weapon]").click((event) => this.createItem(event, "weapon"))
+        html.find("*[data-action=create][data-type=spell]").click((event) => this.createItem(event, "spell"))
         html.find("*[data-action=roll][data-type=item]").click(clickEvent => this.rollItem(clickEvent));
         html.find("*[data-action=edit][data-type=item]").click(clickEvent => this.editItem(clickEvent));
         html.find("*[data-action=delete][data-type=item]").click(clickEvent => this.deleteItem(clickEvent));
@@ -44,23 +45,15 @@ export class NpcSheet extends ActorSheet {
         this.actor.items.get(itemId).sheet.render(true);
     }
 
-    createItem(event) {
+    createItem(event, type) {
         event.preventDefault();
-        const element = event.currentTarget;
-
-        // Grab any data associated with this control.
-        const data = {...element.dataset};
-        const type = data.documentType;
-        delete data.type;
-        delete data.action;
-        delete data.subtype;
 
         // Initialize a default name.
-        const name = type || "Unknown";
+        const name = game.i18n.localize(`FABULA_ULTIMA.item.${type}`) || "Unknown";
 
         // Finally, create the item!
         // noinspection JSCheckFunctionSignatures typecheck gets confused between DOM Document and Foundry Document
-        Item.create({type: type, name: name, data}, {parent: this.actor, type: type})
+        Item.create({type: type, name: name}, {parent: this.actor, type: type})
             .then(item => this.actor.items.get(item.id).sheet.render(true));
     }
 

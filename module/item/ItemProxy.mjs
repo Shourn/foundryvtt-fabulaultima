@@ -4,17 +4,19 @@ import {Armor} from "./armor/Armor.mjs";
 import {MiscItem} from "./misc/MiscItem.mjs";
 import {Shield} from "./shield/Shield.mjs";
 import {Weapon} from "./weapon/Weapon.mjs";
-import {Attack} from "./attack/Attack.mjs";
 import {Spell} from "./spell/Spell.mjs";
+import {Job} from "./job/Job.mjs";
+import {Skill} from "./skill/Skill.mjs";
 
 export const itemMappings = {
-    "accessory": Accessory,
-    "armor": Armor,
-    "attack": Attack,
-    "misc": MiscItem,
-    "shield": Shield,
-    "spell": Spell,
-    "weapon": Weapon
+    accessory: Accessory,
+    armor: Armor,
+    job: Job,
+    misc: MiscItem,
+    shield: Shield,
+    skill: Skill,
+    spell: Spell,
+    weapon: Weapon
 };
 
 export const ItemProxy = new Proxy(function () {

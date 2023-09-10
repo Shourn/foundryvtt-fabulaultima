@@ -4,7 +4,7 @@
 /**
  * @type {Readonly<DamageType[]>}
  */
-export const damageTypes = Object.freeze(["physical", "air", "bolt", "dark", "earth", "fire", "ice", "light", "poison"]);
+export const damageTypes = Object.freeze(["physical", "air", "bolt", "dark", "earth", "fire", "ice", "light", "poison", "special"]);
 
 /**
  * @typedef {"beast", "construct", "demon", "elemental", "humanoid", "monster", "plant", "undead"} Species
@@ -139,3 +139,12 @@ export const feelings2 = Object.freeze(["none", "loyalty", "mistrust"])
  * @type {Readonly<Feeling3[]>}
  */
 export const feelings3 = Object.freeze(["none", "affection", "hatred"])
+
+/**
+ * @typedef {"arcane", "bow", "brawling", "dagger", "firearm", "flail", "heavy", "spear", "sword", "thrown", "special"} WeaponCategory
+ */
+/**
+ *
+ * @type {Readonly<WeaponCategory[]>}
+ */
+export const weaponCategories = Object.freeze(["arcane", "bow", "brawling", "dagger", "firearm", "flail", "heavy", "spear", "sword", "thrown", "special"])

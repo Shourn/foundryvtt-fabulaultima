@@ -5,14 +5,19 @@ import {ActorProxy} from "./actor/ActorProxy.mjs";
 import {CharacterSheet} from "./actor/character/CharacterSheet.mjs";
 import {NpcSheet} from "./actor/npc/NpcSheet.mjs";
 import {ItemProxy} from "./item/ItemProxy.mjs";
-import {AttackData} from "./item/attack/AttackData.mjs";
 import {SystemRoll} from "./roll/SystemRoll.mjs";
-import {AttackSheet} from "./item/attack/AttackSheet.mjs";
 import {SpellData} from "./item/spell/SpellData.mjs";
 import {SpellSheet} from "./item/spell/SpellSheet.mjs";
 import {SYSTEM_ID} from "./System.mjs";
 import {AccessoryData} from "./item/accessory/AccessoryData.mjs";
 import {AccessorySheet} from "./item/accessory/AccessorySheet.mjs";
+import {WeaponData} from "./item/weapon/WeaponData.mjs";
+import {WeaponSheet} from "./item/weapon/WeaponSheet.mjs";
+import {ArmorData} from "./item/armor/ArmorData.mjs";
+import {JobData} from "./item/job/JobData.js";
+import {MiscItemData} from "./item/misc/MiscItemData.mjs";
+import {ShieldData} from "./item/shield/ShieldData.mjs";
+import {SkillData} from "./item/skill/SkillData.mjs";
 
 console.log("at least something is happening")
 
@@ -38,18 +43,32 @@ function initActors() {
 
 function initItems() {
     CONFIG.Item.documentClass = ItemProxy;
-    CONFIG.Item.dataModels.attack = AttackData;
-    CONFIG.Item.typeLabels.attack = "FABULA_ULTIMA.item.attack"
-    CONFIG.Item.dataModels.spell = SpellData;
-    CONFIG.Item.typeLabels.attack = "FABULA_ULTIMA.item.spell"
-    CONFIG.Item.dataModels.accessory = AccessoryData;
-    CONFIG.Item.typeLabels.attack = "FABULA_ULTIMA.item.accessory"
+    foundry.utils.mergeObject(CONFIG.Item.dataModels, {
+        accessory: AccessoryData,
+        armor: ArmorData,
+        job: JobData,
+        misc: MiscItemData,
+        shield: ShieldData,
+        skill: SkillData,
+        spell: SpellData,
+        weapon: WeaponData
+    }, {inplace: true})
+    foundry.utils.mergeObject(CONFIG.Item.typeLabels, {
+        accessory: "FABULA_ULTIMA.item.accessory",
+        armor: "FABULA_ULTIMA.item.armor",
+        job: "FABULA_ULTIMA.item.job",
+        misc: "FABULA_ULTIMA.item.misc",
+        shield: "FABULA_ULTIMA.item.shield",
+        skill: "FABULA_ULTIMA.item.skill",
+        spell: "FABULA_ULTIMA.item.spell",
+        weapon: "FABULA_ULTIMA.item.weapon"
+    }, {inplace: true})
 
     // noinspection JSCheckFunctionSignatures
-    Items.registerSheet(SYSTEM_ID, AttackSheet, {
-        types: ["attack"],
+    Items.registerSheet(SYSTEM_ID, WeaponSheet, {
+        types: ["weapon"],
         makeDefault: true,
-        label: "FabulaUltima.DefaultAttack"
+        label: "FabulaUltima.DefaultWeapon"
     })
 
     // noinspection JSCheckFunctionSignatures
@@ -67,6 +86,45 @@ function initItems() {
     })
 }
 
+function initStatusEffects() {
+    /**
+     * @type {ActiveEffectData[]}
+     */
+    CONFIG.statusEffects = [
+        {
+            id: "dazed",
+            name: "FABULA_ULTIMA.statusEffect.dazed",
+            icon: "icons/svg/daze.svg",
+            statuses: new Set(["dazed"])
+        }, {
+            id: "enraged",
+            name: "FABULA_ULTIMA.statusEffect.enraged",
+            icon: "icons/svg/explosion.svg",
+            statuses: new Set(["enraged"])
+        }, {
+            id: "poisoned",
+            name: "FABULA_ULTIMA.statusEffect.poisoned",
+            icon: "icons/svg/poison.svg",
+            statuses: new Set(["poisoned"])
+        }, {
+            id: "shaken",
+            name: "FABULA_ULTIMA.statusEffect.shaken",
+            icon: "icons/svg/terror.svg",
+            statuses: new Set(["shaken"])
+        }, {
+            id: "slow",
+            name: "FABULA_ULTIMA.statusEffect.slow",
+            icon: "icons/svg/net.svg",
+            statuses: new Set(["slow"])
+        }, {
+            id: "weak",
+            name: "FABULA_ULTIMA.statusEffect.weak",
+            icon: "icons/svg/unconscious.svg",
+            statuses: new Set(["weak"])
+        }
+    ]
+}
+
 Hooks.once('init', async () => {
     console.log('fabulaultima | Initializing fabulaultima');
     // Preload Handlebars templates
@@ -75,6 +133,8 @@ Hooks.once('init', async () => {
     initActors();
 
     initItems();
+
+    initStatusEffects()
 
     CONFIG.ActiveEffect.legacyTransferral = false;
 

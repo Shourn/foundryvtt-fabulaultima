@@ -1,12 +1,4 @@
-import {
-    affinities,
-    attributeDice,
-    attributes, costTypes,
-    damageTypes,
-    durations,
-    rollTypes, statusChoices, statusEffects,
-    targetTypes
-} from "../../Constants.mjs";
+import {costTypes, durations, statusChoices, statusEffects, targetTypes} from "../../Constants.mjs";
 import {CheckSchema} from "../../schema/CheckSchema.mjs";
 import {DamageSchema} from "../../schema/DamageSchema.mjs";
 
@@ -23,6 +15,7 @@ import {DamageSchema} from "../../schema/DamageSchema.mjs";
  * @property {Check} check
  * @property {StatusChoice} statusChoice
  * @property {StatusEffect[]} status
+ * @extends TypeDataModel
  */
 export class SpellData extends foundry.abstract.TypeDataModel {
 
@@ -40,10 +33,15 @@ export class SpellData extends foundry.abstract.TypeDataModel {
                 attr2: "willpower"
             }),
             damage: new DamageSchema(),
-            statusChoice: new StringField({initial: statusChoices[0], statusChoices}),
-            status: new ArrayField(new StringField({choices: statusEffects})),
-            opportunity: new StringField({initial: ""}),
+            effect: new StringField(),
+            opportunity: new StringField(),
             description: new HTMLField({initial: game.i18n.localize('FABULA_ULTIMA.sheet.spell.description')})
         }
     }
+
+    prepareDerivedData(){
+        super.prepareDerivedData()
+        this.fixCost = this.costType === "total"
+    }
+
 }
