@@ -74,8 +74,7 @@ export class NpcSheet extends ActorSheet {
         }
     }
 
-    promptCheck(clickEvent) {
-        promptCheck(this.actor)
-            .then(value => console.log(value))
+    async promptCheck(clickEvent) {
+        return promptCheck(this.actor)
     }
 }

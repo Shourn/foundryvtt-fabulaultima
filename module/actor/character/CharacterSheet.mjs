@@ -1,4 +1,4 @@
-import Templates from "../../Templates.mjs";
+import Templates, {Partials} from "../../Templates.mjs";
 import {promptCheck, registerCollapse} from "../../utils/helper.mjs";
 
 export class CharacterSheet extends ActorSheet {
@@ -25,7 +25,15 @@ export class CharacterSheet extends ActorSheet {
 
     getData(options = {}) {
         const data = super.getData(options);
-        return foundry.utils.mergeObject(data, {system: data.actor.system});
+        return foundry.utils.mergeObject(data, {
+            system: data.actor.system,
+            partials: {
+                accessory: "accessoryEquipment",
+                armor: "armorEquipment",
+                weapon: "weaponEquipment",
+                shield: "shieldEquipment"
+            }
+        });
     }
 
 
@@ -42,6 +50,8 @@ export class CharacterSheet extends ActorSheet {
         html.find("[data-action=add][data-type=equipment]").click(event => this.addItem(event))
         html.find("[data-action=edit][data-type=equipment]").click(event => this.editItem(event))
         html.find("[data-action=delete][data-type=equipment]").click(event => this.deleteItem(event))
+        html.find("[data-action=delete][data-type=job]").click(event => this.deleteItem(event))
+        html.find("[data-action=equip]").click(event => this.equipItem(event))
 
         registerCollapse(html);
     }
@@ -76,13 +86,11 @@ export class CharacterSheet extends ActorSheet {
                     label: game.i18n.localize("FABULA_ULTIMA.button.select"),
                     callback: async (html) => {
                         const find = html.find("[name=type]");
-                        console.log(find)
                         const itemType = find.val();
                         const item = await Item.create({
-                                                           type: itemType,
-                                                           name: game.i18n.localize(types[itemType])
-                                                       }, {parent: this.actor, type: itemType});
-                        console.log(this.actor)
+                            type: itemType,
+                            name: game.i18n.localize(types[itemType])
+                        }, {parent: this.actor, type: itemType});
                         this.actor.items.get(item.id).sheet.render(true);
                     }
                 }
@@ -99,13 +107,19 @@ export class CharacterSheet extends ActorSheet {
     deleteItem(event) {
         event.preventDefault();
         const itemId = $(event.currentTarget).parents("*[data-item-id]").data("itemId");
+        this.actor.unequip(itemId);
         this.actor.items.get(itemId).delete()
     }
-
 
 
     promptCheck(clickEvent) {
         promptCheck(this.actor)
     }
 
+    async equipItem(event) {
+        const itemId = $(event.currentTarget).parents("[data-item-id]").data("itemId");
+        await this.actor.equip(itemId);
+        console.log(this)
+        this.render(true)
+    }
 }

@@ -1,0 +1,11 @@
+{{! expects Weapon }}
+<img src="{{img}}" title="{{name}}" height="24" width="24" class="flex0"/>
+<div>{{name}}</div>
+<div>{{system.quality}}</div>
+<div class="flex0">
+    <a class="{{#if @root/sheetSettings.isObserver}}disabled{{/if}}"
+       title="{{localize 'FABULA_ULTIMA.edit.attack'}}" data-action="edit"
+       data-type="item">
+        <i class="fas fa-edit"></i>
+    </a>
+</div>

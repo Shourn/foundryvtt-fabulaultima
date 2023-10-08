@@ -18,8 +18,7 @@ import {JobData} from "./item/job/JobData.js";
 import {MiscItemData} from "./item/misc/MiscItemData.mjs";
 import {ShieldData} from "./item/shield/ShieldData.mjs";
 import {SkillData} from "./item/skill/SkillData.mjs";
-
-console.log("at least something is happening")
+import {JobSheet} from "./item/job/JobSheet.js";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -43,6 +42,7 @@ function initActors() {
 
 function initItems() {
     CONFIG.Item.documentClass = ItemProxy;
+
     foundry.utils.mergeObject(CONFIG.Item.dataModels, {
         accessory: AccessoryData,
         armor: ArmorData,
@@ -53,6 +53,7 @@ function initItems() {
         spell: SpellData,
         weapon: WeaponData
     }, {inplace: true})
+
     foundry.utils.mergeObject(CONFIG.Item.typeLabels, {
         accessory: "FABULA_ULTIMA.item.accessory",
         armor: "FABULA_ULTIMA.item.armor",
@@ -83,6 +84,13 @@ function initItems() {
         types: ["accessory"],
         makeDefault: true,
         label: "FabulaUltima.DefaultAccessory"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, JobSheet, {
+        types: ["job"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultJob"
     })
 }
 

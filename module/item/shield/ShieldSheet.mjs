@@ -63,8 +63,6 @@ export class ShieldSheet extends ItemSheet {
 
     editEffect(event) {
         const effectId = $(event.currentTarget).parents("[data-effect-id]").data("effectId");
-        console.log(effectId)
-        console.log(this.item.effects)
         this.item.effects.get(effectId).sheet.render(true);
 
     }

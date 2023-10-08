@@ -255,6 +255,25 @@
       "spell": "Spell",
       "skill": "Skill",
       "weapon": "Weapon"
+    },
+    "job": {
+      "tab": {
+        "description": "Description",
+        "questions": "Questions",
+        "skills": "Skills",
+        "spells": "Spells"
+      },
+      "benefits": {
+        "label": "Passive Benefits",
+        "hp": "Grants HP",
+        "mp": "Grants MP",
+        "ip": "Grants IP",
+        "armor": "Grants Martial Armor proficiency",
+        "melee": "Grants Martial Melee Weapon proficiency",
+        "ranged": "Grants Martial Ranged Weapon proficiency",
+        "shield": "Grants Martial Shield proficiency",
+        "special": "Special benefits"
+      }
     }
   }
 }

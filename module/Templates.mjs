@@ -12,11 +12,12 @@ const Templates = {
     itemAccessory: "systems/fabulaultima/templates/item/item_accessory.hbs",
     itemArmor: "systems/fabulaultima/templates/item/item_armor.hbs",
     itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
-    itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs"
+    itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs",
+    itemJob: "systems/fabulaultima/templates/item/item_job.hbs"
 
 };
 
-const Partials = {
+export const Partials = {
     check: "systems/fabulaultima/templates/partials/partial_check.hbs",
     checkConfig: "systems/fabulaultima/templates/partials/partial_check_config.hbs",
     damage: "systems/fabulaultima/templates/partials/partial_damage.hbs",
@@ -25,20 +26,21 @@ const Partials = {
     affinitiesConfig: "systems/fabulaultima/templates/partials/partial_affinities_config.hbs",
     spellDisplay: "systems/fabulaultima/templates/partials/partial_spell_display.hbs",
     weaponDisplay: "systems/fabulaultima/templates/partials/partial_weapon_display.hbs",
-    attributeConfig: "systems/fabulaultima/templates/partials/partial_attribute_config.hbs"
+    attributeConfig: "systems/fabulaultima/templates/partials/partial_attribute_config.hbs",
+    weaponEquipment: "systems/fabulaultima/templates/partials/partial_equipment_weapon.hbs",
+    accessoryEquipment: "systems/fabulaultima/templates/partials/partial_equipment_accessory.hbs",
+    armorEquipment: "systems/fabulaultima/templates/partials/partial_equipment_armor.hbs",
+    shieldEquipment: "systems/fabulaultima/templates/partials/partial_equipment_shield.hbs"
 }
 
-export default Templates
+export default Templates;
 
 export async function preloadTemplates() {
 
     for (let key in Translations) {
         const translation = Translations[key];
         const helper = `fu-${key}`;
-        Handlebars.registerHelper(helper, () => {
-            // console.log(helper, translation)
-            return translation;
-        })
+        Handlebars.registerHelper(helper, () => translation)
     }
 
     const templates = await loadTemplates(Object.values(Templates));

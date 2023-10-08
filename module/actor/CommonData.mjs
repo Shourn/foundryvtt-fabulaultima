@@ -19,6 +19,7 @@ import {affinities, attributeDice, attributes} from "../Constants.mjs";
  * @property {AttributeDie} base
  * @property {AttributeDie} current
  */
+
 /**
  * @typedef Affinities
  * @property {Affinity} physical
@@ -146,12 +147,18 @@ export class CommonData extends foundry.abstract.TypeDataModel {
     /**
      * @returns {FUActor}
      */
-    get parent(){
+    get parent() {
         return super.parent;
     }
 
     prepareBaseData() {
-        this.hp.crisis = Math.floor(this.hp.max / 2);
+        const hp = this.hp;
+        Object.defineProperty(hp, "crisis", {
+            get() {
+                return Math.floor(hp.max / 2)
+            }
+        });
+
         this.attributes.might.current = this.attributes.might.base;
         this.attributes.dexterity.current = this.attributes.dexterity.base;
         this.attributes.insight.current = this.attributes.insight.base;
@@ -163,6 +170,7 @@ export class CommonData extends foundry.abstract.TypeDataModel {
         this.deriveDefense(this.defenses.defense);
         this.deriveDefense(this.defenses.magicDefense);
     }
+
     deriveDefense(statistic) {
         const base = statistic.attribute === "none" ? 0 : this.getDieSize(this.attributes[statistic.attribute].current);
         statistic.current = base + statistic.modifier;
@@ -182,6 +190,7 @@ export class CommonData extends foundry.abstract.TypeDataModel {
                 return NaN;
         }
     }
+
     get inCrisis() {
         return this.hp.value <= this.hp.crisis;
     }
@@ -193,12 +202,12 @@ export class CommonData extends foundry.abstract.TypeDataModel {
         if (statuses.has("weak")) this.reduceDieSize(this.attributes.might);
         if (statuses.has("shaken")) this.reduceDieSize(this.attributes.willpower);
 
-        if (statuses.has("enraged")){
+        if (statuses.has("enraged")) {
             this.reduceDieSize(this.attributes.dexterity);
             this.reduceDieSize(this.attributes.insight);
         }
 
-        if (statuses.has("poisoned")){
+        if (statuses.has("poisoned")) {
             this.reduceDieSize(this.attributes.might);
             this.reduceDieSize(this.attributes.willpower);
         }

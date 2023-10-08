@@ -102,11 +102,9 @@ export function getDamage(damage, roll) {
  */
 export function registerCollapse(jquery) {
     const collapseTriggers = jquery.find("[data-collapse-toggle]");
-    console.log(collapseTriggers)
     collapseTriggers.click(event => {
         const collapseId = $(event.currentTarget).data("collapseToggle");
         const collapse = jquery.find(`.collapse[data-collapse="${collapseId}"]`);
-        console.log(collapse)
         collapse.toggleClass("show");
     })
 }

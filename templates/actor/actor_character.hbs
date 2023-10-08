@@ -66,9 +66,9 @@
         </fieldset>
         <fieldset class="form-fields">
             <label>IP</label>
-            <input type="number" name="system.inventoryPoints.value" value="{{system.inventoryPoints.value}}" min="0">
+            <input type="number" name="system.ip.value" value="{{system.ip.value}}" min="0">
             <span class="sep">/</span>
-            <input type="text" readonly value="{{system.inventoryPoints.max}}"/>
+            <input type="text" readonly value="{{system.ip.max}}"/>
         </fieldset>
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.initiativeModifier.short' }}</label>
@@ -110,8 +110,8 @@
                         {{localize 'FABULA_ULTIMA.proficiencies.armor'}}
                     </label>
                     <label>
-                        <input type="checkbox" disabled {{checked system.proficiencies.shields}}>
-                        {{localize 'FABULA_ULTIMA.proficiencies.shields'}}
+                        <input type="checkbox" disabled {{checked system.proficiencies.shield}}>
+                        {{localize 'FABULA_ULTIMA.proficiencies.shield'}}
                     </label>
                     <label>
                         <input type="checkbox" disabled {{checked system.proficiencies.melee}}>
@@ -122,30 +122,30 @@
                         {{localize 'FABULA_ULTIMA.proficiencies.ranged'}}
                     </label>
                 </fieldset>
-                <fieldset>
+                <fieldset class="flexrow" data-item-id="{{system.equipment.accessory.id}}">
                     {{#if system.equipment.accessory}}
-                        {{system.equipment.accessory.name}}
+                        {{> (lookup partials system.equipment.accessory.type) system.equipment.accessory }}
                     {{else}}
                         {{localize 'FABULA_ULTIMA.none'}}
                     {{/if}}
                 </fieldset>
-                <fieldset>
+                <fieldset class="flexrow" data-item-id="{{system.equipment.armor.id}}">
                     {{#if system.equipment.armor}}
-                        {{system.equipment.armor.name}}
+                        {{> (lookup partials system.equipment.armor.type) system.equipment.armor }}
                     {{else}}
                         {{localize 'FABULA_ULTIMA.none'}}
                     {{/if}}
                 </fieldset>
-                <fieldset>
+                <fieldset class="flexrow" data-item-id="{{system.equipment.mainHand.id}}">
                     {{#if system.equipment.mainHand}}
-                        {{system.equipment.mainHand.name}}
+                        {{> (lookup partials system.equipment.mainHand.type) system.equipment.mainHand }}
                     {{else}}
                         {{localize 'FABULA_ULTIMA.none'}}
                     {{/if}}
                 </fieldset>
-                <fieldset>
+                <fieldset class="flexrow" data-item-id="{{system.equipment.offHand.id}}">
                     {{#if system.equipment.offHand}}
-                        {{system.equipment.offHand.name}}
+                        {{> (lookup partials system.equipment.offHand.type) system.equipment.offHand }}
                     {{else}}
                         {{localize 'FABULA_ULTIMA.none'}}
                     {{/if}}
@@ -166,9 +166,11 @@
                     </li>
                     {{#each actor.backpack as | item |}}
                         <li class="flexrow">
-                            <fieldset data-item-id="{{item.id}}">
+                            <fieldset class="flexrow" data-item-id="{{item.id}}">
+                                <img class="flex0" src="{{item.img}}" width="24" height="24"/>
                                 <label>{{name}}</label>
-                                <div>
+                                <input type="checkbox" data-action="equip" {{checked (lookup ../actor.equipped item.id )}}>
+                                <div class="flex0">
                                     <a data-action="edit" data-type="equipment"><i class="fas fa-edit"></i></a>
                                     <a data-action="delete" data-type="equipment"><i class="fas fa-trash"></i></a>
                                 </div>
@@ -240,43 +242,61 @@
                             <div>{{localize 'FABULA_ULTIMA.character.job.level'}}</div>
                             <div class="flex0">
                                 <a class="item-control item-create {{#if sheetSettings.isObserver}}disabled{{/if}}"
-                                   title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}" data-action="create"
-                                   data-type="item"
-                                   data-document-type="spell">
+                                   title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}"
+                                   data-action="create"
+                                   data-type="item">
                                     <i class="fas fa-plus"></i>
                                 </a>
                             </div>
                         </fieldset>
                     </li>
-
-                    <li class="flexrow">
-                        <fieldset data-item-id="{{id}}">
-                            <div class="flexrow">
-                                <a data-collapse-toggle="{{id}}"><i class="fas fa-chevron-circle-down"></i></a>
-                                <label>{{name}}Name</label>
-                                <label>{{level}}Lvl 5</label>
-                            </div>
-                            <div class="collapse" data-collapse="{{id}}">
-                                <div>
-                                    {{localize 'FABULA_ULTIMA.character.job.skills.label'}}
-                                </div>
-                                <ul>
-                                    {{#each (lookup ../actor.skills slug) }}
-                                        <li class="flexcol">
-                                            <fieldset class="flexrow">
-                                                <label>{{name}}</label>
-                                                <label>{{localize
-                                                        'FABULA_ULTIMA.character.job.skill.level'}} {{level}}</label>
-                                            </fieldset>
-                                        </li>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </fieldset>
-                    </li>
-
                     {{#each actor.itemTypes.job}}
-
+                        {{log this}}
+                        <li class="flexrow">
+                            <fieldset data-item-id="{{id}}">
+                                <div class="flexrow">
+                                    <a data-collapse-toggle="{{id}}"><i class="fas fa-chevron-circle-down"></i></a>
+                                    <label>{{name}}Name</label>
+                                    <label>{{system.level}}Lvl 5</label>
+                                    <div class="flex0">
+                                        <a data-action="delete" data-type="job">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="collapse" data-collapse="{{id}}">
+                                    <div>
+                                        {{localize 'FABULA_ULTIMA.character.job.skills.label'}}
+                                    </div>
+                                    <ul>
+                                        {{#each system.skills as | skill |}}
+                                            <li class="flexcol">
+                                                <fieldset class="flexrow">
+                                                    <a class="content-link" draggable="true"
+                                                       data-uuid="{{skill.uuid}}" data-id="{{skill.id}}"
+                                                       data-type="{{skill.documentName}}" data-tooltip="{{skill.documentName}} {{skill.name}}"><i
+                                                            class="fas fa-suitcase"></i>{{skill.name}}</a>
+                                                    <label>{{skill.name}}</label>
+                                                    <label>{{localize
+                                                            'FABULA_ULTIMA.character.job.skill.level'}} {{skill.level}}</label>
+                                                </fieldset>
+                                            </li>
+                                        {{/each}}
+                                        {{#each system.spells as | spell |}}
+                                            <li class="flexcol">
+                                                <fieldset class="flexrow">
+                                                    <a class="content-link" draggable="true"
+                                                       data-uuid="{{spell.uuid}}" data-id="{{spell.id}}"
+                                                       data-type="{{spell.documentName}}" data-tooltip="{{spell.documentName}} {{spell.name}}"><i
+                                                            class="fas fa-suitcase"></i>{{spell.name}}</a>
+                                                    <label>{{spell.name}}</label>
+                                                </fieldset>
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </fieldset>
+                        </li>
                     {{/each}}
                 </ol>
             </section>

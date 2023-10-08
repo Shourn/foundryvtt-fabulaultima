@@ -19,8 +19,7 @@ export const itemMappings = {
     weapon: Weapon
 };
 
-export const ItemProxy = new Proxy(function () {
-}, {
+export const ItemProxy = new Proxy(Item, {
     //Will intercept calls to the "new" operator
     construct: function (target, args) {
         const [data] = args;
@@ -32,7 +31,6 @@ export const ItemProxy = new Proxy(function () {
         //Return the appropriate, actual object from the right class
         return new itemMappings[data.type](...args);
     },
-
     // Property access on this weird, dirty proxy object
     get: function (target, prop, receiver) {
         switch (prop) {
@@ -40,7 +38,6 @@ export const ItemProxy = new Proxy(function () {
             case "createDocuments":
                 //Calling the class' create() static function
                 return function (data, options) {
-                    console.log(data);
                     if (data.constructor === Array) {
                         //Array of data, this happens when creating Actors imported from a compendium
                         return data.map(i => ItemProxy.create(i, options));
@@ -51,7 +48,6 @@ export const ItemProxy = new Proxy(function () {
 
                     return itemMappings[data.type].create(data, options);
                 };
-
             case Symbol.hasInstance:
                 //Applying the "instanceof" operator on the instance object
                 return function (instance) {
