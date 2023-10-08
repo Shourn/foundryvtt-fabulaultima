@@ -4,6 +4,10 @@ import {getDamage} from "../../utils/helper.mjs";
 
 export class Weapon extends Item {
 
+    static getDefaultArtwork(itemData) {
+        return { img: "systems/fabulaultima/assets/game-icons/plain-dagger.svg" };
+    }
+
 
     /**
      * @type {Character, Npc}

@@ -7,6 +7,10 @@ import {getDamage} from "../../utils/helper.mjs";
  */
 export class Spell extends Item {
 
+    static getDefaultArtwork(itemData) {
+        return { img: "systems/fabulaultima/assets/game-icons/magic-palm.svg" };
+    }
+
     /**
      * @type FUActor
      */
