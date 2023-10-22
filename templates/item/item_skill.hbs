@@ -4,75 +4,20 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
     </header>
     <hr/>
-    <section class="form-group-stacked">
-        <h2>{{localize "FABULA_ULTIMA.job.benefits.label"}}</h2>
+    <section class="form-group">
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.job.benefits.hp'}}</label>
-            <input name="system.benefits.hp" type="number" value="{{system.benefits.hp}}">
-        </fieldset>
-        <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.job.benefits.mp'}}</label>
-            <input name="system.benefits.mp" type="number" value="{{system.benefits.mp}}">
-        </fieldset>
-        <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.job.benefits.ip'}}</label>
-            <input name="system.benefits.ip" type="number" value="{{system.benefits.ip}}">
-        </fieldset>
-        <fieldset class="flexcol">
-            <label class="checkbox">
-                <input type="checkbox" name="system.benefits.armor" {{checked system.benefits.armor}}>
-                {{localize "FABULA_ULTIMA.job.benefits.armor"}}
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="system.benefits.melee" {{checked system.benefits.melee}}>
-                {{localize "FABULA_ULTIMA.job.benefits.melee"}}
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="system.benefits.ranged" {{checked system.benefits.ranged}}>
-                {{localize "FABULA_ULTIMA.job.benefits.ranged"}}
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="system.benefits.shield" {{checked system.benefits.shield}}>
-                {{localize "FABULA_ULTIMA.job.benefits.shield"}}
-            </label>
-        </fieldset>
-        <fieldset>
-            <label>{{localize "FABULA_ULTIMA.job.benefits.special"}}</label>
-            <input type="text" name="system.benefits.special" value="{{system.benefits.special}}">
+            <label>{{localize 'FABULA_ULTIMA.sheet.skill.level'}}</label>
+            <input type="number" name="system.level" value="{{system.level}}" min="0" max="{{system.maxLevel}}">
+            <span class="sep">/</span>
+            <input type="number" name="system.maxLevel" value="{{system.maxLevel}}" min="1">
         </fieldset>
     </section>
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.job.tab.description'}}</a>
-        <a class="item" data-tab="questions">{{localize 'FABULA_ULTIMA.job.tab.questions'}}</a>
-        <a class="item" data-tab="skills">{{localize 'FABULA_ULTIMA.job.tab.skills'}}</a>
-        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.job.tab.spells'}}</a>
+    <nav class="sheet-tabs tabs">
+        <a class="item">{{localize 'FABULA_ULTIMA.sheet.skill.description'}}</a>
     </nav>
-    <div class="tab-container">
-        <section data-tab="description" data-group="primary" class="form-group-stacked tab">
-            <fieldset class="form-fields">
-                {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
-            </fieldset>
-        </section>
-        <section data-tab="questions" data-group="primary" class="form-group-stacked tab">
-            <fieldset class="form-fields">
-                {{editor enrichedHtml.questions target='system.questions' engine="prosemirror" button=true}}
-            </fieldset>
-        </section>
-        <section data-tab="skills" data-group="primary" class="form-group-stacked tab">
-            <ol>
-                {{#each system.skills as | skill |}}
-                    {{log skill}}
-                    <li data-item-id="{{skill.id}}">{{skill.name}}<a data-action="delete" data-type="item"><i class="fas fa-trash"></i></a></li>
-                {{/each}}
-            </ol>
-        </section>
-        <section data-tab="spells" data-group="primary" class="form-group-stacked tab">
-            <ol>
-                {{#each system.spells as | spell |}}
-                    {{log spell}}
-                    <li data-item-id="{{spell.id}}">{{spell.name}}<a data-action="delete" data-type="item"><i class="fas fa-trash"></i></a></li>
-                {{/each}}
-            </ol>
-        </section>
-    </div>
+    <section class="form-group-stacked">
+        <fieldset class="form-fields">
+            {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
+        </fieldset>
+    </section>
 </form>

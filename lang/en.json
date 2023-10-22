@@ -197,6 +197,10 @@
         "initiative": "Initiative",
         "quality": "Quality",
         "description": "Description"
+      },
+      "skill": {
+        "level": "Level",
+        "description": "Description"
       }
     },
     "statusEffect": {
