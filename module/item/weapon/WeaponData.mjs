@@ -11,7 +11,8 @@ export class WeaponData extends foundry.abstract.TypeDataModel {
         const {
             NumberField,
             StringField,
-            HTMLField
+            HTMLField,
+            BooleanField
         } = foundry.data.fields
         return {
             attackType: new StringField({initial: attackTypes[0], choices: attackTypes}),
@@ -21,6 +22,7 @@ export class WeaponData extends foundry.abstract.TypeDataModel {
             damage: new DamageSchema(),
             price: new NumberField({initial: 0, min: 0, integer: true}),
             quality: new StringField(),
+            martial: new BooleanField(),
             description: new HTMLField()
         };
     }

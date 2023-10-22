@@ -16,6 +16,11 @@
             <select name="system.category">
                 {{selectOptions (fu-weaponCategories) selected=system.category localize=true}}
             </select>
+            <span class="sep"></span>
+            <label class="checkbox">
+                {{localize 'FABULA_ULTIMA.sheet.weapon.martial'}}
+                <input type="checkbox" name="system.martial" {{checked system.martial}}/>
+            </label>
         </fieldset>
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.weapon.defense'}}</label>

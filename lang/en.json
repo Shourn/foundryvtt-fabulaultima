@@ -170,7 +170,8 @@
         "damage": "Damage",
         "status": "Status",
         "category": "Category",
-        "quality": "Quality"
+        "quality": "Quality",
+        "martial": "Martial"
       },
       "spell": {
         "target": {
