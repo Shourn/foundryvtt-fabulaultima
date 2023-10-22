@@ -35,3 +35,7 @@
     visibility: initial;
     height: initial;
 }
+
+.fabula-ultima label {
+    white-space: nowrap;
+}

@@ -189,6 +189,14 @@
       "misc": {
         "price": "Price",
         "description": "Description"
+      },
+      "shield": {
+        "price": "Price",
+        "defense": "Defense",
+        "magicDefense": "M. Defense",
+        "initiative": "Initiative",
+        "quality": "Quality",
+        "description": "Description"
       }
     },
     "statusEffect": {
