@@ -13,7 +13,10 @@ const Templates = {
     itemArmor: "systems/fabulaultima/templates/item/item_armor.hbs",
     itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
     itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs",
-    itemJob: "systems/fabulaultima/templates/item/item_job.hbs"
+    itemJob: "systems/fabulaultima/templates/item/item_job.hbs",
+    itemSkill: "systems/fabulaultima/templates/item/item_skill.hbs",
+    itemShield: "systems/fabulaultima/templates/item/item_shield.hbs",
+    itemMisc: "systems/fabulaultima/templates/item/item_misc.hbs"
 
 };
 

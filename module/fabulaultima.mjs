@@ -19,6 +19,10 @@ import {MiscItemData} from "./item/misc/MiscItemData.mjs";
 import {ShieldData} from "./item/shield/ShieldData.mjs";
 import {SkillData} from "./item/skill/SkillData.mjs";
 import {JobSheet} from "./item/job/JobSheet.js";
+import {ArmorSheet} from "./item/armor/ArmorSheet.mjs";
+import {MiscItemSheet} from "./item/misc/MiscItemSheet.mjs";
+import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
+import {SkillSheet} from "./item/skill/SkillSheet.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -66,10 +70,45 @@ function initItems() {
     }, {inplace: true})
 
     // noinspection JSCheckFunctionSignatures
-    Items.registerSheet(SYSTEM_ID, WeaponSheet, {
-        types: ["weapon"],
+    Items.registerSheet(SYSTEM_ID, AccessorySheet, {
+        types: ["accessory"],
         makeDefault: true,
-        label: "FabulaUltima.DefaultWeapon"
+        label: "FabulaUltima.DefaultAccessory"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, ArmorSheet, {
+        types: ["armor"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultArmor"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, JobSheet, {
+        types: ["job"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultJob"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, MiscItemSheet, {
+        types: ["misc"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultMisc"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, ShieldSheet, {
+        types: ["shield"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultShield"
+    })
+
+    // noinspection JSCheckFunctionSignatures
+    Items.registerSheet(SYSTEM_ID, SkillSheet, {
+        types: ["skill"],
+        makeDefault: true,
+        label: "FabulaUltima.DefaultSkill"
     })
 
     // noinspection JSCheckFunctionSignatures
@@ -80,18 +119,12 @@ function initItems() {
     })
 
     // noinspection JSCheckFunctionSignatures
-    Items.registerSheet(SYSTEM_ID, AccessorySheet, {
-        types: ["accessory"],
+    Items.registerSheet(SYSTEM_ID, WeaponSheet, {
+        types: ["weapon"],
         makeDefault: true,
-        label: "FabulaUltima.DefaultAccessory"
+        label: "FabulaUltima.DefaultWeapon"
     })
 
-    // noinspection JSCheckFunctionSignatures
-    Items.registerSheet(SYSTEM_ID, JobSheet, {
-        types: ["job"],
-        makeDefault: true,
-        label: "FabulaUltima.DefaultJob"
-    })
 }
 
 function initStatusEffects() {
@@ -107,7 +140,7 @@ function initStatusEffects() {
         }, {
             id: "enraged",
             name: "FABULA_ULTIMA.statusEffect.enraged",
-            icon: "icons/svg/explosion.svg",
+            icon: "systems/fabulaultima/assets/game-icons/enrage.svg",
             statuses: new Set(["enraged"])
         }, {
             id: "poisoned",

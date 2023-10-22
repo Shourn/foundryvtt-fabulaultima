@@ -3,7 +3,7 @@ import Templates from "../../Templates.mjs";
 /**
  * @extends {ItemSheet}
  */
-export class ShieldSheet extends ItemSheet {
+export class SkillSheet extends ItemSheet {
 
     static get defaultOptions() {
         const defaultOptions = super.defaultOptions;
@@ -14,7 +14,7 @@ export class ShieldSheet extends ItemSheet {
     }
 
     get template() {
-        return Templates.itemShield;
+        return Templates.itemSkill;
     }
 
     /**
@@ -44,11 +44,9 @@ export class ShieldSheet extends ItemSheet {
         super.activateListeners(html);
 
         html.find("[data-action=add][data-type=effect]").click(event => this.addEffect(event))
-        html.find("[data-action=toggle][data-type=effect]").click(event => {
-        })
+        html.find("[data-action=toggle][data-type=effect]").click(event => {})
         html.find("[data-action=edit][data-type=effect]").click(event => this.editEffect(event))
-        html.find("[data-action=delete][data-type=effect]").click(event => {
-        })
+        html.find("[data-action=delete][data-type=effect]").click(event => {})
     }
 
     addEffect(event) {

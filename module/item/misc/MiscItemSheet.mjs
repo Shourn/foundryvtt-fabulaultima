@@ -14,7 +14,7 @@ export class MiscItemSheet extends ItemSheet {
     }
 
     get template() {
-        return Templates.itemArmor;
+        return Templates.itemMisc;
     }
 
     /**

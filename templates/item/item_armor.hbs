@@ -7,66 +7,43 @@
     <hr/>
     <section class="form-group">
         <fieldset class="form-fields">
+            <label>{{localize "FABULA_ULTIMA.defense.defense.short"}}</label>
+            <select name="system.defense.attribute">
+                {{selectOptions (fu-attributes) selected=system.defense.attribute localize=true labelAttr='short'}}
+            </select>
+            <span class="sep">+</span>
+            <input name="system.defense.modifier" type="number" value="{{system.defense.modifier}}"/>
+        </fieldset>
+        <fieldset class="form-fields">
+            <label>{{localize "FABULA_ULTIMA.defense.magicDefense.short"}}</label>
+            <select name="system.magicDefense.attribute">
+                {{selectOptions (fu-attributes) selected=system.magicDefense.attribute localize=true labelAttr='short'}}
+            </select>
+            <span class="sep">+</span>
+            <input name="system.magicDefense.modifier" type="number" value="{{system.magicDefense.modifier}}"/>
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label>{{localize "FABULA_ULTIMA.sheet.weapon.quality"}}</label>
+            <input type="text" name="system.quality" value="{{system.quality}}">
+        </fieldset>
+    </section>
+    <section class="form-group">
+        <fieldset class="form-fields">
+            <label class="checkbox">
+                <input name="system.martial" type="checkbox" {{checked system.martial}}>
+                {{localize "FABULA_ULTIMA.martial"}}
+            </label>
+        </fieldset>
+        <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.item.price'}}</label>
             <input name="system.price" type="number" value="{{system.price}}">
         </fieldset>
     </section>
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.description'}}</a>
-        <a class="item" data-tab="effects">{{localize 'FABULA_ULTIMA.effects'}}</a>
-    </nav>
-    <div class="tab-container">
-        <section data-tab="description" data-group="primary" class="form-group-stacked tab">
-            <fieldset class="form-fields">
-                {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
-            </fieldset>
-        </section>
-        <section data-tab="effects" data-group="primary" class="form-group-stacked tab">
-            <ol>
-                <li class="flexrow">
-                    <fieldset class="flexrow">
-                        <h3 class="flexrow">{{localize "FABULA_ULTIMA.effect.label"}}</h3>
-                        <div>{{localize "FABULA_ULTIMA.effect.source"}}</div>
-                        <div>{{localize "FABULA_ULTIMA.effect.duration"}}</div>
-                        <div class="flexrow">
-                            {{#if @root.editable}}
-                                <a data-action="add" data-type="effect" data-tooltip="FABULA_ULTIMA.effect.create">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            {{/if}}
-                        </div>
-                    </fieldset>
-                </li>
-                {{#each effects as |effect|}}
-                    {{log effect}}
-                    <li class="flexrow" data-effect-id="{{effect.id}}">
-                        <fieldset class="flexrow">
-                            <div class="item-name effect-name flexrow">
-                                <img class="item-image" src="{{effect.icon}}" height="24" width="24"/>
-                                <h4>{{effect.name}}</h4>
-                            </div>
-                            <div>{{effect.sourceName}}</div>
-                            <div>{{effect.duration.label}}</div>
-                            <div class="flexrow">
-                                {{#if @root.editable}}
-                                    <a data-action="toggle" data-type="effect"
-                                       data-tooltip="{{#if effect.disabled}}FABULA_ULTIMA.effect.enable{{else}}FABULA_ULTIMA.effect.disable{{/if}}">
-                                        <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}"></i>
-                                    </a>
-                                    <a data-action="edit" data-type="effect"
-                                       data-tooltip="FABULA_ULTIMA.effect.edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a data-action="delete" data-type="effect"
-                                       data-tooltip="FABULA_ULTIMA.effect.delete">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                {{/if}}
-                            </div>
-                        </fieldset>
-                    </li>
-                {{/each}}
-            </ol>
-        </section>
-    </div>
+    <section data-tab="description" class="form-group-stacked">
+        <fieldset class="form-fields">
+            {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
+        </fieldset>
+    </section>
 </form>
