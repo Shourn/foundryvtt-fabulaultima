@@ -185,6 +185,10 @@
         "status": "Status",
         "opportunity": "Opportunity",
         "description": "Description"
+      },
+      "misc": {
+        "price": "Price",
+        "description": "Description"
       }
     },
     "statusEffect": {
