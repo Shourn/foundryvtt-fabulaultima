@@ -169,16 +169,21 @@ function initStatusEffects() {
 Hooks.once('init', async () => {
     console.log('fabulaultima | Initializing fabulaultima');
     // Preload Handlebars templates
+    console.log('fabulaultima | Preloading templates');
     await preloadTemplates();
     // Register custom sheets (if any)
+    console.log('fabulaultima | Initializing actors');
     initActors();
 
+    console.log('fabulaultima | Initializing items');
     initItems();
 
+    console.log('fabulaultima | Initializing status effects');
     initStatusEffects()
 
     CONFIG.ActiveEffect.legacyTransferral = false;
 
+    console.log('fabulaultima | Initializing rolls');
     CONFIG.Dice.rolls.push(SystemRoll)
 
 });
