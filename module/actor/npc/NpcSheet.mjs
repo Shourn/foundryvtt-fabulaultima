@@ -14,9 +14,13 @@ export class NpcSheet extends ActorSheet {
         return Templates.actorNpc;
     }
 
-    getData(options = {}) {
+    async getData(options = {}) {
         const data = super.getData(options);
-        return foundry.utils.mergeObject({system: data.actor.system}, data);
+        return foundry.utils.mergeObject({
+            system: data.actor.system, enrichedHtml: {
+                description: await TextEditor.enrichHTML(data.actor.system.description)
+            }
+        }, data);
     }
 
 
@@ -49,7 +53,7 @@ export class NpcSheet extends ActorSheet {
         event.preventDefault();
 
         // Initialize a default name.
-        const name = game.i18n.localize(`FABULA_ULTIMA.item.${type}`) || "Unknown";
+        const name = game.i18n.localize(`FABULA_ULTIMA.itemType.${type}`) || "Unknown";
 
         // Finally, create the item!
         // noinspection JSCheckFunctionSignatures typecheck gets confused between DOM Document and Foundry Document

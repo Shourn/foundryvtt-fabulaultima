@@ -1,29 +1,37 @@
 {{! expects Attributes }}
 <fieldset class="form-fields">
-    <label>{{localize 'FABULA_ULTIMA.attribute.might.short'}}</label>
+    <label><abbr title="{{localize 'FABULA_ULTIMA.attribute.might.full'}}">
+        {{localize 'FABULA_ULTIMA.attribute.might.short'}}
+    </abbr></label>
     <select name="system.attributes.might.base">
         {{selectOptions (fu-attributeDice) selected=might.base localize=true}}
     </select>
-    <span>({{localize might.current}})</span>
+    <span>({{localize (concat 'FABULA_ULTIMA.attributeDice.' might.current)}})</span>
 </fieldset>
 <fieldset class="form-fields">
-    <label>{{localize 'FABULA_ULTIMA.attribute.willpower.short'}}</label>
+    <label><abbr title="{{localize 'FABULA_ULTIMA.attribute.willpower.full'}}">
+        {{localize 'FABULA_ULTIMA.attribute.willpower.short'}}
+    </abbr></label>
     <select name="system.attributes.willpower.base">
         {{selectOptions (fu-attributeDice) selected=willpower.base localize=true}}
     </select>
-    <span>({{localize willpower.current}})</span>
+    <span>({{localize (concat 'FABULA_ULTIMA.attributeDice.' willpower.current)}})</span>
 </fieldset>
 <fieldset class="form-fields">
-    <label>{{localize 'FABULA_ULTIMA.attribute.dexterity.short'}}</label>
+    <label><abbr title="{{localize 'FABULA_ULTIMA.attribute.dexterity.full'}}">
+        {{localize 'FABULA_ULTIMA.attribute.dexterity.short'}}
+    </abbr></label>
     <select name="system.attributes.dexterity.base">
         {{selectOptions (fu-attributeDice) selected=dexterity.base localize=true}}
     </select>
-    <span>({{localize dexterity.current}})</span>
+    <span>({{localize (concat 'FABULA_ULTIMA.attributeDice.' dexterity.current)}})</span>
 </fieldset>
 <fieldset class="form-fields">
-    <label>{{localize 'FABULA_ULTIMA.attribute.insight.short'}}</label>
+    <label><abbr title="{{localize 'FABULA_ULTIMA.attribute.insight.full'}}">
+        {{localize 'FABULA_ULTIMA.attribute.insight.short'}}
+    </abbr></label>
     <select name="system.attributes.insight.base">
         {{selectOptions (fu-attributeDice) selected=insight.base localize=true}}
     </select>
-    <span>({{localize insight.current}})</span>
+    <span>({{localize (concat 'FABULA_ULTIMA.attributeDice.' insight.current)}})</span>
 </fieldset>

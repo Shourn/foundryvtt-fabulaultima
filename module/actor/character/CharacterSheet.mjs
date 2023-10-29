@@ -23,7 +23,7 @@ export class CharacterSheet extends ActorSheet {
         return super.actor;
     }
 
-    getData(options = {}) {
+    async getData(options = {}) {
         const data = super.getData(options);
         return foundry.utils.mergeObject(data, {
             system: data.actor.system,
@@ -32,6 +32,9 @@ export class CharacterSheet extends ActorSheet {
                 armor: "armorEquipment",
                 weapon: "weaponEquipment",
                 shield: "shieldEquipment"
+            },
+            enrichedHtml: {
+                description: await TextEditor.enrichHTML(data.actor.system.description)
             }
         });
     }
@@ -72,18 +75,18 @@ export class CharacterSheet extends ActorSheet {
 
     async addItem(event) {
         const types = {
-            accessory: "FABULA_ULTIMA.item.accessory.type",
-            armor: "FABULA_ULTIMA.item.armor.type",
-            misc: "FABULA_ULTIMA.item.misc.type",
-            shield: "FABULA_ULTIMA.item.shield.type",
-            weapon: "FABULA_ULTIMA.item.weapon.type",
+            misc: "FABULA_ULTIMA.itemType.misc",
+            accessory: "FABULA_ULTIMA.itemType.accessory",
+            armor: "FABULA_ULTIMA.itemType.armor",
+            shield: "FABULA_ULTIMA.itemType.shield",
+            weapon: "FABULA_ULTIMA.itemType.weapon",
         };
         const dialog = new Dialog({
             title: game.i18n.localize("FABULA_ULTIMA.dialog.addItem.title"),
             content: await renderTemplate(Templates.dialogAddItem, {types}),
             buttons: {
                 select: {
-                    label: game.i18n.localize("FABULA_ULTIMA.button.select"),
+                    label: game.i18n.localize("FABULA_ULTIMA.dialog.addItem.confirm"),
                     callback: async (html) => {
                         const find = html.find("[name=type]");
                         const itemType = find.val();

@@ -5,47 +5,47 @@
     </header>
     <hr/>
     <section class="form-group-stacked">
-        <h2>{{localize "FABULA_ULTIMA.job.benefits.label"}}</h2>
+        <h2>{{localize "FABULA_ULTIMA.sheet.job.benefits.label"}}</h2>
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.job.benefits.hp'}}</label>
+            <label>{{localize 'FABULA_ULTIMA.sheet.job.benefits.hp'}}</label>
             <input name="system.benefits.hp" type="number" value="{{system.benefits.hp}}">
         </fieldset>
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.job.benefits.mp'}}</label>
+            <label>{{localize 'FABULA_ULTIMA.sheet.job.benefits.mp'}}</label>
             <input name="system.benefits.mp" type="number" value="{{system.benefits.mp}}">
         </fieldset>
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.job.benefits.ip'}}</label>
+            <label>{{localize 'FABULA_ULTIMA.sheet.job.benefits.ip'}}</label>
             <input name="system.benefits.ip" type="number" value="{{system.benefits.ip}}">
         </fieldset>
         <fieldset class="flexcol">
             <label class="checkbox">
                 <input type="checkbox" name="system.benefits.armor" {{checked system.benefits.armor}}>
-                {{localize "FABULA_ULTIMA.job.benefits.armor"}}
+                {{localize "FABULA_ULTIMA.sheet.job.benefits.armor"}}
             </label>
             <label class="checkbox">
                 <input type="checkbox" name="system.benefits.melee" {{checked system.benefits.melee}}>
-                {{localize "FABULA_ULTIMA.job.benefits.melee"}}
+                {{localize "FABULA_ULTIMA.sheet.job.benefits.melee"}}
             </label>
             <label class="checkbox">
                 <input type="checkbox" name="system.benefits.ranged" {{checked system.benefits.ranged}}>
-                {{localize "FABULA_ULTIMA.job.benefits.ranged"}}
+                {{localize "FABULA_ULTIMA.sheet.job.benefits.ranged"}}
             </label>
             <label class="checkbox">
                 <input type="checkbox" name="system.benefits.shield" {{checked system.benefits.shield}}>
-                {{localize "FABULA_ULTIMA.job.benefits.shield"}}
+                {{localize "FABULA_ULTIMA.sheet.job.benefits.shield"}}
             </label>
         </fieldset>
         <fieldset>
-            <label>{{localize "FABULA_ULTIMA.job.benefits.special"}}</label>
+            <label>{{localize "FABULA_ULTIMA.sheet.job.benefits.special"}}</label>
             <input type="text" name="system.benefits.special" value="{{system.benefits.special}}">
         </fieldset>
     </section>
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.job.tab.description'}}</a>
-        <a class="item" data-tab="questions">{{localize 'FABULA_ULTIMA.job.tab.questions'}}</a>
-        <a class="item" data-tab="skills">{{localize 'FABULA_ULTIMA.job.tab.skills'}}</a>
-        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.job.tab.spells'}}</a>
+        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.description'}}</a>
+        <a class="item" data-tab="questions">{{localize 'FABULA_ULTIMA.sheet.job.tab.questions'}}</a>
+        <a class="item" data-tab="skills">{{localize 'FABULA_ULTIMA.sheet.job.tab.skills'}}</a>
+        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.sheet.job.tab.spells'}}</a>
     </nav>
     <div class="tab-container">
         <section data-tab="description" data-group="primary" class="form-group-stacked tab">

@@ -43,6 +43,7 @@ export async function promptCheck(actor) {
             title: game.i18n.localize("FABULA_ULTIMA.dialog.check.title"),
             content: await renderTemplate(Templates.dialogCheck, {
                 attributes: toObject(attributes, value => `FABULA_ULTIMA.attribute.${value}.short`),
+                attributeValues: Object.entries(actor.system.attributes).reduce((previousValue, [attribute, {current}]) => ({...previousValue, [attribute]: current}), {}),
                 attr1: recentActorChecks.attr1 || "might",
                 attr2: recentActorChecks.attr2 || "might"
             }),
@@ -75,6 +76,7 @@ export async function promptCheck(actor) {
                 })
             })
     } catch (e) {
+        console.log(e)
         // TODO
     }
 }

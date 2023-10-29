@@ -12,31 +12,35 @@
     </header>
     <section class="form-group">
         <fieldset class="form-fields">
-            <label>Identity</label>
+            <label>{{localize 'FABULA_ULTIMA.sheet.pc.identity'}}</label>
             <input name="system.traits.identity" type="text" value="{{system.traits.identity}}">
         </fieldset>
     </section>
     <section class="form-group">
         <fieldset class="form-fields">
-            <label>Theme</label>
+            <label>{{localize 'FABULA_ULTIMA.sheet.pc.theme'}}</label>
             <input name="system.traits.theme" type="text" value="{{system.traits.theme}}">
         </fieldset>
         <fieldset class="form-fields">
-            <label>Origin</label>
+            <label>{{localize 'FABULA_ULTIMA.sheet.pc.origin'}}</label>
             <input name="system.traits.origin" type="text" value="{{system.traits.origin}}">
         </fieldset>
     </section>
     <section class="form-group">
         <fieldset class="form-fields">
-            <label>Level</label>
+            <label>{{localize 'FABULA_ULTIMA.level'}}</label>
             <input name="system.level" type="number" value="{{system.level}}">
         </fieldset>
         <fieldset class="form-fields">
-            <label>Experience Points</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.sheet.pc.xp.full'}}">
+                {{localize 'FABULA_ULTIMA.sheet.pc.xp.short'}}
+            </abbr></label>
             <input name="system.experience" type="number" value="{{system.experience}}">
         </fieldset>
         <fieldset class="form-fields">
-            <label>Fabula Points</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.sheet.pc.fp.full'}}">
+                {{localize 'FABULA_ULTIMA.sheet.pc.fp.short'}}
+            </abbr></label>
             <input name="system.fabulaPoints" type="number" value="{{system.fabulaPoints}}">
         </fieldset>
     </section>
@@ -52,26 +56,34 @@
     </section>
     <section class="form-group">
         <fieldset class="form-fields">
-            <label>HP</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.hp.full'}}">
+                {{localize 'FABULA_ULTIMA.hp.short'}}
+            </abbr></label>
             <input type="number" name="system.hp.value" value="{{system.hp.value}}" min="0">
             <span class="sep">/</span>
             <input type="text" readonly value="{{system.hp.max}}">
             (<input type="text" readonly value="{{system.hp.crisis}}">)
         </fieldset>
         <fieldset class="form-fields">
-            <label>MP</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.mp.full'}}">
+                {{localize 'FABULA_ULTIMA.mp.short'}}
+            </abbr></label>
             <input type="number" name="system.mp.value" value="{{system.mp.value}}" min="0">
             <span class="sep">/</span>
             <input type="text" readonly value="{{system.mp.max}}"/>
         </fieldset>
         <fieldset class="form-fields">
-            <label>IP</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.sheet.pc.ip.full'}}">
+                {{localize 'FABULA_ULTIMA.sheet.pc.ip.short'}}
+            </abbr></label>
             <input type="number" name="system.ip.value" value="{{system.ip.value}}" min="0">
             <span class="sep">/</span>
             <input type="text" readonly value="{{system.ip.max}}"/>
         </fieldset>
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.initiativeModifier.short' }}</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.sheet.pc.initiativeModifier.full' }}">
+                {{localize 'FABULA_ULTIMA.sheet.pc.initiativeModifier.short' }}
+            </abbr></label>
             <input name="system.initiativeModifier" type="number" readonly
                    value="{{system.initiativeModifier}}"/>
         </fieldset>
@@ -79,7 +91,8 @@
     <section class="form-group">
         {{#each system.defenses}}
             <fieldset class="form-fields">
-                <label>{{localize (concat 'FABULA_ULTIMA.defense.' @key '.short')}}</label>
+                <label><abbr title="{{localize (concat 'FABULA_ULTIMA.defense.' @key '.full')}}">{{localize
+                        (concat 'FABULA_ULTIMA.defense.' @key '.short')}}</abbr></label>
                 <select name="system.defenses.{{@key}}.attribute">
                     <option value="none"></option>
                     {{selectOptions (fu-attributes) selected=this.attribute localize=true labelAttr='short'}}
@@ -92,13 +105,12 @@
         {{/each}}
     </section>
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="equipment">{{localize 'FABULA_ULTIMA.tab.equipment'}}</a>
-        <a class="item" data-tab="backpack">{{localize 'FABULA_ULTIMA.tab.backpack'}}</a>
-        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.tab.spells'}}</a>
-        <a class="item" data-tab="bonds">{{localize 'FABULA_ULTIMA.tab.bonds'}}</a>
-        <a class="item" data-tab="jobs">{{localize 'FABULA_ULTIMA.tab.jobs'}}</a>
-        <a class="item" data-tab="effects">{{localize 'FABULA_ULTIMA.tab.effects'}}</a>
-        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.tab.description'}}</a>
+        <a class="item" data-tab="equipment">{{localize 'FABULA_ULTIMA.sheet.pc.tab.equipment'}}</a>
+        <a class="item" data-tab="backpack">{{localize 'FABULA_ULTIMA.sheet.pc.tab.backpack'}}</a>
+        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.sheet.pc.tab.spells'}}</a>
+        <a class="item" data-tab="bonds">{{localize 'FABULA_ULTIMA.sheet.pc.tab.bonds'}}</a>
+        <a class="item" data-tab="jobs">{{localize 'FABULA_ULTIMA.sheet.pc.tab.jobs'}}</a>
+        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.description'}}</a>
     </nav>
     <div class="tab-container">
         <div class="tab" data-tab="equipment" data-group="primary">
@@ -111,7 +123,7 @@
                     </label>
                     <label>
                         <input type="checkbox" disabled {{checked system.proficiencies.shield}}>
-                        {{localize 'FABULA_ULTIMA.proficiencies.shield'}}
+                        {{localize 'FABULA_ULTIMA.proficiencies.shields'}}
                     </label>
                     <label>
                         <input type="checkbox" disabled {{checked system.proficiencies.melee}}>
@@ -160,7 +172,7 @@
                 <ul>
                     <li class="flexrow">
                         <fieldset>
-                            <label>{{localize 'FABULA_ULTIMA.character.backpack'}}</label>
+                            <label>{{localize 'FABULA_ULTIMA.sheet.pc.backpack.add'}}</label>
                             <a data-action="add" data-type="equipment"><i class="fas fa-plus"></i></a>
                         </fieldset>
                     </li>
@@ -169,7 +181,8 @@
                             <fieldset class="flexrow" data-item-id="{{item.id}}">
                                 <img class="flex0" src="{{item.img}}" width="24" height="24"/>
                                 <label>{{name}}</label>
-                                <input type="checkbox" data-action="equip" {{checked (lookup ../actor.equipped item.id )}}>
+                                <input type="checkbox" data-action="equip" {{checked
+                                        (lookup ../actor.equipped item.id )}}>
                                 <div class="flex0">
                                     <a data-action="edit" data-type="equipment"><i class="fas fa-edit"></i></a>
                                     <a data-action="delete" data-type="equipment"><i class="fas fa-trash"></i></a>
@@ -186,14 +199,14 @@
                     <li class="flexrow">
                         <fieldset class="flexrow">
                             <div class="flex0" style="min-width: 24px"></div>
-                            <div>{{localize 'FABULA_ULTIMA.npc.spell.name'}}</div>
-                            <div>{{localize 'FABULA_ULTIMA.npc.spell.cost'}}</div>
-                            <div>{{localize 'FABULA_ULTIMA.npc.spell.check'}}</div>
-                            <div>{{localize 'FABULA_ULTIMA.npc.spell.damage'}}</div>
-                            <div>{{localize 'FABULA_ULTIMA.npc.spell.status'}}</div>
+                            <div>{{localize 'FABULA_ULTIMA.sheet.pc.spell.name'}}</div>
+                            <div>{{localize 'FABULA_ULTIMA.sheet.pc.spell.cost'}}</div>
+                            <div>{{localize 'FABULA_ULTIMA.sheet.pc.spell.check'}}</div>
+                            <div>{{localize 'FABULA_ULTIMA.sheet.pc.spell.damage'}}</div>
+                            <div>{{localize 'FABULA_ULTIMA.sheet.pc.spell.status'}}</div>
                             <div class="flex0">
                                 <a class="item-control item-create {{#if sheetSettings.isObserver}}disabled{{/if}}"
-                                   title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}" data-action="create"
+                                   title="{{localize 'FABULA_ULTIMA.sheet.pc.spell.add'}}" data-action="create"
                                    data-type="item"
                                    data-document-type="spell">
                                     <i class="fas fa-plus"></i>
@@ -210,24 +223,26 @@
             </section>
         </div>
         <div class="tab" data-tab="bonds" data-group="primary">
-            <section class="form-group-stacked">
-                <fieldset>
-                    <label>{{localize 'FABULA_ULTIMA.sheet.character.bonds'}}</label>
+            <section class="form-group stacked">
+                <fieldset class="{{#if (gte system.bonds.length 6)}}disabled{{/if}}">
+                    <label>{{localize 'FABULA_ULTIMA.sheet.pc.bonds.add'}}</label>
                     <a data-action="add" data-type="bond"><i class="fas fa-plus"></i></a>
                 </fieldset>
                 {{#each system.bonds}}
                     <fieldset class="form-fields" data-index="{{@index}}">
-                        <input name="system.bonds.{{@index}}.with" type="text" value="{{./with}}">
-                        <select name="system.bonds.{{@index}}.feeling1">
-                            {{selectOptions (fu-feelings1) selected=feeling1 localize=true}}
-                        </select>
-                        <select name="system.bonds.{{@index}}.feeling2">
-                            {{selectOptions (fu-feelings2) selected=feeling2 localize=true}}
-                        </select>
-                        <select name="system.bonds.{{@index}}.feeling3">
-                            {{selectOptions (fu-feelings3) selected=feeling3 localize=true}}
-                        </select>
-                        <a data-action="delete" data-type="bond"><i class="fas fa-trash"></i></a>
+                        <div class="flexrow" style="gap: 0.5rem">
+                            <input name="system.bonds.{{@index}}.with" type="text" value="{{./with}}" placeholder="{{localize 'FABULA_ULTIMA.sheet.pc.bonds.placeholderWith'}}">
+                            <select name="system.bonds.{{@index}}.feeling1" class="flex0">
+                                {{selectOptions (fu-feelings1) selected=feeling1 localize=true}}
+                            </select>
+                            <select name="system.bonds.{{@index}}.feeling2" class="flex0">
+                                {{selectOptions (fu-feelings2) selected=feeling2 localize=true}}
+                            </select>
+                            <select name="system.bonds.{{@index}}.feeling3" class="flex0">
+                                {{selectOptions (fu-feelings3) selected=feeling3 localize=true}}
+                            </select>
+                            <a data-action="delete" data-type="bond" class="flex0"><i class="fas fa-trash"></i></a>
+                        </div>
                     </fieldset>
                 {{/each}}
             </section>
@@ -238,11 +253,10 @@
                     <li class="flexrow">
                         <fieldset class="flexrow">
                             <div class="flex0" style="min-width: 24px"></div>
-                            <div>{{localize 'FABULA_ULTIMA.character.job.name'}}</div>
-                            <div>{{localize 'FABULA_ULTIMA.character.job.level'}}</div>
+                            <div></div>
                             <div class="flex0">
                                 <a class="item-control item-create {{#if sheetSettings.isObserver}}disabled{{/if}}"
-                                   title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}"
+                                   title="{{localize 'FABULA_ULTIMA.sheet.npc.attacks.create'}}"
                                    data-action="create"
                                    data-type="item">
                                     <i class="fas fa-plus"></i>
@@ -251,13 +265,12 @@
                         </fieldset>
                     </li>
                     {{#each actor.itemTypes.job}}
-                        {{log this}}
                         <li class="flexrow">
                             <fieldset data-item-id="{{id}}">
                                 <div class="flexrow">
                                     <a data-collapse-toggle="{{id}}"><i class="fas fa-chevron-circle-down"></i></a>
-                                    <label>{{name}}Name</label>
-                                    <label>{{system.level}}Lvl 5</label>
+                                    <label>{{name}}</label>
+                                    <label>{{localize 'FABULA_ULTIMA.level'}}: {{system.level}}/10</label>
                                     <div class="flex0">
                                         <a data-action="delete" data-type="job">
                                             <i class="fas fa-trash"></i>
@@ -266,7 +279,7 @@
                                 </div>
                                 <div class="collapse" data-collapse="{{id}}">
                                     <div>
-                                        {{localize 'FABULA_ULTIMA.character.job.skills.label'}}
+                                        {{localize 'FABULA_ULTIMA.sheet.pc.job.skills'}}
                                     </div>
                                     <ul>
                                         {{#each system.skills as | skill |}}
@@ -274,22 +287,12 @@
                                                 <fieldset class="flexrow">
                                                     <a class="content-link" draggable="true"
                                                        data-uuid="{{skill.uuid}}" data-id="{{skill.id}}"
-                                                       data-type="{{skill.documentName}}" data-tooltip="{{skill.documentName}} {{skill.name}}"><i
+                                                       data-type="{{skill.documentName}}"
+                                                       data-tooltip="{{skill.documentName}} {{skill.name}}"><i
                                                             class="fas fa-suitcase"></i>{{skill.name}}</a>
                                                     <label>{{skill.name}}</label>
                                                     <label>{{localize
                                                             'FABULA_ULTIMA.character.job.skill.level'}} {{skill.level}}</label>
-                                                </fieldset>
-                                            </li>
-                                        {{/each}}
-                                        {{#each system.spells as | spell |}}
-                                            <li class="flexcol">
-                                                <fieldset class="flexrow">
-                                                    <a class="content-link" draggable="true"
-                                                       data-uuid="{{spell.uuid}}" data-id="{{spell.id}}"
-                                                       data-type="{{spell.documentName}}" data-tooltip="{{spell.documentName}} {{spell.name}}"><i
-                                                            class="fas fa-suitcase"></i>{{spell.name}}</a>
-                                                    <label>{{spell.name}}</label>
                                                 </fieldset>
                                             </li>
                                         {{/each}}
@@ -301,11 +304,8 @@
                 </ol>
             </section>
         </div>
-        <div class="tab" data-tab="effects" data-group="primary">
-            <section></section>
-        </div>
         <div class="tab" data-tab="description" data-group="primary">
-            <section></section>
+            {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
         </div>
     </div>
 </form>

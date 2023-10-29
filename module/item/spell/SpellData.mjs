@@ -20,7 +20,7 @@ import {DamageSchema} from "../../schema/DamageSchema.mjs";
 export class SpellData extends foundry.abstract.TypeDataModel {
 
     static defineSchema() {
-        const {NumberField, StringField, BooleanField, HTMLField, ArrayField} = foundry.data.fields
+        const {NumberField, StringField, BooleanField, HTMLField} = foundry.data.fields
         return {
             cost: new NumberField({initial: 5, min: 5, integer: true, step: 5}),
             costType: new StringField({initial: costTypes[0], costTypes}),
@@ -35,7 +35,7 @@ export class SpellData extends foundry.abstract.TypeDataModel {
             damage: new DamageSchema(),
             effect: new StringField(),
             opportunity: new StringField(),
-            description: new HTMLField({initial: game.i18n.localize('FABULA_ULTIMA.sheet.spell.description')})
+            description: new HTMLField({initial: game.i18n.localize('FABULA_ULTIMA.description')})
         }
     }
 

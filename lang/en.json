@@ -2,6 +2,9 @@
   "FABULA_ULTIMA": {
     "system": "Fabula Ultima TTJRPG",
     "noValue": "-",
+    "level": "Level",
+    "price": "Price",
+    "description": "Description",
     "species": {
       "beast": "Beast",
       "construct": "Construct",
@@ -77,7 +80,8 @@
       "fire": "Fire",
       "ice": "Ice",
       "light": "Light",
-      "poison": "Poison"
+      "poison": "Poison",
+      "special": "Special"
     },
     "damageTypeIcons": {
       "physical": "fa-sword",
@@ -101,47 +105,25 @@
       "elite": "Elite",
       "champion": "Champion"
     },
-    "initiative": {
-      "short": "Init.",
-      "full": "Initiative"
-    },
-    "npc": {
-      "attack": {
-        "label": "Attacks",
-        "name": "Name",
-        "type": "Type",
-        "defense": "Defense",
-        "check": "Check",
-        "damage": "Damage",
-        "quality": "Quality"
-      },
-      "spell": {
-        "name": "Name",
-        "cost": "Cost",
-        "costPerTarget": " x T",
-        "check": "Check",
-        "damage": "Damage",
-        "effect": "Effect"
-      }
-    },
-    "tab": {
-      "attacks": "Attacks",
-      "spells": "Spells",
-      "actions": "Other Actions",
-      "description": "Description",
-      "equipment": "Equipment",
-      "bonds": "Bonds",
-      "effects": "Effects",
-      "jobs": "Classes"
-    },
-    "modifier": {
-      "short": "Mod.",
-      "full": "Modifier"
+    "feeling": {
+      "none": "-",
+      "admiration": "Admiration",
+      "inferiority": "Inferiority",
+      "loyalty": "Loyalty",
+      "mistrust": "Mistrust",
+      "affection": "Affection",
+      "hatred": "Hatred"
     },
     "dialog": {
       "check": {
         "roll": "Roll Check",
-        "title": "Check"
+        "title": "Check",
+        "modifier": "Modifier"
+      },
+      "addItem": {
+        "title": "Add new Item",
+        "label": "Choose Item type:",
+        "confirm": "Add Item"
       }
     },
     "attackType": {
@@ -163,6 +145,83 @@
       }
     },
     "sheet": {
+      "pc": {
+        "identity": "Identity",
+        "theme": "Theme",
+        "origin": "Origin",
+        "xp": {
+          "short": "XP",
+          "full": "Experience Points"
+        },
+        "fp": {
+          "short": "FP",
+          "full": "Fabula Points"
+        },
+        "ip": {
+          "short": "IP",
+          "full": "Inventory Points"
+        },
+        "initiativeModifier": {
+          "short": "Init. Mod.",
+          "full": "Initiative Modifier"
+        },
+        "tab": {
+          "attacks": "Attacks",
+          "spells": "Spells",
+          "backpack": "Backpack",
+          "actions": "Other Actions",
+          "equipment": "Equipment",
+          "bonds": "Bonds",
+          "jobs": "Classes"
+        },
+        "bonds": {
+          "add": "Add Bond",
+          "placeholderWith": "PC, NPC, Location, Organisation, etc."
+        },
+        "job": {
+          "name": "Class",
+          "level": "Level",
+          "skills": "Skills"
+        },
+        "backpack": {
+          "add": "Add new Item"
+        },
+        "spell": {
+          "name": "Name",
+          "cost": "Cost",
+          "check": "Check",
+          "damage": "Damage",
+          "effect": "Effect",
+          "status": "Status",
+          "add": "Add new Spell"
+        }
+      },
+      "npc": {
+        "initiative": {
+          "short": "Init.",
+          "full": "Initiative"
+        },
+        "tab": {
+          "attacks": "Attacks",
+          "spells": "Spells"
+        },
+        "attack": {
+          "label": "Attacks",
+          "name": "Name",
+          "type": "Type",
+          "defense": "Defense",
+          "check": "Check",
+          "damage": "Damage",
+          "quality": "Quality"
+        },
+        "spell": {
+          "name": "Name",
+          "cost": "Cost",
+          "check": "Check",
+          "damage": "Damage",
+          "effect": "Effect"
+        }
+      },
       "weapon": {
         "type": "Type",
         "defense": "Against",
@@ -183,24 +242,39 @@
         "duration": "Duration",
         "offensive": "is Offensive",
         "status": "Status",
-        "opportunity": "Opportunity",
-        "description": "Description"
-      },
-      "misc": {
-        "price": "Price",
-        "description": "Description"
+        "opportunity": "Opportunity"
       },
       "shield": {
-        "price": "Price",
         "defense": "Defense",
         "magicDefense": "M. Defense",
         "initiative": "Initiative",
-        "quality": "Quality",
-        "description": "Description"
+        "quality": "Quality"
       },
       "skill": {
-        "level": "Level",
-        "description": "Description"
+        "level": "Level"
+      },
+      "job": {
+        "tab": {
+          "questions": "Questions",
+          "skills": "Skills",
+          "spells": "Spells"
+        },
+        "benefits": {
+          "label": "Passive Benefits",
+          "hp": "Grants HP",
+          "mp": "Grants MP",
+          "ip": "Grants IP",
+          "armor": "Grants Martial Armor proficiency",
+          "melee": "Grants Martial Melee Weapon proficiency",
+          "ranged": "Grants Martial Ranged Weapon proficiency",
+          "shield": "Grants Martial Shield proficiency",
+          "special": "Special benefits"
+        }
+      }
+    },
+    "partial": {
+      "spellDisplay": {
+        "costPerTarget": " x T"
       }
     },
     "statusEffect": {
@@ -244,12 +318,6 @@
       "melee": "Martial Melee Weapons",
       "ranged": "Martial Ranged Weapons"
     },
-    "effect": {
-      "label": "Effect",
-      "source": "Source",
-      "duration": "Duration",
-      "create": "Create Effect"
-    },
     "weaponCategory": {
       "arcane": "Arcane",
       "bow": "Bow",
@@ -263,7 +331,7 @@
       "thrown": "Thrown",
       "special": "Special"
     },
-    "item": {
+    "itemType": {
       "accessory": "Accessory",
       "armor": "Armor",
       "job": "Class",
@@ -272,25 +340,6 @@
       "spell": "Spell",
       "skill": "Skill",
       "weapon": "Weapon"
-    },
-    "job": {
-      "tab": {
-        "description": "Description",
-        "questions": "Questions",
-        "skills": "Skills",
-        "spells": "Spells"
-      },
-      "benefits": {
-        "label": "Passive Benefits",
-        "hp": "Grants HP",
-        "mp": "Grants MP",
-        "ip": "Grants IP",
-        "armor": "Grants Martial Armor proficiency",
-        "melee": "Grants Martial Melee Weapon proficiency",
-        "ranged": "Grants Martial Ranged Weapon proficiency",
-        "shield": "Grants Martial Shield proficiency",
-        "special": "Special benefits"
-      }
     }
   }
 }

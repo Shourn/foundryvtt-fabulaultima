@@ -50,7 +50,7 @@ import {affinities, attributeDice, attributes} from "../Constants.mjs";
 export class CommonData extends foundry.abstract.TypeDataModel {
 
     static defineSchema() {
-        const {NumberField, StringField, SchemaField} = foundry.data.fields
+        const {NumberField, StringField, SchemaField, HTMLField} = foundry.data.fields
         return {
             level: new NumberField({initial: 5, min: 5, integer: true}),
             hp: new SchemaField({
@@ -140,7 +140,8 @@ export class CommonData extends foundry.abstract.TypeDataModel {
                     required: true,
                     choices: affinities
                 })
-            })
+            }),
+            description: new HTMLField()
         }
     }
 

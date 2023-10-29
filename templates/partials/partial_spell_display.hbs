@@ -2,7 +2,7 @@
 <fieldset data-item-id="{{id}}" class="flexrow">
     <img src="{{img}}" title="{{name}}" height="24" width="24" class="flex0"/>
     <div>{{name}}</div>
-    <div>{{system.cost}} {{localize "FABULA_ULTIMA.mp.short"}}{{#unless system.fixCost}}{{localize "FABULA_ULTIMA.npc.spell.costPerTarget"}}{{/unless}}</div>
+    <div>{{system.cost}} {{localize "FABULA_ULTIMA.mp.short"}}{{#unless system.fixCost}}{{localize "FABULA_ULTIMA.partial.spellDisplay.costPerTarget"}}{{/unless}}</div>
     <div>{{#if system.offensive}}{{>check}}{{/if}}</div>
     <div>{{#if system.offensive}}{{>damage}}{{/if}}</div>
     <div>{{system.effect}}</div>

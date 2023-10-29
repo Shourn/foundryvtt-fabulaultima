@@ -1,6 +1,7 @@
-{{! expects Object {types: {"type": "translation"}} }}
-{{log this}}
-<label>{{localize 'FABULA_ULTIMA.dialog.addItem.label'}}</label>
-<select name="type">
-    {{selectOptions types localize=true}}
-</select>
+{{! expects Object {types: {"type": "translationKey"} } }}
+<fieldset class="flexcol">
+    <label>{{localize 'FABULA_ULTIMA.dialog.addItem.label'}}</label>
+    <select name="type">
+        {{selectOptions types localize=true}}
+    </select>
+</fieldset>

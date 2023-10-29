@@ -1,4 +1,18 @@
-<div>
+<section class="flexrow">
+    {{#each (fu-attributes)}}
+        <fieldset class="form-fields">
+            <label>
+                <abbr title="{{localize (concat 'FABULA_ULTIMA.attribute.' @key '.full')}}">
+                    {{localize (concat 'FABULA_ULTIMA.attribute.' @key '.short')}}
+                </abbr>
+                :
+            </label>
+            <span>{{localize (concat 'FABULA_ULTIMA.attributeDice.' (lookup ../attributeValues @key))}}</span>
+        </fieldset>
+    {{/each}}
+</section>
+<hr>
+<section>
     <fieldset>
         {{radioBoxes 'attr1' attributes checked=attr1 localize=true }}
     </fieldset>
@@ -7,8 +21,8 @@
     </fieldset>
     <fieldset>
         <label>
-            {{localize 'FABULA_ULTIMA.modifier.full'}}
+            {{localize 'FABULA_ULTIMA.dialog.check.modifier'}}
             <input name="modifier" type="number" value="0">
         </label>
     </fieldset>
-</div>
+</section>

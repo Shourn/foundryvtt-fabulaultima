@@ -39,3 +39,9 @@
 .fabula-ultima label {
     white-space: nowrap;
 }
+
+.fabula-ultima .disabled {
+    pointer-events: none;
+    cursor: initial;
+    color: #666666;
+}

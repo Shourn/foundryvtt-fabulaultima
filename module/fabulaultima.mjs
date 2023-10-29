@@ -59,14 +59,14 @@ function initItems() {
     }, {inplace: true})
 
     foundry.utils.mergeObject(CONFIG.Item.typeLabels, {
-        accessory: "FABULA_ULTIMA.item.accessory",
-        armor: "FABULA_ULTIMA.item.armor",
-        job: "FABULA_ULTIMA.item.job",
-        misc: "FABULA_ULTIMA.item.misc",
-        shield: "FABULA_ULTIMA.item.shield",
-        skill: "FABULA_ULTIMA.item.skill",
-        spell: "FABULA_ULTIMA.item.spell",
-        weapon: "FABULA_ULTIMA.item.weapon"
+        accessory: "FABULA_ULTIMA.itemType.accessory",
+        armor: "FABULA_ULTIMA.itemType.armor",
+        job: "FABULA_ULTIMA.itemType.job",
+        misc: "FABULA_ULTIMA.itemType.misc",
+        shield: "FABULA_ULTIMA.itemType.shield",
+        skill: "FABULA_ULTIMA.itemType.skill",
+        spell: "FABULA_ULTIMA.itemType.spell",
+        weapon: "FABULA_ULTIMA.itemType.weapon"
     }, {inplace: true})
 
     // noinspection JSCheckFunctionSignatures

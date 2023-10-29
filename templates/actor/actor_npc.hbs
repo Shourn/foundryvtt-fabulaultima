@@ -98,7 +98,9 @@
             </fieldset>
         {{/each}}
         <fieldset class="form-fields">
-            <label>{{localize 'FABULA_ULTIMA.initiative.short' }}</label>
+            <label><abbr title="{{localize 'FABULA_ULTIMA.sheet.npc.initiative.full' }}">
+                {{localize 'FABULA_ULTIMA.sheet.npc.initiative.short' }}
+            </abbr></label>
             <input name="system.initiative" type="number" readonly
                    value="{{system.initiative}}"/>
         </fieldset>
@@ -107,9 +109,9 @@
         {{> affinitiesConfig system.affinities}}
     </section>
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="attacks">{{localize 'FABULA_ULTIMA.tab.attacks'}}</a>
-        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.tab.spells'}}</a>
-        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.tab.description'}}</a>
+        <a class="item" data-tab="attacks">{{localize 'FABULA_ULTIMA.sheet.npc.tab.attacks'}}</a>
+        <a class="item" data-tab="spells">{{localize 'FABULA_ULTIMA.sheet.npc.tab.spells'}}</a>
+        <a class="item" data-tab="description">{{localize 'FABULA_ULTIMA.description'}}</a>
     </nav>
     <div class="tab-container">
         <section class="tab attacks" data-tab="attacks" data-group="primary">
@@ -117,15 +119,15 @@
                 <li class="flexrow">
                     <fieldset class="flexrow">
                         <div class="flex0" style="min-width: 24px"></div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.name'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.type'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.defense'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.check'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.damage'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.attack.quality'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.attack.name'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.attack.type'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.attack.defense'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.attack.check'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.attack.damage'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.attack.quality'}}</div>
                         <div class="flex0">
                             <a class="{{#if sheetSettings.isObserver}}disabled{{/if}}"
-                               title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}"
+                               title="{{localize 'FABULA_ULTIMA.sheet.npc.attacks.create'}}"
                                data-action="create"
                                data-type="weapon">
                                 <i class="fas fa-plus"></i>
@@ -145,14 +147,14 @@
                 <li class="flexrow">
                     <fieldset class="flexrow">
                         <div class="flex0" style="min-width: 24px"></div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.spell.name'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.spell.cost'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.spell.check'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.spell.damage'}}</div>
-                        <div>{{localize 'FABULA_ULTIMA.npc.spell.effect'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.spell.name'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.spell.cost'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.spell.check'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.spell.damage'}}</div>
+                        <div>{{localize 'FABULA_ULTIMA.sheet.npc.spell.effect'}}</div>
                         <div class="flex0">
                             <a class="{{#if sheetSettings.isObserver}}disabled{{/if}}"
-                               title="{{localize 'FABULA_ULTIMA.npc.attacks.create'}}"
+                               title="{{localize 'FABULA_ULTIMA.sheet.npc.attacks.create'}}"
                                data-action="create"
                                data-type="spell">
                                 <i class="fas fa-plus"></i>
