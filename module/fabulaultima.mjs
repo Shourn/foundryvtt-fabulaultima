@@ -186,6 +186,7 @@ Hooks.once('init', async () => {
     console.log('fabulaultima | Initializing rolls');
     CONFIG.Dice.rolls.push(SystemRoll)
 
+    console.log('fabulaultima | Finished initialization');
 });
 // Setup system
 Hooks.once('setup', async () => {
