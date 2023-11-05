@@ -28,5 +28,7 @@
       "path": "lang/en.json",
       "flags": {}
     }
-  ]
+  ],
+  "primaryTokenAttribute": "hp",
+  "secondaryTokenAttribute": "mp"
 }

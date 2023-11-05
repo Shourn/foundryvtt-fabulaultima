@@ -1,5 +1,6 @@
 import Templates from "../../Templates.mjs";
 import {promptCheck} from "../../utils/helper.mjs";
+import {activateStatusEffectListeners, extractStatusEffects} from "../../StatusEffects.mjs";
 
 
 export class NpcSheet extends ActorSheet {
@@ -19,7 +20,8 @@ export class NpcSheet extends ActorSheet {
         return foundry.utils.mergeObject({
             system: data.actor.system, enrichedHtml: {
                 description: await TextEditor.enrichHTML(data.actor.system.description)
-            }
+            },
+            statusEffects: extractStatusEffects(this.actor)
         }, data);
     }
 
@@ -42,6 +44,7 @@ export class NpcSheet extends ActorSheet {
         html.find("*[data-action=delete][data-type=item]").click(clickEvent => this.deleteItem(clickEvent));
         html.find("*[data-action=roll][data-type=check]").click(clickEvent => this.promptCheck(clickEvent));
 
+        activateStatusEffectListeners(html, this.actor)
     }
 
     editItem(clickEvent) {

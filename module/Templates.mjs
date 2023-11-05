@@ -33,7 +33,8 @@ export const Partials = {
     weaponEquipment: "systems/fabulaultima/templates/partials/partial_equipment_weapon.hbs",
     accessoryEquipment: "systems/fabulaultima/templates/partials/partial_equipment_accessory.hbs",
     armorEquipment: "systems/fabulaultima/templates/partials/partial_equipment_armor.hbs",
-    shieldEquipment: "systems/fabulaultima/templates/partials/partial_equipment_shield.hbs"
+    shieldEquipment: "systems/fabulaultima/templates/partials/partial_equipment_shield.hbs",
+    statusEffects: "systems/fabulaultima/templates/partials/partial_status_effects.hbs"
 }
 
 export default Templates;

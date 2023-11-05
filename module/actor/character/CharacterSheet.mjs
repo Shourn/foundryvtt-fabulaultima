@@ -1,5 +1,6 @@
-import Templates, {Partials} from "../../Templates.mjs";
+import Templates from "../../Templates.mjs";
 import {promptCheck, registerCollapse} from "../../utils/helper.mjs";
+import {activateStatusEffectListeners, extractStatusEffects} from "../../StatusEffects.mjs";
 
 export class CharacterSheet extends ActorSheet {
 
@@ -35,7 +36,8 @@ export class CharacterSheet extends ActorSheet {
             },
             enrichedHtml: {
                 description: await TextEditor.enrichHTML(data.actor.system.description)
-            }
+            },
+            statusEffects: extractStatusEffects(this.actor)
         });
     }
 
@@ -55,6 +57,7 @@ export class CharacterSheet extends ActorSheet {
         html.find("[data-action=delete][data-type=equipment]").click(event => this.deleteItem(event))
         html.find("[data-action=delete][data-type=job]").click(event => this.deleteItem(event))
         html.find("[data-action=equip]").click(event => this.equipItem(event))
+        activateStatusEffectListeners(html, this.actor)
 
         registerCollapse(html);
     }

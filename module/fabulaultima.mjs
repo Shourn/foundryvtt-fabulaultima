@@ -23,6 +23,7 @@ import {ArmorSheet} from "./item/armor/ArmorSheet.mjs";
 import {MiscItemSheet} from "./item/misc/MiscItemSheet.mjs";
 import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
 import {SkillSheet} from "./item/skill/SkillSheet.mjs";
+import {initStatusEffects} from "./StatusEffects.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -127,45 +128,6 @@ function initItems() {
 
 }
 
-function initStatusEffects() {
-    /**
-     * @type {ActiveEffectData[]}
-     */
-    CONFIG.statusEffects = [
-        {
-            id: "dazed",
-            name: "FABULA_ULTIMA.statusEffect.dazed",
-            icon: "icons/svg/daze.svg",
-            statuses: new Set(["dazed"])
-        }, {
-            id: "enraged",
-            name: "FABULA_ULTIMA.statusEffect.enraged",
-            icon: "systems/fabulaultima/assets/game-icons/enrage.svg",
-            statuses: new Set(["enraged"])
-        }, {
-            id: "poisoned",
-            name: "FABULA_ULTIMA.statusEffect.poisoned",
-            icon: "icons/svg/poison.svg",
-            statuses: new Set(["poisoned"])
-        }, {
-            id: "shaken",
-            name: "FABULA_ULTIMA.statusEffect.shaken",
-            icon: "icons/svg/terror.svg",
-            statuses: new Set(["shaken"])
-        }, {
-            id: "slow",
-            name: "FABULA_ULTIMA.statusEffect.slow",
-            icon: "icons/svg/net.svg",
-            statuses: new Set(["slow"])
-        }, {
-            id: "weak",
-            name: "FABULA_ULTIMA.statusEffect.weak",
-            icon: "icons/svg/unconscious.svg",
-            statuses: new Set(["weak"])
-        }
-    ]
-}
-
 Hooks.once('init', async () => {
     console.log('fabulaultima | Initializing fabulaultima');
     // Preload Handlebars templates
@@ -179,9 +141,8 @@ Hooks.once('init', async () => {
     initItems();
 
     console.log('fabulaultima | Initializing status effects');
-    initStatusEffects()
-
     CONFIG.ActiveEffect.legacyTransferral = false;
+    initStatusEffects()
 
     console.log('fabulaultima | Initializing rolls');
     CONFIG.Dice.rolls.push(SystemRoll)

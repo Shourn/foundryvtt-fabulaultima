@@ -54,6 +54,7 @@
             </a>
         </fieldset>
     </section>
+    {{> statusEffects statusEffects}}
     <section class="form-group">
         <fieldset class="form-fields">
             <label><abbr title="{{localize 'FABULA_ULTIMA.hp.full'}}">
@@ -231,7 +232,8 @@
                 {{#each system.bonds}}
                     <fieldset class="form-fields" data-index="{{@index}}">
                         <div class="flexrow" style="gap: 0.5rem">
-                            <input name="system.bonds.{{@index}}.with" type="text" value="{{./with}}" placeholder="{{localize 'FABULA_ULTIMA.sheet.pc.bonds.placeholderWith'}}">
+                            <input name="system.bonds.{{@index}}.with" type="text" value="{{./with}}"
+                                   placeholder="{{localize 'FABULA_ULTIMA.sheet.pc.bonds.placeholderWith'}}">
                             <select name="system.bonds.{{@index}}.feeling1" class="flex0">
                                 {{selectOptions (fu-feelings1) selected=feeling1 localize=true}}
                             </select>
