@@ -22,7 +22,13 @@
     <fieldset>
         <label>
             {{localize 'FABULA_ULTIMA.dialog.check.modifier'}}
-            <input name="modifier" type="number" value="0">
+            <input name="modifier" type="number" value="{{modifier}}">
+        </label>
+    </fieldset>
+    <fieldset>
+        <label>
+            {{localize 'FABULA_ULTIMA.dialog.check.difficulty'}}
+            <input name="difficulty" type="number" value="{{difficulty}}" min="0">
         </label>
     </fieldset>
 </section>

@@ -3,7 +3,7 @@
  */
 export class SystemRoll extends Roll {
 
-    static FORMULA = "@attr1[@label1] + @attr2[@label2] + @modifier"
+    static FORMULA = "@attrDice1 + @attrDice2 @signum @modifier"
 
     /**
      * @param {Check} check
@@ -14,11 +14,12 @@ export class SystemRoll extends Roll {
         return new SystemRoll(
             this.FORMULA,
             {
-                attr1: attributes[check.attr1].current,
-                label1: game.i18n.localize(`FABULA_ULTIMA.attribute.${check.attr1}.short`),
-                attr2: attributes[check.attr2].current,
-                label2: game.i18n.localize(`FABULA_ULTIMA.attribute.${check.attr2}.short`),
-                modifier: check.modifier
+                attr1: check.attr1,
+                attrDice1: attributes[check.attr1].current,
+                attr2: check.attr2,
+                attrDice2: attributes[check.attr2].current,
+                signum: check.modifier < 0 ? "-" : "+",
+                modifier: Math.abs(check.modifier)
             }
         ).roll();
     }
@@ -42,7 +43,7 @@ export class SystemRoll extends Roll {
             return false;
         }
         const dice = this.dice.flatMap(value => value.values);
-        const allSameNumber = dice.length >= 2 && dice.reduce((previousValue, currentValue) => previousValue === currentValue);
+        const allSameNumber = dice.length >= 2 && dice.every((value, _, array) => array[0] === value);
         return allSameNumber && dice[0] >= 6;
     }
 

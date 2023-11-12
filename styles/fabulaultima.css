@@ -1,19 +1,20 @@
 @import "item_attack.css";
 @import "item_spell.css";
 @import "actor_character.css";
+@import "chat_check.css";
 
-.fabula-ultima {
+.system-fabulaultima {
 }
 
-.fabula-ultima .editor {
+.system-fabulaultima .editor {
     min-height: 15rem;
 }
 
-.fabula-ultima .status-select option[selected] {
+.system-fabulaultima .status-select option[selected] {
     font-weight: bold;
 }
 
-.fabula-ultima .status-select option::before {
+.system-fabulaultima .status-select option::before {
     font-family: FontAwesome;
     content: "\f096";
     width: 1.3em;
@@ -21,26 +22,26 @@
     display: inline-block;
 }
 
-.fabula-ultima .status-select option[selected]::before {
+.system-fabulaultima .status-select option[selected]::before {
     content: "\f046";
 }
 
-.fabula-ultima .collapse {
+.system-fabulaultima .collapse {
     visibility: collapse;
     height: 0;
     transition: height 500ms ease-in;
 }
 
-.fabula-ultima .collapse.show {
+.system-fabulaultima .collapse.show {
     visibility: initial;
     height: initial;
 }
 
-.fabula-ultima label {
+.system-fabulaultima label {
     white-space: nowrap;
 }
 
-.fabula-ultima .disabled {
+.system-fabulaultima .disabled {
     pointer-events: none;
     cursor: initial;
     color: #666666;

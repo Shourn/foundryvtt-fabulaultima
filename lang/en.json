@@ -114,11 +114,21 @@
       "affection": "Affection",
       "hatred": "Hatred"
     },
+    "chat": {
+      "check": {
+        "difficulty": "Difficulty Level",
+        "success": "Success",
+        "failure": "Failure",
+        "critical": "Critical",
+        "fumble": "Fumble"
+      }
+    },
     "dialog": {
       "check": {
         "roll": "Roll Check",
         "title": "Check",
-        "modifier": "Modifier"
+        "modifier": "Modifier",
+        "difficulty": "Difficulty Level"
       },
       "addItem": {
         "title": "Add new Item",

@@ -1,40 +1,48 @@
 {{log this}}
-<section>
-    <label>Result:</label>
-    <div>{{result.total}}</div>
-</section>
-{{#with result}}
-    {{#if isFumble}}
-        <h1>FUMBLE</h1>
-    {{/if}}
-    {{#if isCrit}}
-        <h1>CRITICAL</h1>
-    {{/if}}
+<div class="check">
     <div class="dice-roll">
-        {{#if flavor}}
-            <div class="dice-flavor">{{flavor}}</div>
+        {{#if result.flavor}}
+            <div class="dice-flavor">{{result.flavor}}</div>
         {{/if}}
         <div class="dice-result">
-            <div class="dice-formula">{{formula}}</div>
-            <div class="dice-tooltip">
-                {{#each dice}}
-                    <section class="tooltip-part">
-                        <div class="dice">
-                            <header class="part-header flexrow">
-                                <span class="part-formula">{{this.formula}}</span>
-                                {{#if this.flavor}}<span class="part-flavor">{{this.flavor}}</span>{{/if}}
-                                <span class="part-total">{{this.total}}</span>
-                            </header>
-                            <ol class="dice-rolls">
-                                {{#each this.rolls}}
-                                    <li class="roll {{this.classes}}">{{{this.result}}}</li>
-                                {{/each}}
-                            </ol>
-                        </div>
-                    </section>
-                {{/each}}
+            <div class="dice-formula">
+                <span>{{localize (concat 'FABULA_ULTIMA.attribute.' result.data.attr1 '.short')}}</span>
+                <span>+</span>
+                <span>{{localize (concat 'FABULA_ULTIMA.attribute.' result.data.attr2 '.short')}}</span>
+                <span>{{result.data.signum}}</span>
+                <span>{{result.data.modifier}}</span>
             </div>
-            <h4 class="dice-total">{{total}}</h4>
+            <div class="dice-formula">
+                {{#each result.dice}}
+                    <span class="roll d{{this.faces}}">{{this.total}}</span>
+                    {{#unless @last}}<span>+</span>{{/unless}}
+                {{/each}}
+                <span>{{result.data.signum}}</span>
+                <span>{{result.data.modifier}}</span>
+            </div>
+            <h4 class="dice-total">{{result.total}}</h4>
         </div>
     </div>
-{{/with}}
+    {{#if difficulty}}
+        <section class="difficulty">
+            <label>{{localize 'FABULA_ULTIMA.chat.check.difficulty'}}:</label>
+            <span>{{difficulty}}</span>
+        </section>
+    {{/if}}
+    <section class="result {{#if result.isFumble}}fumble{{/if}} {{#if result.isCrit}}critical{{/if}} {{#if difficulty}}{{#if
+            (gte result.total difficulty)}}success{{else}}failure{{/if}}{{/if}}">
+        {{#if result.isCrit}}
+            <span>{{localize 'FABULA_ULTIMA.chat.check.critical'}}</span>
+        {{/if}}
+        {{#if result.isFumble}}
+            <span>{{localize 'FABULA_ULTIMA.chat.check.fumble'}}</span>
+        {{/if}}
+        {{#if difficulty}}
+            {{#if (and (or result.isCrit (gte result.total difficulty)) (not result.isFumble))}}
+                <span>{{localize 'FABULA_ULTIMA.chat.check.success'}}</span>
+            {{else}}
+                {{#unless result.isFumble}}<span>{{localize 'FABULA_ULTIMA.chat.check.failure'}}</span>{{/unless}}
+            {{/if}}
+        {{/if}}
+    </section>
+</div>

@@ -8,7 +8,7 @@ const Templates = {
     chatCheck: "systems/fabulaultima/templates/chat/chat_check.hbs",
     chatSpell: "systems/fabulaultima/templates/chat/chat_spell.hbs",
     dialogAddItem: "systems/fabulaultima/templates/item/dialog_addItem.hbs",
-    dialogCheck: "systems/fabulaultima/templates/dialog/dialog_check.hbs",
+    dialogCheckConfig: "systems/fabulaultima/templates/dialog/dialog_check.hbs",
     itemAccessory: "systems/fabulaultima/templates/item/item_accessory.hbs",
     itemArmor: "systems/fabulaultima/templates/item/item_armor.hbs",
     itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
