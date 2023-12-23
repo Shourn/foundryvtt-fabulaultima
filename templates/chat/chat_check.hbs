@@ -4,6 +4,17 @@
             <span>{{{localize 'FABULA_ULTIMA.chat.check.reroll' trait=(localize (concat 'FABULA_ULTIMA.trait.' reroll.trait)) value=(concat '<strong class="trait">' reroll.value '</strong>' )}}}</span>
         </section>
     {{/if}}
+    {{#if push}}
+        <section>
+            <span>{{localize 'FABULA_ULTIMA.chat.check.push.bond'}}</span>
+            {{#each push.feelings}}
+                <strong>{{localize (concat 'FABULA_ULTIMA.feeling.' this)}}</strong>
+                {{#unless @last}}<span>{{localize 'FABULA_ULTIMA.chat.check.push.and'}}</span>{{/unless}}
+            {{/each}}
+            <span>{{{localize 'FABULA_ULTIMA.chat.check.push.with' with=(concat '<strong>' push.with '</strong>')}}}</span>
+            <span>({{push.strength}})</span>
+        </section>
+    {{/if}}
     <div class="dice-roll">
         <div class="dice-result">
             <div class="dice-formula">
@@ -12,6 +23,10 @@
                 <span>{{localize (concat 'FABULA_ULTIMA.attribute.' check.attr2.attribute '.short')}}</span>
                 <span>{{#if (lt check.modifier 0)}}-{{else}}+{{/if}}</span>
                 <span>{{fu-abs check.modifier}}</span>
+                {{#if push}}
+                    <span>+</span>
+                    <span>{{push.strength}}</span>
+                {{/if}}
             </div>
             <div class="dice-formula">
                 <span class="roll {{check.attr1.dice}}">{{result.attr1}}</span>
@@ -19,6 +34,10 @@
                 <span class="roll {{check.attr2.dice}}">{{result.attr2}}</span>
                 <span>{{#if (lt check.modifier 0)}}-{{else}}+{{/if}}</span>
                 <span>{{fu-abs result.modifier}}</span>
+                {{#if push}}
+                    <span>+</span>
+                    <span>{{push.strength}}</span>
+                {{/if}}
             </div>
             <h4 class="dice-total">{{result.total}}</h4>
         </div>

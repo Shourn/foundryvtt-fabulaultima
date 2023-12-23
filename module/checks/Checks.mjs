@@ -37,6 +37,7 @@ const check = {
  * @property {number} attr1
  * @property {number} attr2
  * @property {number} modifier
+ * @property {number} [push]
  * @property {number} total
  * @property {boolean} fumble
  * @property {boolean} crit
@@ -49,6 +50,7 @@ const result = {
     attr1: 5,
     attr2: 3,
     modifier: 1,
+    push: 2,
     total: 9,
     fumble: false,
     crit: false,
@@ -72,28 +74,26 @@ const reroll = {
 
 /**
  * @typedef CheckPush
- * @property {Bond} bond
- * @property {number} modifier
+ * @property {string} with
+ * @property {("admiration"|"inferiority"|"loyalty"|"mistrust"|"affection"|"hatred")[]} feelings
+ * @property {number} strength
  */
 /**
  * @type CheckPush
  */
 const push = {
-    bond: {
-        with: "Best Friend",
-        feeling1: "none",
-        feeling2: "loyalty",
-        feeling3: "affection"
-    },
-    modifier: 2
+    with: "Best Friend",
+    feelings: ["loyalty", "affection"],
+    strength: 2
 }
 
 /**
  * @typedef CheckParams
  * @property {CheckData} check
- * @property {CheckResult?} result
- * @property {CheckReroll?} reroll
+ * @property {CheckResult} [result]
+ * @property {CheckReroll} [reroll]
  * @property {ChatSpeakerData} [speaker]
+ * @property {CheckPush} [push]
  */
 
 /**
@@ -162,7 +162,12 @@ export async function rerollCheck(params, reroll) {
         attribute2Part = `${params.result.attr2}[${attribute2.attribute}]`
     }
 
-    const formula = `${attribute1Part} + ${attribute2Part} ${modPart}`;
+    let pushPart = ""
+    if (check.push) {
+        pushPart = ` + ${check.push.strength}[${check.push.with}]`
+    }
+
+    const formula = `${attribute1Part} + ${attribute2Part} ${modPart}${pushPart}`;
     /** @type Roll */
     const roll = await new Roll(formula).roll();
 
@@ -185,6 +190,7 @@ export async function rerollCheck(params, reroll) {
         attr1: roll1,
         attr2: roll2,
         modifier: modifier,
+        push: params.result.push,
         total: roll.total,
         fumble: roll1 === 1 && roll2 === 1,
         crit: roll1 === roll2 && roll1 >= 6 && roll2 >= 6,
@@ -229,6 +235,34 @@ export function addRerollContextMenuEntries(html, options) {
         }
     })
 
+    // Character push
+    options.unshift({
+        name: "FABULA_ULTIMA.chat.context.push",
+        icon: '<i class="fas fa-arrow-up-right-dots"></i>',
+        group: SYSTEM_ID,
+        condition: li => {
+            const messageId = li.data("messageId");
+            /** @type ChatMessage | undefined */
+            const message = game.messages.get(messageId);
+            const flag = message.getFlag(SYSTEM_ID, FLAGS.CheckParams);
+            return message && message.isRoll && flag && ChatMessage.getSpeakerActor(message.speaker) instanceof Character && !flag.push
+        },
+        callback: async li => {
+            const messageId = li.data("messageId");
+            /** @type ChatMessage | undefined */
+            const message = game.messages.get(messageId);
+            if (message) {
+                const checkParams = message.getFlag(SYSTEM_ID, FLAGS.CheckParams);
+                const pushParams = await getPushParams(ChatMessage.getSpeakerActor(message.speaker));
+                if (pushParams) {
+                    const newMessage = await pushCheck(checkParams, pushParams)
+                    await createCheckMessage(newMessage)
+                }
+            }
+        }
+    })
+
+
     // Villain reroll
     options.unshift({
         name: "FABULA_ULTIMA.chat.context.reroll.ultima",
@@ -255,6 +289,75 @@ export function addRerollContextMenuEntries(html, options) {
             }
         }
     })
+}
+
+/**
+ *
+ * @param {CheckParams} params
+ * @param {CheckPush} push
+ * @returns {Promise<CheckParams>}
+ */
+async function pushCheck(params, push){
+    const check = params.check;
+    const oldResult = params.result;
+
+    const attr1Part = `${oldResult.attr1}[${check.attr1.attribute}]`
+    const attr2Part = `${oldResult.attr2}[${check.attr2.attribute}]`
+    const modPart = `${check.modifier < 0 ? "-" : "+"} ${Math.abs(check.modifier)}`
+    const pushPart = `+ ${push.strength}`
+    const roll = await new Roll(`${attr1Part} + ${attr2Part} ${modPart} ${pushPart}`).roll()
+    /** @type CheckResult */
+    const result = {
+        ...oldResult,
+        push: push.strength,
+        total: oldResult.attr1 + oldResult.attr2 + oldResult.modifier + push.strength,
+        roll: roll
+    }
+
+    return {...params, result, push}
+}
+
+/**
+ *
+ * @param {Character} actor
+ * @returns {Promise<CheckPush | undefined>}
+ */
+async function getPushParams(actor){
+
+    /** @type CheckPush[] */
+    const bonds = actor.system.bonds.map(value => {
+
+        const feelings = []
+        value.feeling1 !== "none" && feelings.push(value.feeling1)
+        value.feeling2 !== "none" && feelings.push(value.feeling2)
+        value.feeling3 !== "none" && feelings.push(value.feeling3)
+
+        return ({
+            with: value.with,
+            feelings: feelings,
+            strength: feelings.length
+        });
+    })
+
+    /** @type CheckPush */
+    const push = await Dialog.prompt({
+        title: game.i18n.localize("FABULA_ULTIMA.dialog.push.title"),
+        label: game.i18n.localize("FABULA_ULTIMA.dialog.push.label"),
+        content: await renderTemplate(Templates.dialogCheckPush, {bonds}),
+        options: {classes: ["dialog-reroll"]},
+        /** @type {(jQuery) => CheckPush} */
+        callback: (html) => {
+            const index = +html.find("input[name=bond]:checked").val();
+            return bonds[index]
+        }
+    })
+
+    if (!push){
+        ui.notifications.error("FABULA_ULTIMA.dialog.reroll.missingBond", {localize: true})
+        return;
+    }
+
+    return push;
 }
 
 /**

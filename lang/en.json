@@ -121,7 +121,12 @@
         "failure": "Failure",
         "critical": "Critical",
         "fumble": "Fumble",
-        "reroll": "Invoked {trait} {value} to reroll"
+        "reroll": "Invoked {trait} {value} to reroll",
+        "push": {
+          "bond": "Pushed using Bond of",
+          "and": "and",
+          "with": "with {with}"
+        }
       },
       "context": {
         "reroll": {
@@ -148,6 +153,13 @@
         "label": "Invoke Trait to Reroll Dice",
         "missingTrait": "No trait selected!",
         "missingDice": "No dice to reroll selected!"
+      },
+      "push": {
+        "title": "Invoke Bond",
+        "label": "Invoke Bond to push yourself",
+        "bond": "Bond of",
+        "and": "and",
+        "with": "with {with}"
       }
     },
     "attackType": {

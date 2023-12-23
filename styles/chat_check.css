@@ -65,3 +65,7 @@
 .system-fabulaultima .chat-message .check .trait {
     display: inline;
 }
+
+.system-fabulaultima .chat-message .check section {
+    margin-bottom: .5em;
+}
