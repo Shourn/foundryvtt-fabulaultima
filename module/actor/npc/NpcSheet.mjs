@@ -1,6 +1,6 @@
 import Templates from "../../Templates.mjs";
-import {promptCheck} from "../../utils/helper.mjs";
 import {activateStatusEffectListeners, extractStatusEffects} from "../../StatusEffects.mjs";
+import {promptCheck} from "../../checks/Checks.mjs";
 
 
 export class NpcSheet extends ActorSheet {
@@ -89,8 +89,8 @@ export class NpcSheet extends ActorSheet {
 
     async addTrait(clickEvent) {
         const newTrait = await Dialog.prompt({
-            title: "FABULA_ULTIMA.npc.traits.dialog.title",
-            label: "FABULA_ULTIMA.npc.traits.dialog.label",
+            title: game.i18n.localize("FABULA_ULTIMA.sheet.npc.traits.dialog.title"),
+            label: game.i18n.localize("FABULA_ULTIMA.sheet.npc.traits.dialog.label"),
             content: await renderTemplate(Templates.dialogNpcAddTrait, {}),
             callback: (html) => {
                 console.log(html)
@@ -101,12 +101,13 @@ export class NpcSheet extends ActorSheet {
         if (newTrait && newTrait.trim()) {
             await this.actor.update({system: {traits: [...this.actor.system.traits, newTrait]}})
         } else {
-            ui.notifications.warn("FABULA_ULTIMA.npc.traits.dialog.empty")
+            ui.notifications.warn("FABULA_ULTIMA.npc.traits.dialog.empty", {localize: true})
         }
     }
 
     async deleteTrait(clickEvent) {
         event.preventDefault()
+        console.log(this)
         const index = event.currentTarget.dataset.index;
 
         const traits = [...this.actor.system.traits].toSpliced(index, 1);

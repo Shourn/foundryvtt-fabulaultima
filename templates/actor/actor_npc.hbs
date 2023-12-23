@@ -93,9 +93,7 @@
             <span class="sep">/</span>
             <input type="text" readonly value="{{system.mp.max}}"/>
         </fieldset>
-        {{log @root}}
         {{#each system.defenses as | defense |}}
-            {{log defense}}
             <fieldset class="form-fields">
                 <label>{{localize (concat 'FABULA_ULTIMA.defense.' @key '.short')}}</label>
                 <select name="system.defenses.{{@key}}.attribute">

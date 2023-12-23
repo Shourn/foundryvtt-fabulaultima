@@ -1,9 +1,7 @@
-{{log this}}
 <div class="check">
     {{#if reroll}}
         <section>
-            <label>{{localize 'FABULA_ULTIMA.chat.check.reroll' trait=(localize (concat 'FABULA_ULTIMA.trait.' reroll.trait))}}</label>
-            <div>{{reroll.value}}</div>
+            <span>{{{localize 'FABULA_ULTIMA.chat.check.reroll' trait=(localize (concat 'FABULA_ULTIMA.trait.' reroll.trait)) value=(concat '<strong class="trait">' reroll.value '</strong>' )}}}</span>
         </section>
     {{/if}}
     <div class="dice-roll">

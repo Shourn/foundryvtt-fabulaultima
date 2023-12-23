@@ -23,7 +23,7 @@ import {MiscItemSheet} from "./item/misc/MiscItemSheet.mjs";
 import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
 import {SkillSheet} from "./item/skill/SkillSheet.mjs";
 import {initStatusEffects} from "./StatusEffects.mjs";
-import {addRerollContextMenuEntries, createCheckMessage, rollCheck} from "./checks/Checks.mjs";
+import {addRerollContextMenuEntries} from "./checks/Checks.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;

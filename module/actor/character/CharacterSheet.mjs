@@ -1,6 +1,7 @@
 import Templates from "../../Templates.mjs";
-import {promptCheck, registerCollapse} from "../../utils/helper.mjs";
+import {registerCollapse} from "../../utils/helper.mjs";
 import {activateStatusEffectListeners, extractStatusEffects} from "../../StatusEffects.mjs";
+import {promptCheck} from "../../checks/Checks.mjs";
 
 export class CharacterSheet extends ActorSheet {
 

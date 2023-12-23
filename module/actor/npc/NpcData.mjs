@@ -9,7 +9,7 @@ import {rank, species, villain} from "../../Constants.mjs";
  * @property {number} replacesSoldiers
  * @property {Species} species
  * @property {string} description
- * @property {string} traits
+ * @property {string[]} traits
  * @property {number} initiative
  */
 export class NpcData extends CommonData {

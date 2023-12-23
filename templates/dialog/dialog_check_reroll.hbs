@@ -1,0 +1,34 @@
+<section class="traits">
+    {{#each traits}}
+        <div>
+            <label >
+                <input type="radio" name="trait" value="{{this.type}}" data-value="{{this.value}}">
+                <span>{{localize (concat 'FABULA_ULTIMA.trait.' this.type)}}:</span>
+                <strong class="trait">{{this.value}}</strong>
+            </label>
+        </div>
+    {{/each}}
+</section>
+<hr>
+<section class="flexrow">
+
+    <label class="dice-container">
+            <span class="roll-container">
+                <abbr class="roll {{attr1.dice}}"
+                      title="{{localize (concat 'FABULA_ULTIMA.attributeDice.' attr1.dice)}}">{{attr1.result}}</abbr>
+            </span>
+        <span>{{localize (concat 'FABULA_ULTIMA.attribute.' attr1.attribute '.full')}}</span>
+        <input type="checkbox" name="results" value="attr1">
+    </label>
+
+    <label class="dice-container">
+            <span class="roll-container">
+                <abbr class="roll {{attr2.dice}}"
+                      title="{{localize (concat 'FABULA_ULTIMA.attributeDice.' attr2.dice)}}">{{attr2.result}}</abbr>
+            </span>
+        <span>{{localize (concat 'FABULA_ULTIMA.attribute.' attr2.attribute '.full')}}</span>
+        <input type="checkbox" name="results" value="attr2">
+    </label>
+
+</section>
+<hr>

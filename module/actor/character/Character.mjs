@@ -2,6 +2,7 @@ import {Accessory} from "../../item/accessory/Accessory.mjs";
 import {Armor} from "../../item/armor/Armor.mjs";
 import {Shield} from "../../item/shield/Shield.mjs";
 import {Weapon} from "../../item/weapon/Weapon.mjs";
+import {BaseActor} from "../BaseActor.mjs";
 
 /**
  * @augments {Actor}
@@ -10,7 +11,7 @@ import {Weapon} from "../../item/weapon/Weapon.mjs";
  * @extends {ClientDocumentMixin}
  * @property {PlayerCharacterData} system
  */
-export class Character extends Actor {
+export class Character extends BaseActor {
 
     get backpack() {
         return [...this.itemTypes.accessory, ...this.itemTypes.armor, ...this.itemTypes.misc, ...this.itemTypes.shield, ...this.itemTypes.weapon]

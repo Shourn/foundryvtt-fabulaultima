@@ -1,0 +1,45 @@
+
+.system-fabulaultima .dialog-reroll .roll {
+    display: inline-block;
+    min-width: 30px;
+    min-height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-size: cover;
+    filter: brightness(.75);
+}
+
+.system-fabulaultima .dialog-reroll .roll-container {
+    display: flex;
+    justify-content: center;
+}
+
+.system-fabulaultima .dialog-reroll .dice-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.system-fabulaultima .dialog-reroll .roll.d6 {
+    background-image: url("/icons/svg/d6-grey.svg");
+}
+
+.system-fabulaultima .dialog-reroll .roll.d8 {
+    background-image: url("/icons/svg/d8-grey.svg");
+}
+
+.system-fabulaultima .dialog-reroll .roll.d10 {
+    background-image: url("/icons/svg/d10-grey.svg");
+}
+
+.system-fabulaultima .dialog-reroll .roll.d12 {
+    background-image: url("/icons/svg/d12-grey.svg");
+}
+
+.system-fabulaultima .dialog-reroll .traits {
+    line-height: 2;
+}
+
+.system-fabulaultima .dialog-reroll .trait {
+    font-size: 1.2em;
+}

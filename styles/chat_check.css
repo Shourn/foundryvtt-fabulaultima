@@ -54,3 +54,14 @@
     justify-content: center;
     gap: 0.5rem;
 }
+
+
+.system-fabulaultima .chat-message .check .trait::before {
+    content: "'";
+}
+.system-fabulaultima .chat-message .check .trait::after {
+    content: "'";
+}
+.system-fabulaultima .chat-message .check .trait {
+    display: inline;
+}

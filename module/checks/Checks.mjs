@@ -14,6 +14,8 @@ import {FLAGS, SYSTEM_ID} from "../System.mjs";
 import Templates from "../Templates.mjs";
 import {Character} from "../actor/character/Character.mjs";
 import {Npc} from "../actor/npc/Npc.mjs";
+import {attributes as Attributes} from "../Constants.mjs";
+import {toObject} from "../utils/helper.mjs";
 
 /**
  * @type CheckData
@@ -86,16 +88,13 @@ const push = {
     modifier: 2
 }
 
-
 /**
  * @typedef CheckParams
  * @property {CheckData} check
  * @property {CheckResult?} result
  * @property {CheckReroll?} reroll
- * @property {string} [actor]
+ * @property {ChatSpeakerData} [speaker]
  */
-
-const FORMULA = "@attr1.dice[@attr1.attribute] + @attr2.dice[@attr2.attribute] @signum @modifier"
 
 /**
  * @param {CheckParams} params
@@ -139,8 +138,6 @@ export async function rollCheck(params) {
  * @returns {Promise<CheckParams>}
  */
 export async function rerollCheck(params, reroll) {
-
-    console.log(params, reroll)
 
     const check = params.check;
 
@@ -208,7 +205,7 @@ export async function rerollCheck(params, reroll) {
 export function addRerollContextMenuEntries(html, options) {
     // Character reroll
     options.unshift({
-        name: "FABULA_ULTIMA.chat.context.reroll",
+        name: "FABULA_ULTIMA.chat.context.reroll.fabula",
         icon: '<i class="fas fa-dice"></i>',
         group: SYSTEM_ID,
         condition: li => {
@@ -222,19 +219,19 @@ export function addRerollContextMenuEntries(html, options) {
             /** @type ChatMessage | undefined */
             const message = game.messages.get(messageId);
             if (message) {
-                const newMessage = await rerollCheck(message.getFlag(SYSTEM_ID, FLAGS.CheckParams), {
-                    trait: "identity",
-                    value: "Thirsty Sword Lesbian",
-                    selection: "attr1"
-                })
-                await createCheckMessage(newMessage)
+                const checkParams = message.getFlag(SYSTEM_ID, FLAGS.CheckParams);
+                const rerollParams = await getRerollParams(checkParams, ChatMessage.getSpeakerActor(message.speaker));
+                if (rerollParams) {
+                    const newMessage = await rerollCheck(checkParams, rerollParams)
+                    await createCheckMessage(newMessage)
+                }
             }
         }
     })
 
     // Villain reroll
     options.unshift({
-        name: "FABULA_ULTIMA.chat.context.reroll",
+        name: "FABULA_ULTIMA.chat.context.reroll.ultima",
         icon: '<i class="fas fa-dice"></i>',
         group: SYSTEM_ID,
         condition: li => {
@@ -249,16 +246,80 @@ export function addRerollContextMenuEntries(html, options) {
             /** @type ChatMessage | undefined */
             const message = game.messages.get(messageId);
             if (message) {
-                const newMessage = await rerollCheck(message.getFlag(SYSTEM_ID, FLAGS.CheckParams), {
-                    trait: "trait",
-                    value: "Thirsty Sword Lesbian",
-                    selection: "attr1"
-                })
-                await createCheckMessage(newMessage)
+                const checkParams = message.getFlag(SYSTEM_ID, FLAGS.CheckParams);
+                const rerollParams = await getRerollParams(checkParams, ChatMessage.getSpeakerActor(message.speaker));
+                if (rerollParams) {
+                    const newMessage = await rerollCheck(checkParams, rerollParams)
+                    await createCheckMessage(newMessage)
+                }
+            }
+        }
+    })
+}
+
+/**
+ *
+ * @param {CheckParams} params
+ * @param {Actor} actor
+ * @returns {Promise<CheckReroll | undefined>}
+ */
+async function getRerollParams(params, actor) {
+    const traits = [];
+    if (actor instanceof Character) {
+        Object.entries(actor.system.traits)
+            .map(([trait, value]) => ({type: trait, value: value}))
+            .forEach(trait => traits.push(trait));
+    }
+    if (actor instanceof Npc) {
+        actor.system.traits.map(trait => ({type: "trait", value: trait}))
+            .forEach(trait => traits.push(trait))
+    }
+
+    const attr1 = {
+        ...params.check.attr1,
+        result: params.result.attr1
+    }
+
+    const attr2 = {
+        ...params.check.attr2,
+        result: params.result.attr2
+    }
+
+    /** @type CheckReroll */
+    const reroll = await Dialog.prompt({
+        title: game.i18n.localize("FABULA_ULTIMA.dialog.reroll.title"),
+        label: game.i18n.localize("FABULA_ULTIMA.dialog.reroll.label"),
+        content: await renderTemplate(Templates.dialogCheckReroll, {traits, attr1, attr2}),
+        options: {classes: ["dialog-reroll"]},
+        /** @type {(jQuery) => CheckReroll} */
+        callback: (html) => {
+
+            const trait = html.find("input[name=trait]:checked");
+
+            const selection = html.find("input[name=results]:checked")
+                .map((_, el) => el.value)
+                .get();
+
+
+            return {
+                trait: trait.val(),
+                value: trait.data("value"),
+                selection: selection
             }
         }
     })
 
+    if (!reroll.trait) {
+        ui.notifications.error("FABULA_ULTIMA.dialog.reroll.missingTrait", {localize: true})
+        return;
+    }
+
+    if (!reroll.selection || !reroll.selection.length) {
+        ui.notifications.error("FABULA_ULTIMA.dialog.reroll.missingDice", {localize: true})
+        return;
+    }
+
+    return reroll;
 }
 
 export async function createCheckMessage(checkParams) {
@@ -268,9 +329,7 @@ export async function createCheckMessage(checkParams) {
         content: await renderTemplate(Templates.chatCheck, checkParams),
         rolls: [checkParams.result.roll],
         type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-        speaker: {
-            actor: checkParams.actor
-        },
+        speaker: checkParams.speaker,
         flags: {
             [SYSTEM_ID]: {
                 [FLAGS.CheckParams]: checkParams
@@ -279,4 +338,74 @@ export async function createCheckMessage(checkParams) {
     }
 
     return ChatMessage.create(chatMessage);
+}
+
+const KEY_RECENT_CHECKS = "fabulaultima.recentChecks"
+
+/**
+ * @param {Character, Npc} actor
+ * @returns {Promise<ChatMessage|Object>}
+ */
+export async function promptCheck(actor) {
+    const recentChecks = JSON.parse(sessionStorage.getItem(KEY_RECENT_CHECKS) || "{}");
+    const recentActorChecks = recentChecks[actor.uuid] || (recentChecks[actor.uuid] = {});
+    try {
+        const attributes = actor.system.attributes;
+        const checkConfig = await Dialog.wait({
+            title: game.i18n.localize("FABULA_ULTIMA.dialog.check.title"),
+            content: await renderTemplate(Templates.dialogCheckConfig, {
+                attributes: toObject(Attributes, value => `FABULA_ULTIMA.attribute.${value}.short`),
+                attributeValues: Object.entries(attributes).reduce((previousValue, [attribute, {current}]) => ({
+                    ...previousValue,
+                    [attribute]: current
+                }), {}),
+                attr1: recentActorChecks.attr1 || "might",
+                attr2: recentActorChecks.attr2 || "might",
+                modifier: recentActorChecks.modifier || 0,
+                difficulty: recentActorChecks.difficulty || 0
+            }),
+            buttons: [{
+                icon: '<i class="fas fa-dice"></i>',
+                label: game.i18n.localize("FABULA_ULTIMA.dialog.check.roll"),
+                callback: jQuery => {
+                    return {
+                        attr1: jQuery.find("*[name=attr1]:checked").val(),
+                        attr2: jQuery.find("*[name=attr2]:checked").val(),
+                        modifier: +jQuery.find("*[name=modifier]").val(),
+                        difficulty: +jQuery.find("*[name=difficulty]").val()
+                    }
+                }
+            }]
+        }, {}, {});
+
+        recentActorChecks.attr1 = checkConfig.attr1;
+        recentActorChecks.attr2 = checkConfig.attr2;
+        recentActorChecks.modifier = checkConfig.modifier;
+        recentActorChecks.difficulty = checkConfig.difficulty;
+        sessionStorage.setItem(KEY_RECENT_CHECKS, JSON.stringify(recentChecks));
+
+        const speaker = ChatMessage.implementation.getSpeaker({actor});
+
+        const rolledCheck = await rollCheck({
+            check: {
+                attr1: {
+                    attribute: checkConfig.attr1,
+                    dice: attributes[checkConfig.attr1].current
+                },
+                attr2: {
+                    attribute: checkConfig.attr2,
+                    dice: attributes[checkConfig.attr2].current
+                },
+                modifier: checkConfig.modifier
+            },
+            speaker: speaker
+            //TODO: Difficulty
+        });
+
+
+        return await createCheckMessage(rolledCheck);
+    } catch (e) {
+        console.log(e)
+        // TODO
+    }
 }

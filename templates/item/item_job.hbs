@@ -61,7 +61,6 @@
         <section data-tab="skills" data-group="primary" class="form-group-stacked tab">
             <ol>
                 {{#each system.skills as | skill |}}
-                    {{log skill}}
                     <li data-item-id="{{skill.id}}">{{skill.name}}<a data-action="delete" data-type="item"><i class="fas fa-trash"></i></a></li>
                 {{/each}}
             </ol>
@@ -69,7 +68,6 @@
         <section data-tab="spells" data-group="primary" class="form-group-stacked tab">
             <ol>
                 {{#each system.spells as | spell |}}
-                    {{log spell}}
                     <li data-item-id="{{spell.id}}">{{spell.name}}<a data-action="delete" data-type="item"><i class="fas fa-trash"></i></a></li>
                 {{/each}}
             </ol>
