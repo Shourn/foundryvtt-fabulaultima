@@ -16,7 +16,8 @@ const Templates = {
     itemJob: "systems/fabulaultima/templates/item/item_job.hbs",
     itemSkill: "systems/fabulaultima/templates/item/item_skill.hbs",
     itemShield: "systems/fabulaultima/templates/item/item_shield.hbs",
-    itemMisc: "systems/fabulaultima/templates/item/item_misc.hbs"
+    itemMisc: "systems/fabulaultima/templates/item/item_misc.hbs",
+    dialogNpcAddTrait: "systems/fabulaultima/templates/dialog/dialog_npc_trait_add.hbs"
 
 };
 

@@ -13,6 +13,7 @@
 import {FLAGS, SYSTEM_ID} from "../System.mjs";
 import Templates from "../Templates.mjs";
 import {Character} from "../actor/character/Character.mjs";
+import {Npc} from "../actor/npc/Npc.mjs";
 
 /**
  * @type CheckData
@@ -231,21 +232,36 @@ export function addRerollContextMenuEntries(html, options) {
         }
     })
 
+    // Villain reroll
+    options.unshift({
+        name: "FABULA_ULTIMA.chat.context.reroll",
+        icon: '<i class="fas fa-dice"></i>',
+        group: SYSTEM_ID,
+        condition: li => {
+            const messageId = li.data("messageId");
+            /** @type ChatMessage | undefined */
+            const message = game.messages.get(messageId);
+            const speakerActor = ChatMessage.getSpeakerActor(message.speaker);
+            return message && message.isRoll && message.getFlag(SYSTEM_ID, FLAGS.CheckParams) && speakerActor instanceof Npc && speakerActor.system.isVillain
+        },
+        callback: async li => {
+            const messageId = li.data("messageId");
+            /** @type ChatMessage | undefined */
+            const message = game.messages.get(messageId);
+            if (message) {
+                const newMessage = await rerollCheck(message.getFlag(SYSTEM_ID, FLAGS.CheckParams), {
+                    trait: "trait",
+                    value: "Thirsty Sword Lesbian",
+                    selection: "attr1"
+                })
+                await createCheckMessage(newMessage)
+            }
+        }
+    })
+
 }
 
 export async function createCheckMessage(checkParams) {
-
-    let reroll = checkParams.reroll
-    if (checkParams.actor && checkParams.reroll) {
-        /** @type Actor | undefined */
-        const actor = game.actors.get(checkParams.actor);
-        if (actor instanceof Character) {
-            reroll = {
-                ...reroll,
-                traitValue: actor.system.traits[reroll.trait]
-            }
-        }
-    }
 
     /** @type Partial<ChatMessageData> */
     const chatMessage = {

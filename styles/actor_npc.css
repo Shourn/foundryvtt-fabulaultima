@@ -1,0 +1,21 @@
+.system-fabulaultima .npc .traits {
+    flex: 9;
+    margin-left: 2px;
+    min-height: 32px;
+    max-height: 56px;
+    overflow-y: scroll;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 4px 4px;
+    border-radius: 4px;
+    box-shadow: inset black 0 0 2px 0px;
+}
+
+.system-fabulaultima .npc .traits .trait {
+    display: inline-block;
+    line-height: 1.1rem;
+    margin: 0 0 2px;
+    padding: 0 2px;
+    border: 1px solid var(--color-border-light-tertiary);
+    background: var(--color-bg-btn-minor-inactive);
+    border-radius: 3px;
+}

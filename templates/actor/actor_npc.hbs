@@ -1,5 +1,5 @@
 {{! expects Npc }}
-<form class="{{cssClass}}" autocomplete="off">
+<form class="{{cssClass}} npc" autocomplete="off">
     <header class="sheet-header form-group">
         <section class="form-group-stacked">
             <fieldset>
@@ -53,7 +53,17 @@
             <fieldset>
                 <div class="form-fields">
                     <label>Traits</label>
-                    <input name="system.traits" type="text" value="{{system.traits}}">
+                    <span class="traits">
+                        {{#each system.traits}}
+                            <span class="trait">
+                        <span>{{ this }}</span>
+                        <a class="remove" data-tooltip="{{localize 'FABULA_ULTIMA.npc.traits.delete'}}"
+                           data-index="{{ @index }}" data-type="trait" data-action="delete"><i
+                                class="fa-solid fa-trash"></i></a>
+                    </span>
+                        {{/each}}
+                    </span>
+                    <a style="flex: 0 !important;" data-type="trait" data-action="add"><i class="fas fa-plus"></i></a>
                 </div>
             </fieldset>
         </section>

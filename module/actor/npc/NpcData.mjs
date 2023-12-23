@@ -16,7 +16,8 @@ export class NpcData extends CommonData {
     static defineSchema() {
         const {
             NumberField,
-            StringField
+            StringField,
+            ArrayField
         } = foundry.data.fields
         return Object.assign({}, super.defineSchema(), {
                 villain: new StringField({required: true, initial: villain[0], choices: villain}),
@@ -24,7 +25,7 @@ export class NpcData extends CommonData {
                 rank: new StringField({required: true, initial: rank[0], choices: rank}),
                 replacesSoldiers: new NumberField({initial: 1, positive: true, integer: true}),
                 species: new StringField({initial: species[0], choices: species}),
-                traits: new StringField({initial: ""})
+                traits: new ArrayField(new StringField({initial: ""}), {})
             }
         )
     }

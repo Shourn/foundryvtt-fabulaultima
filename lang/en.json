@@ -231,6 +231,14 @@
           "check": "Check",
           "damage": "Damage",
           "effect": "Effect"
+        },
+        "traits": {
+          "dialog": {
+            "title": "New Trait",
+            "label": "Add Trait",
+            "empty": "Cannot add blank trait!"
+          },
+          "delete": "Delete Trait"
         }
       },
       "weapon": {

@@ -43,6 +43,8 @@ export class NpcSheet extends ActorSheet {
         html.find("*[data-action=edit][data-type=item]").click(clickEvent => this.editItem(clickEvent));
         html.find("*[data-action=delete][data-type=item]").click(clickEvent => this.deleteItem(clickEvent));
         html.find("*[data-action=roll][data-type=check]").click(clickEvent => this.promptCheck(clickEvent));
+        html.find("*[data-action=add][data-type=trait]").click(clickEvent => this.addTrait(clickEvent));
+        html.find("*[data-action=delete][data-type=trait]").click(clickEvent => this.deleteTrait(clickEvent));
 
         activateStatusEffectListeners(html, this.actor)
     }
@@ -83,5 +85,31 @@ export class NpcSheet extends ActorSheet {
 
     async promptCheck(clickEvent) {
         return promptCheck(this.actor)
+    }
+
+    async addTrait(clickEvent) {
+        const newTrait = await Dialog.prompt({
+            title: "FABULA_ULTIMA.npc.traits.dialog.title",
+            label: "FABULA_ULTIMA.npc.traits.dialog.label",
+            content: await renderTemplate(Templates.dialogNpcAddTrait, {}),
+            callback: (html) => {
+                console.log(html)
+                return html.find("input[name=trait]").val();
+            }
+        });
+
+        if (newTrait && newTrait.trim()) {
+            await this.actor.update({system: {traits: [...this.actor.system.traits, newTrait]}})
+        } else {
+            ui.notifications.warn("FABULA_ULTIMA.npc.traits.dialog.empty")
+        }
+    }
+
+    async deleteTrait(clickEvent) {
+        event.preventDefault()
+        const index = event.currentTarget.dataset.index;
+
+        const traits = [...this.actor.system.traits].toSpliced(index, 1);
+        await this.actor.update({system: {traits: traits}})
     }
 }
