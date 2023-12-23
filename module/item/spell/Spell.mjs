@@ -1,6 +1,5 @@
-import {SystemRoll} from "../../roll/SystemRoll.mjs";
 import Templates from "../../Templates.mjs";
-import {getDamage} from "../../utils/helper.mjs";
+import {createCheckMessage, rollCheck} from "../../checks/Checks.mjs";
 
 /**
  * @property {SpellData} system
@@ -25,18 +24,23 @@ export class Spell extends Item {
 
         if (this.system.offensive) {
 
-            const roll = await SystemRoll.rollCheck(this.system.check, this.actor.system.attributes);
-
-            await roll.toMessage({
-                speaker: ChatMessage.getSpeaker({actor: this.actor}),
-                flavor: this.name + " (HR: " + roll.highRoll + ")",
-                content: await renderTemplate(Templates.chatSpell, {
-                    result: roll,
-                    damage: getDamage(this.system.damage, roll),
-                    system: this.getRollData(),
-                    description: await TextEditor.enrichHTML(this.system.description)
-                })
+            const check = this.system.check;
+            const attributes = this.actor.system.attributes;
+            const rolledCheck = await rollCheck({
+                check: {
+                    attr1: {
+                        attribute: check.attr1,
+                        dice: attributes[check.attr1]
+                    },
+                    attr2: {
+                        attribute: check.attr2,
+                        dice: attributes[check.attr2]
+                    },
+                    modifier: check.modifier
+                }
             });
+
+            await createCheckMessage(rolledCheck);
         } else {
             await ChatMessage.create({
                 content: await renderTemplate(Templates.chatSpell, {

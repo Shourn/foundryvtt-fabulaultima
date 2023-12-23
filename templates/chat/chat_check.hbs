@@ -1,24 +1,26 @@
 {{log this}}
 <div class="check">
+    {{#if reroll}}
+        <section>
+            <label>{{localize 'FABULA_ULTIMA.chat.check.reroll' trait=(localize (concat 'FABULA_ULTIMA.trait.' reroll.trait))}}</label>
+            <div>{{reroll.value}}</div>
+        </section>
+    {{/if}}
     <div class="dice-roll">
-        {{#if result.flavor}}
-            <div class="dice-flavor">{{result.flavor}}</div>
-        {{/if}}
         <div class="dice-result">
             <div class="dice-formula">
-                <span>{{localize (concat 'FABULA_ULTIMA.attribute.' result.data.attr1 '.short')}}</span>
+                <span>{{localize (concat 'FABULA_ULTIMA.attribute.' check.attr1.attribute '.short')}}</span>
                 <span>+</span>
-                <span>{{localize (concat 'FABULA_ULTIMA.attribute.' result.data.attr2 '.short')}}</span>
-                <span>{{result.data.signum}}</span>
-                <span>{{result.data.modifier}}</span>
+                <span>{{localize (concat 'FABULA_ULTIMA.attribute.' check.attr2.attribute '.short')}}</span>
+                <span>{{#if (lt check.modifier 0)}}-{{else}}+{{/if}}</span>
+                <span>{{fu-abs check.modifier}}</span>
             </div>
             <div class="dice-formula">
-                {{#each result.dice}}
-                    <span class="roll d{{this.faces}}">{{this.total}}</span>
-                    {{#unless @last}}<span>+</span>{{/unless}}
-                {{/each}}
-                <span>{{result.data.signum}}</span>
-                <span>{{result.data.modifier}}</span>
+                <span class="roll {{check.attr1.dice}}">{{result.attr1}}</span>
+                <span>+</span>
+                <span class="roll {{check.attr2.dice}}">{{result.attr2}}</span>
+                <span>{{#if (lt check.modifier 0)}}-{{else}}+{{/if}}</span>
+                <span>{{fu-abs result.modifier}}</span>
             </div>
             <h4 class="dice-total">{{result.total}}</h4>
         </div>
@@ -29,19 +31,19 @@
             <span>{{difficulty}}</span>
         </section>
     {{/if}}
-    <section class="result {{#if result.isFumble}}fumble{{/if}} {{#if result.isCrit}}critical{{/if}} {{#if difficulty}}{{#if
+    <section class="result {{#if result.fumble}}fumble{{/if}} {{#if result.crit}}critical{{/if}} {{#if difficulty}}{{#if
             (gte result.total difficulty)}}success{{else}}failure{{/if}}{{/if}}">
-        {{#if result.isCrit}}
+        {{#if result.crit}}
             <span>{{localize 'FABULA_ULTIMA.chat.check.critical'}}</span>
         {{/if}}
-        {{#if result.isFumble}}
+        {{#if result.fumble}}
             <span>{{localize 'FABULA_ULTIMA.chat.check.fumble'}}</span>
         {{/if}}
         {{#if difficulty}}
-            {{#if (and (or result.isCrit (gte result.total difficulty)) (not result.isFumble))}}
+            {{#if (and (or result.crit (gte result.total difficulty)) (not result.fumble))}}
                 <span>{{localize 'FABULA_ULTIMA.chat.check.success'}}</span>
             {{else}}
-                {{#unless result.isFumble}}<span>{{localize 'FABULA_ULTIMA.chat.check.failure'}}</span>{{/unless}}
+                {{#unless result.fumble}}<span>{{localize 'FABULA_ULTIMA.chat.check.failure'}}</span>{{/unless}}
             {{/if}}
         {{/if}}
     </section>

@@ -1,6 +1,6 @@
 import Templates from "../Templates.mjs";
-import {attributes} from "../Constants.mjs";
-import {SystemRoll} from "../roll/SystemRoll.mjs";
+import {attributes as Attributes} from "../Constants.mjs";
+import {createCheckMessage, rollCheck} from "../checks/Checks.mjs";
 
 /**
  * @param {number} value
@@ -36,11 +36,12 @@ export async function promptCheck(actor) {
     const recentChecks = JSON.parse(sessionStorage.getItem(KEY_RECENT_CHECKS) || "{}");
     const recentActorChecks = recentChecks[actor.uuid] || (recentChecks[actor.uuid] = {});
     try {
+        const attributes = actor.system.attributes;
         const checkConfig = await Dialog.wait({
             title: game.i18n.localize("FABULA_ULTIMA.dialog.check.title"),
             content: await renderTemplate(Templates.dialogCheckConfig, {
-                attributes: toObject(attributes, value => `FABULA_ULTIMA.attribute.${value}.short`),
-                attributeValues: Object.entries(actor.system.attributes).reduce((previousValue, [attribute, {current}]) => ({...previousValue, [attribute]: current}), {}),
+                attributes: toObject(Attributes, value => `FABULA_ULTIMA.attribute.${value}.short`),
+                attributeValues: Object.entries(attributes).reduce((previousValue, [attribute, {current}]) => ({...previousValue, [attribute]: current}), {}),
                 attr1: recentActorChecks.attr1 || "might",
                 attr2: recentActorChecks.attr2 || "might",
                 modifier: recentActorChecks.modifier || 0,
@@ -66,36 +67,27 @@ export async function promptCheck(actor) {
         recentActorChecks.difficulty = checkConfig.difficulty;
         sessionStorage.setItem(KEY_RECENT_CHECKS, JSON.stringify(recentChecks));
 
-        const roll = await SystemRoll.rollCheck(checkConfig, actor.system.attributes);
+        const rolledCheck = await rollCheck({
+            check: {
+                attr1: {
+                    attribute: checkConfig.attr1,
+                    dice: attributes[checkConfig.attr1].current
+                },
+                attr2: {
+                    attribute: checkConfig.attr2,
+                    dice: attributes[checkConfig.attr2].current
+                },
+                modifier: checkConfig.modifier
+            },
+            actor: actor.id
+            //TODO: Difficulty
+        });
 
-        return roll.toMessage({
-                speaker: ChatMessage.getSpeaker({actor}),
-                content: await renderTemplate(Templates.chatCheck, {
-                    result: roll,
-                    difficulty: checkConfig.difficulty
-                })
-            })
+        return await createCheckMessage(rolledCheck);
     } catch (e) {
         console.log(e)
         // TODO
     }
-}
-
-/**
- * @param {Damage} damage
- * @param {SystemRoll} roll
- * @returns {{total: number, bonus: number, type: string, base: number}}
- */
-export function getDamage(damage, roll) {
-    const rollType = damage.roll;
-    const base = rollType !== "none" ? roll[rollType] : 0;
-    const bonus = damage.bonus;
-    return {
-        base: base,
-        bonus: bonus,
-        total: base + bonus,
-        type: `FABULA_ULTIMA.damageType.${damage.type}`
-    };
 }
 
 /**

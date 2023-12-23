@@ -1,6 +1,4 @@
-import {SystemRoll} from "../../roll/SystemRoll.mjs";
-import Templates from "../../Templates.mjs";
-import {getDamage} from "../../utils/helper.mjs";
+import {createCheckMessage, rollCheck} from "../../checks/Checks.mjs";
 
 export class Weapon extends Item {
 
@@ -21,16 +19,23 @@ export class Weapon extends Item {
             return;
         }
 
-        const roll = await SystemRoll.rollCheck(this.system.check, this.actor.system.attributes);
-
-        await roll.toMessage({
-            speaker: ChatMessage.getSpeaker({actor: this.actor}),
-            flavor: this.name + " (HR: " + roll.highRoll + ")",
-            content: await renderTemplate(Templates.chatAttack, {
-                result: roll,
-                damage: getDamage(this.system.damage, roll)
-            })
+        const check = this.system.check;
+        const attributes = this.actor.system.attributes;
+        const rolledCheck = await rollCheck({
+            check: {
+                attr1: {
+                    attribute: check.attr1,
+                    dice: attributes[check.attr1]
+                },
+                attr2: {
+                    attribute: check.attr2,
+                    dice: attributes[check.attr2]
+                },
+                modifier: check.modifier
+            }
         });
+
+        await createCheckMessage(rolledCheck);
 
     }
 

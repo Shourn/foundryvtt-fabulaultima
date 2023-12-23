@@ -47,6 +47,8 @@ export async function preloadTemplates() {
         Handlebars.registerHelper(helper, () => translation)
     }
 
+    Handlebars.registerHelper("fu-abs", (val) => Math.abs(val))
+
     const templates = await loadTemplates(Object.values(Templates));
     const partials = await loadTemplates(Partials);
     return [...templates, ...partials];

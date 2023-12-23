@@ -5,7 +5,6 @@ import {ActorProxy} from "./actor/ActorProxy.mjs";
 import {CharacterSheet} from "./actor/character/CharacterSheet.mjs";
 import {NpcSheet} from "./actor/npc/NpcSheet.mjs";
 import {ItemProxy} from "./item/ItemProxy.mjs";
-import {SystemRoll} from "./roll/SystemRoll.mjs";
 import {SpellData} from "./item/spell/SpellData.mjs";
 import {SpellSheet} from "./item/spell/SpellSheet.mjs";
 import {SYSTEM_ID} from "./System.mjs";
@@ -24,6 +23,7 @@ import {MiscItemSheet} from "./item/misc/MiscItemSheet.mjs";
 import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
 import {SkillSheet} from "./item/skill/SkillSheet.mjs";
 import {initStatusEffects} from "./StatusEffects.mjs";
+import {addRerollContextMenuEntries, createCheckMessage, rollCheck} from "./checks/Checks.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -145,7 +145,8 @@ Hooks.once('init', async () => {
     initStatusEffects()
 
     console.log('fabulaultima | Initializing rolls');
-    CONFIG.Dice.rolls.push(SystemRoll)
+
+    Hooks.on('getChatLogEntryContext', addRerollContextMenuEntries);
 
     console.log('fabulaultima | Finished initialization');
 });

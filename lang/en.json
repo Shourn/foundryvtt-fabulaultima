@@ -120,7 +120,8 @@
         "success": "Success",
         "failure": "Failure",
         "critical": "Critical",
-        "fumble": "Fumble"
+        "fumble": "Fumble",
+        "reroll": "Rerolled using {trait}:"
       }
     },
     "dialog": {
@@ -350,6 +351,12 @@
       "spell": "Spell",
       "skill": "Skill",
       "weapon": "Weapon"
+    },
+    "trait": {
+      "trait": "Trait",
+      "origin": "Origin",
+      "identity": "Identity",
+      "theme": "Theme"
     }
   }
 }
