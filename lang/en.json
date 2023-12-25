@@ -87,7 +87,7 @@
       "physical": "fa-sword",
       "air": "fa-wind",
       "bolt": "fa-bolt",
-      "dark": "fa-book-dead",
+      "dark": "fa-eclipse",
       "earth": "fa-hill-rockslide",
       "fire": "fa-fire-alt",
       "ice": "fa-snowflakes",
@@ -116,7 +116,11 @@
     },
     "chat": {
       "check": {
-        "title": "Check",
+        "flavor": {
+          "default": "Check",
+          "accuracy": "Accuracy Check",
+          "magic": "Magic Check"
+        },
         "difficulty": "Difficulty Level",
         "success": "Success",
         "failure": "Failure",
@@ -130,6 +134,9 @@
         },
         "damage": {
           "title": "Damage"
+        },
+        "weapon": {
+          "against": "against"
         }
       },
       "context": {

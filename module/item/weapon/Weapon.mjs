@@ -6,7 +6,7 @@ import {createCheckMessage, rollCheck} from "../../checks/Checks.mjs";
 export class Weapon extends Item {
 
     static getDefaultArtwork(itemData) {
-        return { img: "systems/fabulaultima/assets/game-icons/plain-dagger.svg" };
+        return {img: "systems/fabulaultima/assets/game-icons/plain-dagger.svg"};
     }
 
 
@@ -21,7 +21,7 @@ export class Weapon extends Item {
         if (!this.actor) {
             return;
         }
-        const {check, damage} = this.system;
+        const {quality, category, attackType, defense, check, damage} = this.system;
         const attributes = this.actor.system.attributes;
         const rolledCheck = await rollCheck({
             check: {
@@ -34,6 +34,13 @@ export class Weapon extends Item {
                     dice: attributes[check.attr2].current
                 },
                 modifier: check.modifier
+            },
+            weapon: {
+                name: this.name,
+                quality,
+                category,
+                attackType,
+                defense
             },
             damage: {
                 roll: damage.roll,

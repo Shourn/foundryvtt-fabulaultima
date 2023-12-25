@@ -1,4 +1,20 @@
 <div class="check">
+    {{#if weapon}}
+        <section class="weapon">
+            <div>
+                <strong>{{weapon.name}}</strong>
+                <span>(</span>
+                <span>{{localize (concat 'FABULA_ULTIMA.weaponCategory.' weapon.category)}}</span>
+                <span>)</span>
+            </div>
+            {{#if weapon.quality}}<div>{{weapon.quality}}</div>{{/if}}
+            <div>
+                <span>{{localize (concat 'FABULA_ULTIMA.attackType.' weapon.attackType)}}</span>
+                <span>{{localize 'FABULA_ULTIMA.chat.check.weapon.against'}}</span>
+                <span>{{localize (concat 'FABULA_ULTIMA.defense.' weapon.defense '.full')}}</span>
+            </div>
+        </section>
+    {{/if}}
     {{#if reroll}}
         <section class="reroll">
             <span>{{{localize 'FABULA_ULTIMA.chat.check.reroll'
@@ -56,10 +72,12 @@
                     {{#if (and damage.roll (ne damage.roll 'none'))}}
                         <div class="dice-formula">
                             <span>[</span>
-                            <span class="roll">{{localize (concat 'FABULA_ULTIMA.rollType.' damage.roll '.short')}}</span>
+                            <span class="roll">{{localize
+                                    (concat 'FABULA_ULTIMA.rollType.' damage.roll '.short')}}</span>
                             <span>+</span>
                             <span>{{damage.bonus}}</span>
                             <span>]</span>
+                            <span>{{localize (concat 'FABULA_ULTIMA.damageType.' damage.type)}}</span>
                         </div>
                         <div class="dice-formula">
                             {{#if damage.attribute}}
@@ -70,7 +88,10 @@
                             <span>{{damage.bonus}}</span>
                         </div>
                     {{/if}}
-                    <div class="dice-total">{{damage.total}}</div>
+                    <div class="dice-total">
+                        <span>{{damage.total}}</span>
+                        <i class="fas {{localize (concat 'FABULA_ULTIMA.damageTypeIcons.' damage.type)}}"></i>
+                    </div>
                 </div>
             </div>
         </section>

@@ -91,6 +91,7 @@ const push = {
  * @typedef CheckWeapon
  * @property {string} name
  * @property {string} quality
+ * @property {WeaponCategory} category
  * @property {AttackType} attackType
  * @property {Defense} defense
  */
@@ -100,6 +101,7 @@ const push = {
 const weapon = {
     name: "Excalibird",
     quality: "multi(2)",
+    category: "sword",
     attackType: "melee",
     defense: "defense"
 }
@@ -131,6 +133,7 @@ const damage = {
  * @property {ChatSpeakerData} [speaker]
  * @property {CheckPush} [push]
  * @property {CheckDamage} [damage]
+ * @property {CheckWeapon} [weapon]
  */
 
 /**
@@ -517,9 +520,19 @@ async function getRerollParams(params, actor) {
 
 export async function createCheckMessage(checkParams) {
 
+    const flavor = (() => {
+       if (checkParams.weapon) {
+           return "FABULA_ULTIMA.chat.check.flavor.accuracy"
+       }
+       if (checkParams.spell){
+           return "FABULA_ULTIMA.chat.check.flavor.magic"
+       }
+       return "FABULA_ULTIMA.chat.check.flavor.default"
+    })()
+
     /** @type Partial<ChatMessageData> */
     const chatMessage = {
-        flavor: game.i18n.localize("FABULA_ULTIMA.chat.check.title"),
+        flavor: game.i18n.localize(flavor),
         content: await renderTemplate(Templates.chatCheck, checkParams),
         rolls: [checkParams.result.roll],
         type: CONST.CHAT_MESSAGE_TYPES.ROLL,
