@@ -155,6 +155,21 @@ const damage = {
 }
 
 /**
+ * @typedef CheckTarget
+ * @property {number} difficulty
+ * @property {string} target
+ * @property {string} uuid
+ */
+/**
+ * @type CheckTarget
+ */
+const target = {
+    difficulty: 10,
+    target: "Villain",
+    uuid: ""
+}
+
+/**
  * @typedef CheckParams
  * @property {CheckData} check
  * @property {CheckResult} [result]
@@ -164,6 +179,8 @@ const damage = {
  * @property {CheckDamage} [damage]
  * @property {CheckWeapon} [weapon]
  * @property {CheckSpell} [spell]
+ * @property {number} [difficulty]
+ * @property {CheckTarget[]} [targets]
  */
 
 /**
@@ -588,7 +605,7 @@ export async function promptCheck(actor) {
     const recentActorChecks = recentChecks[actor.uuid] || (recentChecks[actor.uuid] = {});
     try {
         const attributes = actor.system.attributes;
-        const checkConfig = await Dialog.wait({
+        const {attr1, attr2, difficulty, modifier} = await Dialog.wait({
             title: game.i18n.localize("FABULA_ULTIMA.dialog.check.title"),
             content: await renderTemplate(Templates.dialogCheckConfig, {
                 attributes: toObject(Attributes, value => `FABULA_ULTIMA.attribute.${value}.short`),
@@ -615,10 +632,10 @@ export async function promptCheck(actor) {
             }]
         }, {}, {});
 
-        recentActorChecks.attr1 = checkConfig.attr1;
-        recentActorChecks.attr2 = checkConfig.attr2;
-        recentActorChecks.modifier = checkConfig.modifier;
-        recentActorChecks.difficulty = checkConfig.difficulty;
+        recentActorChecks.attr1 = attr1;
+        recentActorChecks.attr2 = attr2;
+        recentActorChecks.modifier = modifier;
+        recentActorChecks.difficulty = difficulty;
         sessionStorage.setItem(KEY_RECENT_CHECKS, JSON.stringify(recentChecks));
 
         const speaker = ChatMessage.implementation.getSpeaker({actor});
@@ -626,17 +643,17 @@ export async function promptCheck(actor) {
         const rolledCheck = await rollCheck({
             check: {
                 attr1: {
-                    attribute: checkConfig.attr1,
-                    dice: attributes[checkConfig.attr1].current
+                    attribute: attr1,
+                    dice: attributes[attr1].current
                 },
                 attr2: {
-                    attribute: checkConfig.attr2,
-                    dice: attributes[checkConfig.attr2].current
+                    attribute: attr2,
+                    dice: attributes[attr2].current
                 },
-                modifier: checkConfig.modifier
+                modifier: modifier
             },
+            difficulty: difficulty,
             speaker: speaker
-            //TODO: Difficulty
         });
 
 
