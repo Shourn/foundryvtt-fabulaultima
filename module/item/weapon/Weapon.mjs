@@ -23,6 +23,16 @@ export class Weapon extends Item {
         }
         const {quality, category, attackType, defense, check, damage} = this.system;
         const attributes = this.actor.system.attributes;
+
+        /** @type CheckTarget[] */
+        const targets = [...game.user.targets]
+            .filter(token => !!token.actor)
+            .map(token => ({
+                name: token.actor.name,
+                uuid: token.actor.uuid,
+                difficulty: token.actor.system.defenses[defense].current
+        }));
+
         const rolledCheck = await rollCheck({
             check: {
                 attr1: {
@@ -48,6 +58,7 @@ export class Weapon extends Item {
                 bonus: damage.bonus,
                 type: damage.type
             },
+            targets: targets,
             speaker: ChatMessage.implementation.getSpeaker({actor: this.actor})
         });
 

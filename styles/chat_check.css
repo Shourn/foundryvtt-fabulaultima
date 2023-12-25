@@ -70,8 +70,12 @@
     margin-bottom: .5em;
 }
 
-.system-fabulaultima .chat-message .check .chat-link-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: scale-down;
+.system-fabulaultima .chat-message .check .targets .target {
+    margin-bottom: 0.5em;
+}
+
+.system-fabulaultima .chat-message .check .targets .target .success,
+.system-fabulaultima .chat-message .check .targets .target .failure {
+    float: right;
+    margin-right: 1em;
 }

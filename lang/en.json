@@ -152,7 +152,10 @@
           "cost": "Cost:",
           "effect": "Effect:",
           "opportunity": "Opportunity:"
-        }
+        },
+        "hit": "Hit",
+        "miss": "Miss",
+        "targets": "Targets"
       },
       "context": {
         "reroll": {

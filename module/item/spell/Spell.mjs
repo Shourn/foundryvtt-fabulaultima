@@ -25,6 +25,16 @@ export class Spell extends Item {
         if (this.system.offensive) {
             const {cost, costType, maxTargets, targetType, duration, effect, opportunity, check, damage} = this.system;
             const attributes = this.actor.system.attributes;
+
+            /** @type CheckTarget[] */
+            const targets = [...game.user.targets]
+                .filter(token => !!token.actor)
+                .map(token => ({
+                    name: token.actor.name,
+                    uuid: token.actor.uuid,
+                    difficulty: token.actor.system.defenses.magicDefense.current
+                }));
+
             const rolledCheck = await rollCheck({
                 check: {
                     attr1: {
@@ -54,6 +64,7 @@ export class Spell extends Item {
                     bonus: damage.bonus,
                     type: damage.type
                 },
+                targets: targets,
                 speaker: ChatMessage.implementation.getSpeaker({actor: this.actor})
             });
 

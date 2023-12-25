@@ -105,10 +105,10 @@
             </div>
         </div>
     </section>
-    <hr>
     {{#if damage}}
+        <hr>
         <section class="damage">
-            <div>{{localize 'FABULA_ULTIMA.chat.check.damage.title'}}</div>
+            <h4>{{localize 'FABULA_ULTIMA.chat.check.damage.title'}}</h4>
             <div class="dice-roll">
                 <div class="dice-result">
                     {{#if (and damage.roll (ne damage.roll 'none'))}}
@@ -139,9 +139,30 @@
         </section>
     {{/if}}
     {{#if difficulty}}
+        <hr>
         <section class="difficulty">
             <label>{{localize 'FABULA_ULTIMA.chat.check.difficulty'}}:</label>
             <span>{{difficulty}}</span>
+        </section>
+    {{/if}}
+    {{#if targets}}
+        <hr>
+        <section class="targets">
+            <h4>{{localize 'FABULA_ULTIMA.chat.check.targets'}}</h4>
+            {{#each targets}}
+                <div class="target">
+                    <a class="content-link" data-uuid="{{this.uuid}}" data-type="actor">
+                        <i class="fas fa-person"></i>
+                        <strong>{{this.name}}</strong>
+                    </a>
+                    <span class="sep"></span>
+                    {{#if (or (gte @root.result.total this.difficulty) @root.result.crit)}}
+                        <span class="success">{{localize 'FABULA_ULTIMA.chat.check.hit'}}</span>
+                    {{else}}
+                        <span class="failure">{{localize 'FABULA_ULTIMA.chat.check.miss'}}</span>
+                    {{/if}}
+                </div>
+            {{/each}}
         </section>
     {{/if}}
     <section class="result {{#if result.fumble}}fumble{{/if}} {{#if result.crit}}critical{{/if}} {{#if difficulty}}{{#if
