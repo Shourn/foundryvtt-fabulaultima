@@ -1,0 +1,23 @@
+<form>
+    <fieldset>
+        <section class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.app.metaCurrencyTracker.fabula'}}</label>
+            <span class="flexrow">
+                {{numberInput object.fabula name='fabula' min=0 step=1}}
+                <button type="button" data-action="increment-fabula" class="flex0"><i class="fas fa-plus"></i> </button>
+            </span>
+
+        </section>
+        <section class="form-fields">
+            <label>{{localize 'FABULA_ULTIMA.app.metaCurrencyTracker.ultima'}}</label>
+            <span class="flexrow">
+                {{numberInput object.ultima name='ultima' min=0 step=1}}
+                <button type="button" data-action="increment-ultima" class="flex0"><i class="fas fa-plus"></i> </button>
+            </span>
+        </section>
+    </fieldset>
+    <section>
+        <button type="button" data-action="calc-exp"><i class="fas fa-calculator"></i>{{localize
+                'FABULA_ULTIMA.app.metaCurrencyTracker.button'}}</button>
+    </section>
+</form>

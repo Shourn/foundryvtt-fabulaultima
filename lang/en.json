@@ -134,6 +134,14 @@
           "ultima": "Invoke Trait using Ultima Point"
         },
         "push": "Invoke Bond using Fabula Point"
+      },
+      "expAward": {
+        "flavor": "EXP Awards",
+        "baseExp": "Base EXP",
+        "ultimaExp": "EXP from Ultima Points",
+        "fabulaExp": "EXP from Fabula Points",
+        "totalExp": "Total EXP",
+        "activeCharacters": "Active Characters"
       }
     },
     "dialog": {
@@ -390,6 +398,14 @@
       "origin": "Origin",
       "identity": "Identity",
       "theme": "Theme"
+    },
+    "app": {
+      "metaCurrencyTracker": {
+        "title": "FP/UP Tracker",
+        "fabula": "Spent Fabula Points",
+        "ultima": "Spent Ultima Points",
+        "button": "Award EXP"
+      }
     }
   }
 }

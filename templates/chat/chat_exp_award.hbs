@@ -1,0 +1,30 @@
+<div class="exp-award">
+    <section>
+        <div>
+            <span>{{localize 'FABULA_ULTIMA.chat.expAward.baseExp'}}:</span>
+            <span>{{baseExp}}</span>
+        </div>
+        <div>
+            <span>{{localize 'FABULA_ULTIMA.chat.expAward.ultimaExp'}}:</span>
+            <span>{{ultimaExp}}</span>
+        </div>
+        <div>
+            <span>{{localize 'FABULA_ULTIMA.chat.expAward.fabulaExp'}}:</span>
+            <span>{{fabulaExp}}</span>
+        </div>
+        <div>
+            <strong>{{localize 'FABULA_ULTIMA.chat.expAward.totalExp'}}:</strong>
+            <strong>{{totalExp}}</strong>
+        </div>
+    </section>
+    <hr>
+    <section>
+        <div>{{localize 'FABULA_ULTIMA.chat.expAward.activeCharacters'}}:</div>
+        <ul class="active-characters">
+            {{#each activeCharacters}}
+                <li><a class="content-link" data-id="{{this.id}}" data-type="{{this.type}}"
+                                data-uuid="{{this.uuid}}"><i class="fas fa-user"></i>{{this.name}}</a></li>
+            {{/each}}
+        </ul>
+    </section>
+</div>

@@ -19,7 +19,9 @@ const Templates = {
     itemMisc: "systems/fabulaultima/templates/item/item_misc.hbs",
     dialogNpcAddTrait: "systems/fabulaultima/templates/dialog/dialog_npc_trait_add.hbs",
     dialogCheckReroll: "systems/fabulaultima/templates/dialog/dialog_check_reroll.hbs",
-    dialogCheckPush: "systems/fabulaultima/templates/dialog/dialog_check_push.hbs"
+    dialogCheckPush: "systems/fabulaultima/templates/dialog/dialog_check_push.hbs",
+    metaCurrencyTracker: "systems/fabulaultima/templates/app/metacurrency_tracker.hbs",
+    chatExpAward: "systems/fabulaultima/templates/chat/chat_exp_award.hbs"
 
 };
 

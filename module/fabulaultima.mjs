@@ -7,7 +7,7 @@ import {NpcSheet} from "./actor/npc/NpcSheet.mjs";
 import {ItemProxy} from "./item/ItemProxy.mjs";
 import {SpellData} from "./item/spell/SpellData.mjs";
 import {SpellSheet} from "./item/spell/SpellSheet.mjs";
-import {SYSTEM_ID} from "./System.mjs";
+import {HOOKS, SETTINGS, SYSTEM_ID} from "./System.mjs";
 import {AccessoryData} from "./item/accessory/AccessoryData.mjs";
 import {AccessorySheet} from "./item/accessory/AccessorySheet.mjs";
 import {WeaponData} from "./item/weapon/WeaponData.mjs";
@@ -24,6 +24,9 @@ import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
 import {SkillSheet} from "./item/skill/SkillSheet.mjs";
 import {initStatusEffects} from "./StatusEffects.mjs";
 import {addRerollContextMenuEntries} from "./checks/Checks.mjs";
+import {MetaCurrencyTrackerApplication} from "./application/metacurrency/MetaCurrencyTrackerApplication.mjs";
+import {initializeSystemControl} from "./ui/controls/SystemControls.mjs";
+import {SystemControlsLayer} from "./ui/controls/SystemControlsLayer.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -128,6 +131,34 @@ function initItems() {
 
 }
 
+function initSettings() {
+    game.settings.register(SYSTEM_ID, SETTINGS.MetaCurrencyFabula, {
+        name: "Count used Fabula Points",
+        scope: "world",
+        config: false,
+        type: Number,
+        range: {
+            min: 0,
+            step: 1
+        },
+        default: 0,
+        onChange: (newValue) => Hooks.callAll(HOOKS.UpdateMetaCurrencyFabula, newValue)
+    })
+
+    game.settings.register(SYSTEM_ID, SETTINGS.MetaCurrencyUltima, {
+        name: "Count used Ultima Points",
+        scope: "world",
+        config: false,
+        type: Number,
+        range: {
+            min: 0,
+            step: 1
+        },
+        default: 0,
+        onChange: (newValue) => Hooks.callAll(HOOKS.UpdateMetaCurrencyUltima, newValue)
+    })
+}
+
 Hooks.once('init', async () => {
     console.log('fabulaultima | Initializing fabulaultima');
     // Preload Handlebars templates
@@ -145,8 +176,18 @@ Hooks.once('init', async () => {
     initStatusEffects()
 
     console.log('fabulaultima | Initializing rolls');
-
     Hooks.on('getChatLogEntryContext', addRerollContextMenuEntries);
+
+    console.log("fabulaultima | Initializing ui hooks")
+    CONFIG.Canvas.layers[SYSTEM_ID] = {
+        layerClass: SystemControlsLayer,
+        group: "interface"
+    }
+    Hooks.on("getSceneControlButtons", initializeSystemControl)
+    Hooks.on(HOOKS.GetSystemControlTools, MetaCurrencyTrackerApplication.getTool)
+
+    console.log('fabulaultima | Initializing settings')
+    initSettings();
 
     console.log('fabulaultima | Finished initialization');
 });
@@ -158,5 +199,8 @@ Hooks.once('setup', async () => {
 // When ready
 Hooks.once('ready', async () => {
     // Do anything once the system is ready
+    if (game.user.isGM) {
+        new MetaCurrencyTrackerApplication().render(true)
+    }
 });
 // Add any additional hooks if necessary
