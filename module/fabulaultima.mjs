@@ -199,8 +199,5 @@ Hooks.once('setup', async () => {
 // When ready
 Hooks.once('ready', async () => {
     // Do anything once the system is ready
-    if (game.user.isGM) {
-        new MetaCurrencyTrackerApplication().render(true)
-    }
 });
 // Add any additional hooks if necessary

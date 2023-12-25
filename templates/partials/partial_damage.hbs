@@ -1,6 +1,8 @@
 <span class="sep">[</span>
-<span>{{localize (concat 'FABULA_ULTIMA.rollType.' system.damage.roll '.short') }}</span>
-<span class="sep">+</span>
+{{#if (ne system.damage.roll 'none')}}
+    <span>{{localize (concat 'FABULA_ULTIMA.rollType.' system.damage.roll '.short') }}</span>
+    <span class="sep">+</span>
+{{/if}}
 <span>{{system.damage.bonus}}</span>
 <span class="sep">]</span>
 <span>{{localize (concat 'FABULA_ULTIMA.damageType.' system.damage.type ) }}</span>

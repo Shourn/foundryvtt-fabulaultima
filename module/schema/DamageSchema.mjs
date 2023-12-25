@@ -1,18 +1,14 @@
 import {damageTypes, rollTypes} from "../Constants.mjs";
 
 /**
- * @typedef Damage
  * @property {RollType} roll
  * @property {number} bonus
  * @property {DamageType} type
  */
-/**
- * @extends Damage
- */
 export class DamageSchema extends foundry.data.fields.SchemaField {
 
     /**
-     * @param {Damage} initials
+     * @param {DamageSchema} initials
      */
     constructor(initials = {}) {
         const {NumberField, StringField} = foundry.data.fields

@@ -116,6 +116,7 @@
     },
     "chat": {
       "check": {
+        "title": "Check",
         "difficulty": "Difficulty Level",
         "success": "Success",
         "failure": "Failure",
@@ -126,6 +127,9 @@
           "bond": "Pushed using Bond of",
           "and": "and",
           "with": "with {with}"
+        },
+        "damage": {
+          "title": "Damage"
         }
       },
       "context": {

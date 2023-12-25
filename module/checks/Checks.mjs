@@ -1,3 +1,10 @@
+import {FLAGS, SYSTEM_ID} from "../System.mjs";
+import Templates from "../Templates.mjs";
+import {Character} from "../actor/character/Character.mjs";
+import {Npc} from "../actor/npc/Npc.mjs";
+import {attributes as Attributes} from "../Constants.mjs";
+import {toObject} from "../utils/helper.mjs";
+
 /**
  * @typedef CheckAttribute
  * @property {Attribute} attribute
@@ -9,13 +16,6 @@
  * @property {CheckAttribute} attr2
  * @property {number} modifier
  */
-
-import {FLAGS, SYSTEM_ID} from "../System.mjs";
-import Templates from "../Templates.mjs";
-import {Character} from "../actor/character/Character.mjs";
-import {Npc} from "../actor/npc/Npc.mjs";
-import {attributes as Attributes} from "../Constants.mjs";
-import {toObject} from "../utils/helper.mjs";
 
 /**
  * @type CheckData
@@ -88,24 +88,58 @@ const push = {
 }
 
 /**
+ * @typedef CheckWeapon
+ * @property {string} name
+ * @property {string} quality
+ * @property {AttackType} attackType
+ * @property {Defense} defense
+ */
+/**
+ * @type CheckWeapon
+ */
+const weapon = {
+    name: "Excalibird",
+    quality: "multi(2)",
+    attackType: "melee",
+    defense: "defense"
+}
+
+/**
+ * @typedef CheckDamage
+ * @property {RollType} roll
+ * @property {number} bonus
+ * @property {DamageType} type
+ * @property {number} [total]
+ * @property {"attr1" | "attr2"} [attribute]
+ */
+/**
+ * @type CheckDamage
+ */
+const damage = {
+    roll: "highRoll",
+    bonus: 7,
+    type: "air",
+    total: 14,
+    attribute: "attr1"
+}
+
+/**
  * @typedef CheckParams
  * @property {CheckData} check
  * @property {CheckResult} [result]
  * @property {CheckReroll} [reroll]
  * @property {ChatSpeakerData} [speaker]
  * @property {CheckPush} [push]
+ * @property {CheckDamage} [damage]
  */
 
 /**
- * @param {CheckParams} params
- * @returns {Promise<CheckParams>}
+ * @param {CheckParams} check
+ * @returns {Promise<void>}
  */
-export async function rollCheck(params) {
-    const check = params.check;
+async function handleRoll(check) {
+    const {attr1: attribute1, attr2: attribute2, modifier} = check.check;
 
-    const attribute1 = check.attr1;
-    const attribute2 = check.attr2;
-    const modifier = check.modifier;
     const modPart = `${modifier ? `${modifier < 0 ? "-" : "+"} ${Math.abs(modifier)}` : ""}`
     const formula = `${attribute1.dice}[${attribute1.attribute}] + ${attribute2.dice}[${attribute2.attribute}] ${modPart}`;
     /** @type Roll */
@@ -115,8 +149,8 @@ export async function rollCheck(params) {
     const roll1 = roll.dice[0].total;
     /** @type number */
     const roll2 = roll.dice[1].total;
-    /** @type CheckResult */
-    const result = {
+
+    check.result = {
         attr1: roll1,
         attr2: roll2,
         modifier: modifier,
@@ -125,10 +159,108 @@ export async function rollCheck(params) {
         crit: roll1 === roll2 && roll1 >= 6 && roll2 >= 6,
         roll: roll
     }
+}
 
-    return {
-        ...params,
-        result: result
+/**
+ * @param {CheckParams} check
+ */
+function handleDamage(check) {
+    if (check.damage) {
+        const {roll, bonus} = check.damage;
+        const {attr1, attr2} = check.result;
+
+        const damageRoll = ({
+            none: 0,
+            lowRoll: Math.min(attr1, attr2),
+            highRoll: Math.max(attr1, attr2)
+        })[roll]
+
+        const total = damageRoll + bonus
+        /** @type {"attr1" | "attr2" | undefined} */
+        let attribute = undefined
+        if (roll !== "none") {
+            attribute = damageRoll === attr1 ? "attr1" : "attr2"
+        }
+
+        check.damage = {
+            ...check.damage,
+            total,
+            attribute
+        }
+    }
+}
+
+/**
+ * @param {CheckParams} params
+ * @returns {Promise<CheckParams>}
+ */
+export async function rollCheck(params) {
+    /** @type CheckParams */
+    const check = {...params};
+
+    await handleRoll(check);
+    handleDamage(check);
+
+    return check
+}
+
+/**
+ * @param {CheckParams} check
+ * @returns {Promise<void>}
+ */
+async function handleReroll(check) {
+
+    const {attr1: attribute1, attr2: attribute2, modifier, push} = check.check;
+    const selection = check.reroll.selection;
+
+    let {attr1: attr1Result, attr2: attr2Result} = check.result;
+
+    const modPart = `${modifier ? `${modifier < 0 ? "-" : "+"} ${Math.abs(modifier)}` : ""}`
+    let attribute1Part
+    const rerollAttr1 = selection === "attr1" || (Array.isArray(selection) && selection.includes("attr1"));
+    if (rerollAttr1) {
+        attribute1Part = `${attribute1.dice}[${attribute1.attribute}]`;
+    } else {
+        attribute1Part = `${attr1Result}[${attribute1.attribute}]`
+    }
+
+    let attribute2Part
+    const rerollAttr2 = selection === "attr2" || (Array.isArray(selection) && selection.includes("attr2"));
+    if (rerollAttr2) {
+        attribute2Part = `${attribute2.dice}[${attribute2.attribute}]`;
+    } else {
+        attribute2Part = `${attr2Result}[${attribute2.attribute}]`
+    }
+
+    let pushPart = ""
+    if (check.push) {
+        const {strength, with: bond} = check.push;
+        pushPart = `+ ${strength}[${bond}]`
+    }
+
+    const formula = `${attribute1Part} + ${attribute2Part} ${modPart} ${pushPart}`;
+    /** @type Roll */
+    const roll = await new Roll(formula).roll();
+
+    if (rerollAttr1 && rerollAttr2) {
+        attr1Result = roll.dice[0].total;
+        attr2Result = roll.dice[1].total;
+    } else if (rerollAttr1) {
+        attr1Result = roll.dice[0].total;
+    } else if (rerollAttr2) {
+        attr2Result = roll.dice[0].total;
+    }
+
+    /** @type CheckResult */
+    check.result = {
+        attr1: attr1Result,
+        attr2: attr2Result,
+        modifier: modifier,
+        push: push,
+        total: roll.total,
+        fumble: attr1Result === 1 && attr2Result === 1,
+        crit: attr1Result === attr2Result && attr1Result >= 6 && attr2Result >= 6,
+        roll: roll
     }
 }
 
@@ -138,70 +270,14 @@ export async function rollCheck(params) {
  * @returns {Promise<CheckParams>}
  */
 export async function rerollCheck(params, reroll) {
+    /** @type CheckParams */
+    const check = {...params}
 
-    const check = params.check;
+    check.reroll = reroll
+    await handleReroll(check);
+    handleDamage(check)
 
-    const attribute1 = check.attr1;
-    const attribute2 = check.attr2;
-    const modifier = check.modifier;
-    const modPart = `${modifier ? `${modifier < 0 ? "-" : "+"} ${Math.abs(modifier)}` : ""}`
-
-    let attribute1Part
-    const rerollAttr1 = reroll.selection === "attr1" || (Array.isArray(reroll.selection) && reroll.selection.includes("attr1"));
-    if (rerollAttr1) {
-        attribute1Part = `${attribute1.dice}[${attribute1.attribute}]`;
-    } else {
-        attribute1Part = `${params.result.attr1}[${attribute1.attribute}]`
-    }
-
-    let attribute2Part
-    const rerollAttr2 = reroll.selection === "attr2" || (Array.isArray(reroll.selection) && reroll.selection.includes("attr2"));
-    if (rerollAttr2) {
-        attribute2Part = `${attribute2.dice}[${attribute2.attribute}]`;
-    } else {
-        attribute2Part = `${params.result.attr2}[${attribute2.attribute}]`
-    }
-
-    let pushPart = ""
-    if (check.push) {
-        pushPart = ` + ${check.push.strength}[${check.push.with}]`
-    }
-
-    const formula = `${attribute1Part} + ${attribute2Part} ${modPart}${pushPart}`;
-    /** @type Roll */
-    const roll = await new Roll(formula).roll();
-
-    /** @type number */
-    let roll1 = params.result.attr1;
-    /** @type number */
-    let roll2 = params.result.attr2;
-
-    if (rerollAttr1 && rerollAttr2) {
-        roll1 = roll.dice[0].total;
-        roll2 = roll.dice[1].total;
-    } else if (rerollAttr1) {
-        roll1 = roll.dice[0].total;
-    } else if (rerollAttr2) {
-        roll2 = roll.dice[0].total;
-    }
-
-    /** @type CheckResult */
-    const result = {
-        attr1: roll1,
-        attr2: roll2,
-        modifier: modifier,
-        push: params.result.push,
-        total: roll.total,
-        fumble: roll1 === 1 && roll2 === 1,
-        crit: roll1 === roll2 && roll1 >= 6 && roll2 >= 6,
-        roll: roll
-    }
-
-    return {
-        ...params,
-        result,
-        reroll
-    }
+    return check
 }
 
 /**
@@ -292,29 +368,43 @@ export function addRerollContextMenuEntries(html, options) {
 }
 
 /**
+ * @param {CheckParams} check
+ * @returns {Promise<void>}
+ */
+async function handlePush(check) {
+    const {result: oldResult, push} = check;
+
+    const {attr1: {attribute: attribute1}, attr2: {attribute: attribute2}, modifier} = check.check;
+    const {attr1: attr1Roll, attr2: attr2Roll} = oldResult;
+    const attr1Part = `${attr1Roll}[${attribute1}]`
+    const attr2Part = `${attr2Roll}[${attribute2}]`
+    const modPart = `${modifier < 0 ? "-" : "+"} ${Math.abs(modifier)}`
+    const pushPart = `+ ${push.strength}`
+    const roll = await new Roll(`${attr1Part} + ${attr2Part} ${modPart} ${pushPart}`).roll()
+
+    /** @type CheckResult */
+    check.result = {
+        ...oldResult,
+        push: push.strength,
+        total: attr1Roll + attr2Roll + modifier + push.strength,
+        roll: roll
+    }
+}
+
+/**
  *
  * @param {CheckParams} params
  * @param {CheckPush} push
  * @returns {Promise<CheckParams>}
  */
-async function pushCheck(params, push){
-    const check = params.check;
-    const oldResult = params.result;
+async function pushCheck(params, push) {
+    /** @type CheckParams */
+    const check = {...params};
+    check.push = push
 
-    const attr1Part = `${oldResult.attr1}[${check.attr1.attribute}]`
-    const attr2Part = `${oldResult.attr2}[${check.attr2.attribute}]`
-    const modPart = `${check.modifier < 0 ? "-" : "+"} ${Math.abs(check.modifier)}`
-    const pushPart = `+ ${push.strength}`
-    const roll = await new Roll(`${attr1Part} + ${attr2Part} ${modPart} ${pushPart}`).roll()
-    /** @type CheckResult */
-    const result = {
-        ...oldResult,
-        push: push.strength,
-        total: oldResult.attr1 + oldResult.attr2 + oldResult.modifier + push.strength,
-        roll: roll
-    }
+    await handlePush(check);
 
-    return {...params, result, push}
+    return check;
 }
 
 /**
@@ -322,7 +412,7 @@ async function pushCheck(params, push){
  * @param {Character} actor
  * @returns {Promise<CheckPush | undefined>}
  */
-async function getPushParams(actor){
+async function getPushParams(actor) {
 
     /** @type CheckPush[] */
     const bonds = actor.system.bonds.map(value => {
@@ -352,7 +442,7 @@ async function getPushParams(actor){
         }
     })
 
-    if (!push){
+    if (!push) {
         ui.notifications.error("FABULA_ULTIMA.dialog.reroll.missingBond", {localize: true})
         return;
     }
@@ -429,6 +519,7 @@ export async function createCheckMessage(checkParams) {
 
     /** @type Partial<ChatMessageData> */
     const chatMessage = {
+        flavor: game.i18n.localize("FABULA_ULTIMA.chat.check.title"),
         content: await renderTemplate(Templates.chatCheck, checkParams),
         rolls: [checkParams.result.roll],
         type: CONST.CHAT_MESSAGE_TYPES.ROLL,

@@ -4,6 +4,15 @@ import {DamageSchema} from "../../schema/DamageSchema.mjs";
 
 /**
  * @extends TypeDataModel
+ * @property {AttackType} attackType
+ * @property {WeaponCategory} category
+ * @property {Defense} defense
+ * @property {CheckSchema} check
+ * @property {DamageSchema} damage
+ * @property {number} price
+ * @property {string} quality
+ * @property {boolean} martial
+ * @property {string} description
  */
 export class WeaponData extends foundry.abstract.TypeDataModel {
 

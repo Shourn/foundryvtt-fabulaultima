@@ -53,11 +53,12 @@ export class CharacterSheet extends ActorSheet {
         html.find("[data-action=add][data-type=bond]").click((event) => this.addBond(event));
         html.find("[data-action=delete][data-type=bond]").click((event) => this.removeBond(event));
         html.find("[data-action=roll][data-type=check]").click(clickEvent => this.promptCheck(clickEvent));
-        html.find("[data-action=add][data-type=equipment]").click(event => this.addItem(event))
-        html.find("[data-action=edit][data-type=equipment]").click(event => this.editItem(event))
-        html.find("[data-action=delete][data-type=equipment]").click(event => this.deleteItem(event))
-        html.find("[data-action=delete][data-type=job]").click(event => this.deleteItem(event))
+        html.find("[data-action=add][data-type=item]").click(event => this.addItem(event))
+        html.find("[data-action=edit][data-type=item]").click(event => this.editItem(event))
+        html.find("[data-action=delete][data-type=item]").click(event => this.deleteItem(event))
         html.find("[data-action=equip]").click(event => this.equipItem(event))
+        html.find("[data-action=roll][data-type=item]").click(event => this.rollItem(event))
+        html.find("[data-action=edit][data-type=item]").click(event => this.editItem(event))
         activateStatusEffectListeners(html, this.actor)
 
         registerCollapse(html);
@@ -118,6 +119,16 @@ export class CharacterSheet extends ActorSheet {
         this.actor.items.get(itemId).delete()
     }
 
+    rollItem(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        const itemId = $(event.currentTarget).parents("*[data-item-id]").data("itemId");
+        const item = this.actor.items.get(itemId);
+        if (item.roll) {
+            item.roll();
+        }
+    }
 
     promptCheck(clickEvent) {
         promptCheck(this.actor)
