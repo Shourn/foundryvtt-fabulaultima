@@ -43,7 +43,10 @@ export const statusChoices = toObject(c.statusChoices, value => `FABULA_ULTIMA.s
 
 export const costTypes = toObject(c.costTypes, value => `FABULA_ULTIMA.costType.${value}`)
 
-export const targetTypes = toObject(c.targetTypes, value => `FABULA_ULTIMA.targetType.${value}`)
+export const targetTypes = toObject(c.targetTypes, value => ({
+    singular: `FABULA_ULTIMA.targetType.${value}.singular`,
+    plural: `FABULA_ULTIMA.targetType.${value}.plural`
+}))
 
 export const durations = toObject(c.durations, value => `FABULA_ULTIMA.duration.${value}`)
 

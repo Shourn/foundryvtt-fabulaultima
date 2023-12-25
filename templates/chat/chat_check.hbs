@@ -1,18 +1,58 @@
 <div class="check">
     {{#if weapon}}
         <section class="weapon">
-            <div>
-                <strong>{{weapon.name}}</strong>
-                <span>(</span>
-                <span>{{localize (concat 'FABULA_ULTIMA.weaponCategory.' weapon.category)}}</span>
-                <span>)</span>
-            </div>
-            {{#if weapon.quality}}<div>{{weapon.quality}}</div>{{/if}}
+            <h4>
+                <a class="content-link" data-uuid="{{weapon.uuid}}" data-type="weapon">
+                    <i class="fas fa-sword"></i>
+                    <strong>{{weapon.name}}</strong>
+                </a>
+            </h4>
+            {{#if weapon.quality}}
+                <div>{{weapon.quality}}</div>
+            {{/if}}
             <div>
                 <span>{{localize (concat 'FABULA_ULTIMA.attackType.' weapon.attackType)}}</span>
                 <span>{{localize 'FABULA_ULTIMA.chat.check.weapon.against'}}</span>
                 <span>{{localize (concat 'FABULA_ULTIMA.defense.' weapon.defense '.full')}}</span>
             </div>
+        </section>
+    {{/if}}
+    {{#if spell}}
+        <section class="spell">
+            <h4>
+                <a class="content-link" data-uuid="{{spell.uuid}}" data-type="spell">
+                    <i class="fas fa-sparkles"></i>
+                    <strong>{{spell.name}}</strong>
+                </a>
+            </h4>
+            <div>
+                <strong>{{localize 'FABULA_ULTIMA.chat.check.spell.target.target'}}</strong>
+                {{#if (gt spell.maxTargets 1)}}
+                    <span>{{localize 'FABULA_ULTIMA.chat.check.spell.target.multiple' maxTargets=spell.maxTargets
+                                     target=(localize (concat 'FABULA_ULTIMA.targetType.' spell.targetType '.plural'))}}</span>
+                {{else}}
+                    <span>{{localize
+                            (concat 'FABULA_ULTIMA.chat.check.spell.target.singular.' spell.targetType)}}</span>
+                {{/if}}
+            </div>
+            <div>
+                <strong>{{localize 'FABULA_ULTIMA.chat.check.spell.cost'}}</strong>
+                <span>{{spell.cost}}</span>
+                <span>{{localize 'FABULA_ULTIMA.mp.short'}}</span>
+                <span>{{localize (concat 'FABULA_ULTIMA.costType.' spell.costType)}}</span>
+            </div>
+            {{#if spell.effect}}
+                <div>
+                    <strong>{{localize 'FABULA_ULTIMA.chat.check.spell.effect'}}</strong>
+                    <span>{{spell.effect}}</span>
+                </div>
+            {{/if}}
+            {{#if (and result.crit spell.opportunity)}}
+                <div>
+                    <strong>{{localize 'FABULA_ULTIMA.chat.check.spell.opportunity'}}</strong>
+                    <span>{{spell.opportunity}}</span>
+                </div>
+            {{/if}}
         </section>
     {{/if}}
     {{#if reroll}}
@@ -38,9 +78,11 @@
         <div class="dice-roll">
             <div class="dice-result">
                 <div class="dice-formula">
+                    <span>[</span>
                     <span>{{localize (concat 'FABULA_ULTIMA.attribute.' check.attr1.attribute '.short')}}</span>
                     <span>+</span>
                     <span>{{localize (concat 'FABULA_ULTIMA.attribute.' check.attr2.attribute '.short')}}</span>
+                    <span>]</span>
                     <span>{{#if (lt check.modifier 0)}}-{{else}}+{{/if}}</span>
                     <span>{{fu-abs check.modifier}}</span>
                     {{#if push}}

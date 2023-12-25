@@ -7,7 +7,7 @@ import {createCheckMessage, rollCheck} from "../../checks/Checks.mjs";
 export class Spell extends Item {
 
     static getDefaultArtwork(itemData) {
-        return { img: "systems/fabulaultima/assets/game-icons/magic-palm.svg" };
+        return {img: "systems/fabulaultima/assets/game-icons/magic-palm.svg"};
     }
 
     /**
@@ -23,7 +23,7 @@ export class Spell extends Item {
         }
 
         if (this.system.offensive) {
-            const {check, damage} = this.system;
+            const {cost, costType, maxTargets, targetType, duration, effect, opportunity, check, damage} = this.system;
             const attributes = this.actor.system.attributes;
             const rolledCheck = await rollCheck({
                 check: {
@@ -36,6 +36,18 @@ export class Spell extends Item {
                         dice: attributes[check.attr2].current
                     },
                     modifier: check.modifier
+                },
+                spell: {
+                    name: this.name,
+                    uuid: this.uuid,
+                    img: this.img,
+                    cost,
+                    costType,
+                    maxTargets,
+                    targetType,
+                    duration,
+                    effect,
+                    opportunity
                 },
                 damage: {
                     roll: damage.roll,

@@ -15,7 +15,7 @@
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.target.type'}}</label>
             <select name="system.targetType">
-                {{selectOptions (fu-targetTypes) selected=system.targetType localize=true}}
+                {{selectOptions (fu-targetTypes) selected=system.targetType localize=true labelAttr='singular'}}
             </select>
             <label>{{localize 'FABULA_ULTIMA.sheet.spell.target.max'}}</label>
             <input name="system.maxTargets" type="number" value="{{system.maxTargets}}">

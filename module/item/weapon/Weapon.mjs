@@ -37,6 +37,7 @@ export class Weapon extends Item {
             },
             weapon: {
                 name: this.name,
+                uuid: this.uuid,
                 quality,
                 category,
                 attackType,

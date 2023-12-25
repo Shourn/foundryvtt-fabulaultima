@@ -94,6 +94,7 @@ const push = {
  * @property {WeaponCategory} category
  * @property {AttackType} attackType
  * @property {Defense} defense
+ * @property {string} uuid
  */
 /**
  * @type CheckWeapon
@@ -103,7 +104,35 @@ const weapon = {
     quality: "multi(2)",
     category: "sword",
     attackType: "melee",
-    defense: "defense"
+    defense: "defense",
+    uuid: ""
+}
+
+/**
+ * @typedef CheckSpell
+ * @property {string} name
+ * @property {number} cost
+ * @property {CostType} costType
+ * @property {number} maxTargets
+ * @property {TargetType} targetType
+ * @property {Duration} duration
+ * @property {string} effect
+ * @property {string} opportunity
+ * @property {string} uuid
+ */
+/**
+ * @type CheckSpell
+ */
+const spell = {
+    name: "Flare",
+    cost: 50,
+    costType: "total",
+    maxTargets: 3,
+    targetType: "creature",
+    duration: "instant",
+    effect: "ignores resistance",
+    opportunity: "targets suffer Dazed and Shaken",
+    uuid: ""
 }
 
 /**
@@ -134,6 +163,7 @@ const damage = {
  * @property {CheckPush} [push]
  * @property {CheckDamage} [damage]
  * @property {CheckWeapon} [weapon]
+ * @property {CheckSpell} [spell]
  */
 
 /**

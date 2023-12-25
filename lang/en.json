@@ -137,6 +137,21 @@
         },
         "weapon": {
           "against": "against"
+        },
+        "spell": {
+          "target": {
+            "target": "Target:",
+            "singular": {
+              "creature": "One Creature",
+              "self": "Self",
+              "weapon": "One Weapon",
+              "special": "Special"
+            },
+            "multiple": "up to {maxTargets} {target}"
+          },
+          "cost": "Cost:",
+          "effect": "Effect:",
+          "opportunity": "Opportunity:"
         }
       },
       "context": {
@@ -304,7 +319,7 @@
         "damage": "Damage",
         "duration": "Duration",
         "offensive": "is Offensive",
-        "status": "Status",
+        "effect": "Effect",
         "opportunity": "Opportunity"
       },
       "shield": {
@@ -365,10 +380,22 @@
       "target": "per Target"
     },
     "targetType": {
-      "creature": "Creature",
-      "self": "Self",
-      "weapon": "Weapon",
-      "special": "Special"
+      "creature": {
+        "singular": "Creature",
+        "plural": "Creatures"
+      },
+      "self": {
+        "singular": "Self",
+        "plural": "Self"
+      },
+      "weapon": {
+        "singular": "Weapon",
+        "plural": "Weapons"
+      },
+      "special": {
+        "singular": "Special",
+        "plural": "Special"
+      }
     },
     "duration": {
       "instant": "Instantaneous",

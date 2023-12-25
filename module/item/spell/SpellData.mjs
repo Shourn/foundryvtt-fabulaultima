@@ -5,7 +5,7 @@ import {DamageSchema} from "../../schema/DamageSchema.mjs";
 /**
  * @property {Duration} duration
  * @property {boolean} offensive
- * @property {Damage} damage
+ * @property {DamageSchema} damage
  * @property {number} cost
  * @property {number} maxTargets
  * @property {CostType} costType
@@ -13,8 +13,6 @@ import {DamageSchema} from "../../schema/DamageSchema.mjs";
  * @property {string} description - HTMLField
  * @property {TargetType} targetType
  * @property {Check} check
- * @property {StatusChoice} statusChoice
- * @property {StatusEffect[]} status
  * @extends TypeDataModel
  */
 export class SpellData extends foundry.abstract.TypeDataModel {
