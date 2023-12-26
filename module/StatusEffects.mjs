@@ -15,7 +15,7 @@ export const StatusEffects = Object.freeze({
     }, poisoned: {
         id: "poisoned",
         name: "FABULA_ULTIMA.statusEffect.poisoned",
-        icon: "icons/svg/poison.svg",
+        icon: "icons/svg/acid.svg",
         statuses: new Set(["poisoned"])
     }, shaken: {
         id: "shaken",
@@ -51,7 +51,6 @@ function toggleStatus(event, actor) {
         }
     } else {
         const statusEffect = StatusEffects[status];
-        console.log(statusEffect)
         ActiveEffect.create({
             ...statusEffect,
             name: game.i18n.localize(statusEffect.name),

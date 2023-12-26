@@ -30,7 +30,6 @@ export class Character extends BaseActor {
     async equip(itemId) {
         const item = this.items.get(itemId);
         if (item instanceof Accessory) {
-            console.log(item)
             await this.update({"system.equipment.accessory": this.system.equipment.accessory === item ? null : item.id});
         }
         if (item instanceof Armor) {

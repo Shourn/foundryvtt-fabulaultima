@@ -24,9 +24,12 @@ import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
 import {SkillSheet} from "./item/skill/SkillSheet.mjs";
 import {initStatusEffects} from "./StatusEffects.mjs";
 import {addRerollContextMenuEntries} from "./checks/Checks.mjs";
-import {MetaCurrencyTrackerApplication} from "./application/metacurrency/MetaCurrencyTrackerApplication.mjs";
+import {MetaCurrencyTrackerApplication} from "./ui/metacurrency/MetaCurrencyTrackerApplication.mjs";
 import {initializeSystemControl} from "./ui/controls/SystemControls.mjs";
 import {SystemControlsLayer} from "./ui/controls/SystemControlsLayer.mjs";
+import {CombatFU} from "./ui/combat/CombatFU.mjs";
+import {CombatTrackerFU} from "./ui/combat/CombatTrackerFU.mjs";
+import {CombatantFU} from "./ui/combat/CombatantFU.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -178,7 +181,16 @@ Hooks.once('init', async () => {
     console.log('fabulaultima | Initializing rolls');
     Hooks.on('getChatLogEntryContext', addRerollContextMenuEntries);
 
-    console.log("fabulaultima | Initializing ui hooks")
+    console.log("fabulaultima | Initializing combat")
+    CONFIG.Combat.documentClass = CombatFU
+    CONFIG.Combatant.documentClass = CombatantFU
+    CONFIG.Combat.initiative = {
+        formula: "1",
+        decimals: 0
+    }
+    CONFIG.ui.combat = CombatTrackerFU
+
+    console.log("fabulaultima | Initializing ui controls")
     CONFIG.Canvas.layers[SYSTEM_ID] = {
         layerClass: SystemControlsLayer,
         group: "interface"

@@ -62,7 +62,6 @@ export class JobSheet extends ItemSheet {
     async _onDrop(event) {
         const dragEventData = TextEditor.getDragEventData(event);
         const document = await fromUuid(dragEventData.uuid);
-        console.log(document)
 
         if (document instanceof Skill) {
             await this.item.system.addSkill(document);

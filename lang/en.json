@@ -197,6 +197,19 @@
         "bond": "Bond of",
         "and": "and",
         "with": "with {with}"
+      },
+      "firstTurn": {
+        "title": "Initiative",
+        "label": "Start Combat",
+        "faction": "Which faction has the Initiative?",
+        "factions": {
+          "friendly": "Players",
+          "hostile": "Opponents"
+        }
+      },
+      "defeatedTurn": {
+        "title": "Take Turn?",
+        "content": "You are about to take a turn with a defeated combatant. Do you want to continue?"
       }
     },
     "attackType": {
@@ -446,6 +459,13 @@
         "fabula": "Spent Fabula Points",
         "ultima": "Spent Ultima Points",
         "button": "Award EXP"
+      }
+    },
+    "combat": {
+      "currentTurn": "Current Turn: {turn}",
+      "faction": {
+        "friendly": "Allies",
+        "hostile": "Opponents"
       }
     }
   }

@@ -64,7 +64,7 @@ export class CharacterSheet extends ActorSheet {
         registerCollapse(html);
     }
 
-    async addBond(event) {
+    async addBond() {
         const bonds = [...this.actor.system.bonds];
         bonds.push({with: "", feeling1: "none", feeling2: "none", feeling3: "none"})
         await this.document.update({"system.bonds": bonds});
@@ -78,7 +78,7 @@ export class CharacterSheet extends ActorSheet {
         await this.render()
     }
 
-    async addItem(event) {
+    async addItem() {
         const types = {
             misc: "FABULA_ULTIMA.itemType.misc",
             accessory: "FABULA_ULTIMA.itemType.accessory",
@@ -121,8 +121,6 @@ export class CharacterSheet extends ActorSheet {
 
     rollItem(event) {
         event.preventDefault();
-        const element = event.currentTarget;
-        const dataset = element.dataset;
         const itemId = $(event.currentTarget).parents("*[data-item-id]").data("itemId");
         const item = this.actor.items.get(itemId);
         if (item.roll) {
@@ -137,7 +135,6 @@ export class CharacterSheet extends ActorSheet {
     async equipItem(event) {
         const itemId = $(event.currentTarget).parents("[data-item-id]").data("itemId");
         await this.actor.equip(itemId);
-        console.log(this)
         this.render(true)
     }
 }

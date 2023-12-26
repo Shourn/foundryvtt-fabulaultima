@@ -2,7 +2,10 @@
 export const SYSTEM_ID = "fabulaultima";
 
 export const FLAGS = Object.freeze({
-    CheckParams: "CheckParams"
+    CheckParams: "CheckParams",
+    CombatantsTurnTaken: "CombatantTurnTaken",
+    FirstTurn: "FirstTurn",
+    CurrentTurn: "CurrentTurn"
 })
 
 export const HOOKS = Object.freeze({

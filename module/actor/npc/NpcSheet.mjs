@@ -74,8 +74,6 @@ export class NpcSheet extends ActorSheet {
 
     rollItem(event) {
         event.preventDefault();
-        const element = event.currentTarget;
-        const dataset = element.dataset;
         const itemId = $(event.currentTarget).parents("*[data-item-id]").data("itemId");
         const item = this.actor.items.get(itemId);
         if (item.roll) {
@@ -83,19 +81,16 @@ export class NpcSheet extends ActorSheet {
         }
     }
 
-    async promptCheck(clickEvent) {
+    async promptCheck() {
         return promptCheck(this.actor)
     }
 
-    async addTrait(clickEvent) {
+    async addTrait() {
         const newTrait = await Dialog.prompt({
             title: game.i18n.localize("FABULA_ULTIMA.sheet.npc.traits.dialog.title"),
             label: game.i18n.localize("FABULA_ULTIMA.sheet.npc.traits.dialog.label"),
             content: await renderTemplate(Templates.dialogNpcAddTrait, {}),
-            callback: (html) => {
-                console.log(html)
-                return html.find("input[name=trait]").val();
-            }
+            callback: (html) => html.find("input[name=trait]").val()
         });
 
         if (newTrait && newTrait.trim()) {
@@ -105,9 +100,8 @@ export class NpcSheet extends ActorSheet {
         }
     }
 
-    async deleteTrait(clickEvent) {
+    async deleteTrait() {
         event.preventDefault()
-        console.log(this)
         const index = event.currentTarget.dataset.index;
 
         const traits = [...this.actor.system.traits].toSpliced(index, 1);

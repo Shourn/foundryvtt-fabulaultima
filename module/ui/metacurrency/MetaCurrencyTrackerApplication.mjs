@@ -12,7 +12,7 @@ export class MetaCurrencyTrackerApplication extends FormApplication {
     static getTool(tools) {
         tools.push({
             name: MetaCurrencyTrackerApplication.name,
-            title: "FABULA_ULTIMA.app.metaCurrencyTracker.title",
+            title: "FABULA_ULTIMA.ui.metaCurrencyTracker.title",
             icon: "fa-solid fa-chart-line-up",
             visible: true,
             onClick: () => {
@@ -33,7 +33,7 @@ export class MetaCurrencyTrackerApplication extends FormApplication {
             submitOnChange: true,
             submitOnClose: true,
             minimizable: false,
-            title: "FABULA_ULTIMA.app.metaCurrencyTracker.title"
+            title: "FABULA_ULTIMA.ui.metaCurrencyTracker.title"
         });
     }
 
@@ -70,7 +70,6 @@ export class MetaCurrencyTrackerApplication extends FormApplication {
     }
 
     async _updateObject(event, formData) {
-        console.log(event, formData)
         if (game.settings.get(SYSTEM_ID, SETTINGS.MetaCurrencyFabula) !== formData.fabula) {
             game.settings.set(SYSTEM_ID, SETTINGS.MetaCurrencyFabula, formData.fabula);
         }

@@ -20,8 +20,10 @@ const Templates = {
     dialogNpcAddTrait: "systems/fabulaultima/templates/dialog/dialog_npc_trait_add.hbs",
     dialogCheckReroll: "systems/fabulaultima/templates/dialog/dialog_check_reroll.hbs",
     dialogCheckPush: "systems/fabulaultima/templates/dialog/dialog_check_push.hbs",
-    metaCurrencyTracker: "systems/fabulaultima/templates/app/metacurrency_tracker.hbs",
-    chatExpAward: "systems/fabulaultima/templates/chat/chat_exp_award.hbs"
+    metaCurrencyTracker: "systems/fabulaultima/templates/ui/metacurrency_tracker.hbs",
+    chatExpAward: "systems/fabulaultima/templates/chat/chat_exp_award.hbs",
+    combatTracker: "systems/fabulaultima/templates/ui/combat_tracker.hbs",
+    dialogFirstTurn: "systems/fabulaultima/templates/dialog/dialog_first_turn.hbs"
 
 };
 

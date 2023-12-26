@@ -99,9 +99,7 @@ export class JobData extends foundry.abstract.TypeDataModel {
      */
     async removeSpell(spellId) {
         const spellIds = this._source.spells;
-        console.log(spellIds)
         if (!spellIds.includes(spellId)) return;
-        console.log("here")
         return this.parent.update({
             system: {
                 spells: spellIds.filter(id => id !== spellId)
@@ -130,9 +128,7 @@ export class JobData extends foundry.abstract.TypeDataModel {
      */
     async removeSkill(skillId) {
         const skillIds = this._source.skills;
-        console.log(skillIds)
         if (!skillIds.includes(skillId)) return;
-        console.log("here")
         return this.parent.update({
             system: {
                 skills: skillIds.filter(id => id !== skillId)
