@@ -16,12 +16,10 @@ import {ArmorData} from "./item/armor/ArmorData.mjs";
 import {JobData} from "./item/job/JobData.js";
 import {MiscItemData} from "./item/misc/MiscItemData.mjs";
 import {ShieldData} from "./item/shield/ShieldData.mjs";
-import {SkillData} from "./item/skill/SkillData.mjs";
 import {JobSheet} from "./item/job/JobSheet.js";
 import {ArmorSheet} from "./item/armor/ArmorSheet.mjs";
 import {MiscItemSheet} from "./item/misc/MiscItemSheet.mjs";
 import {ShieldSheet} from "./item/shield/ShieldSheet.mjs";
-import {SkillSheet} from "./item/skill/SkillSheet.mjs";
 import {initStatusEffects} from "./StatusEffects.mjs";
 import {addRerollContextMenuEntries} from "./checks/Checks.mjs";
 import {MetaCurrencyTrackerApplication} from "./ui/metacurrency/MetaCurrencyTrackerApplication.mjs";
@@ -30,6 +28,7 @@ import {SystemControlsLayer} from "./ui/controls/SystemControlsLayer.mjs";
 import {CombatFU} from "./ui/combat/CombatFU.mjs";
 import {CombatTrackerFU} from "./ui/combat/CombatTrackerFU.mjs";
 import {CombatantFU} from "./ui/combat/CombatantFU.mjs";
+import {registerAdvancementTypes} from "./item/job/Advancements.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -60,7 +59,6 @@ function initItems() {
         job: JobData,
         misc: MiscItemData,
         shield: ShieldData,
-        skill: SkillData,
         spell: SpellData,
         weapon: WeaponData
     }, {inplace: true})
@@ -71,7 +69,6 @@ function initItems() {
         job: "FABULA_ULTIMA.itemType.job",
         misc: "FABULA_ULTIMA.itemType.misc",
         shield: "FABULA_ULTIMA.itemType.shield",
-        skill: "FABULA_ULTIMA.itemType.skill",
         spell: "FABULA_ULTIMA.itemType.spell",
         weapon: "FABULA_ULTIMA.itemType.weapon"
     }, {inplace: true})
@@ -109,13 +106,6 @@ function initItems() {
         types: ["shield"],
         makeDefault: true,
         label: "FabulaUltima.DefaultShield"
-    })
-
-    // noinspection JSCheckFunctionSignatures
-    Items.registerSheet(SYSTEM_ID, SkillSheet, {
-        types: ["skill"],
-        makeDefault: true,
-        label: "FabulaUltima.DefaultSkill"
     })
 
     // noinspection JSCheckFunctionSignatures
@@ -173,6 +163,7 @@ Hooks.once('init', async () => {
 
     console.log('fabulaultima | Initializing items');
     initItems();
+    registerAdvancementTypes()
 
     console.log('fabulaultima | Initializing status effects');
     CONFIG.ActiveEffect.legacyTransferral = false;

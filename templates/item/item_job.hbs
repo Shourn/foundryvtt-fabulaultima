@@ -59,9 +59,11 @@
             </fieldset>
         </section>
         <section data-tab="skills" data-group="primary" class="form-group-stacked tab">
+            <a data-action="add" data-type="skill">Add new Skill</a>
             <ol>
+                {{log system.skills}}
                 {{#each system.skills as | skill |}}
-                    <li data-item-id="{{skill.id}}">{{skill.name}}<a data-action="delete" data-type="item"><i class="fas fa-trash"></i></a></li>
+                    <li data-skill-id="{{skill.id}}">{{skill.name}}<a data-action="delete" data-type="skill"><i class="fas fa-trash"></i></a></li>
                 {{/each}}
             </ol>
         </section>

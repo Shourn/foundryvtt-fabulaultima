@@ -11,7 +11,8 @@ export const FLAGS = Object.freeze({
 export const HOOKS = Object.freeze({
     UpdateMetaCurrencyFabula: `${SYSTEM_ID}.updateMetaCurrencyFabula`,
     UpdateMetaCurrencyUltima: `${SYSTEM_ID}.updateMetaCurrencyUltima`,
-    GetSystemControlTools: `${SYSTEM_ID}.getSystemControlTools`
+    GetSystemControlTools: `${SYSTEM_ID}.getSystemControlTools`,
+    RegisterAdvancementTypes: `${SYSTEM_ID}.registerAdvancementTypes`
 })
 
 export const SETTINGS = Object.freeze({

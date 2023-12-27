@@ -1,15 +1,15 @@
 <form class="{{cssClass}}" autocomplete="off">
     <header class="sheet-header">
-        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
-        <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
+        <img src="{{object.img}}" data-edit="img" title="{{object.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{object.name}}" placeholder="{{ localize 'Name' }}"/></h1>
     </header>
     <hr/>
     <section class="form-group">
         <fieldset class="form-fields">
             <label>{{localize 'FABULA_ULTIMA.sheet.skill.level'}}</label>
-            <input type="number" name="system.level" value="{{system.level}}" min="0" max="{{system.maxLevel}}">
+            <input type="number" name="level" value="{{object.level}}" min="0" max="{{object.maxLevel}}">
             <span class="sep">/</span>
-            <input type="number" name="system.maxLevel" value="{{system.maxLevel}}" min="1">
+            <input type="number" name="maxLevel" value="{{object.maxLevel}}" min="1">
         </fieldset>
     </section>
     <nav class="sheet-tabs tabs">
@@ -17,7 +17,7 @@
     </nav>
     <section class="form-group-stacked">
         <fieldset class="form-fields">
-            {{editor enrichedHtml.description target='system.description' engine="prosemirror" button=true}}
+            {{editor enrichedHtml.description target='description' engine="prosemirror" button=true}}
         </fieldset>
     </section>
 </form>

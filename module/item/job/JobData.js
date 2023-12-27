@@ -1,5 +1,4 @@
-import {Skill} from "../skill/Skill.mjs";
-import {Spell} from "../spell/Spell.mjs";
+import {Skill} from "./Skill.mjs";
 
 /**
  * @property {string} description
@@ -16,7 +15,6 @@ import {Spell} from "../spell/Spell.mjs";
  * @property {boolean} benefits.armor
  * @property {string} benefits.special
  * @property {Skill[]} skills
- * @property {Spell[]} spells
  * @extends TypeDataModel
  */
 export class JobData extends foundry.abstract.TypeDataModel {
@@ -29,7 +27,7 @@ export class JobData extends foundry.abstract.TypeDataModel {
             BooleanField,
             StringField,
             ArrayField,
-            ForeignDocumentField
+            EmbeddedDataField
         } = foundry.data.fields;
         return {
             description: new HTMLField(),
@@ -45,8 +43,7 @@ export class JobData extends foundry.abstract.TypeDataModel {
                 shield: new BooleanField({initial: false}),
                 special: new StringField()
             }),
-            skills: new ArrayField(new ForeignDocumentField(Skill, {nullable: false})),
-            spells: new ArrayField(new ForeignDocumentField(Spell, {nullable: false}))
+            skills: new ArrayField(new EmbeddedDataField(Skill, {nullable: false})),
         }
     }
 
@@ -71,73 +68,6 @@ export class JobData extends foundry.abstract.TypeDataModel {
 
     get grantsSpecial() {
         return this.benefits.special && (this.benefits.special.trim().length !== 0);
-    }
-
-    prepareBaseData() {
-        this.skills = this.skills.map(fn => fn instanceof Skill ? fn : fn()).filter(value => !!value);
-        this.spells = this.spells.map(fn => fn instanceof Spell ? fn : fn()).filter(value => !!value);
-    }
-
-    /**
-     * @param {Spell} spell
-     */
-    async addSpell(spell) {
-        if (!spell instanceof Spell) throw new Error("Not a Spell");
-        if (spell.pack) throw new Error("You may only add Spells which exist within the World.");
-        const spellIds = this._source.spells;
-        if (spellIds.includes(spell.id)) return;
-        return this.parent.update({
-            system: {
-                spells: spellIds.concat([spell.id])
-            }
-        });
-    }
-
-    /**
-     * @param {string} spellId
-     * @returns {Promise<*>}
-     */
-    async removeSpell(spellId) {
-        const spellIds = this._source.spells;
-        if (!spellIds.includes(spellId)) return;
-        return this.parent.update({
-            system: {
-                spells: spellIds.filter(id => id !== spellId)
-            }
-        });
-    }
-
-    /**
-     * @param {Skill} skill
-     */
-    async addSkill(skill) {
-        if (!skill instanceof Skill) throw new Error("Not a Spell");
-        if (skill.pack) throw new Error("You may only add Skills which exist within the World.");
-        const skillIds = this._source.skills;
-        if (skillIds.includes(skill.id)) return;
-        return this.parent.update({
-            system: {
-                skills: skillIds.concat([skill.id])
-            }
-        });
-    }
-
-    /**
-     * @param {string} skillId
-     * @returns {Promise<*>}
-     */
-    async removeSkill(skillId) {
-        const skillIds = this._source.skills;
-        if (!skillIds.includes(skillId)) return;
-        return this.parent.update({
-            system: {
-                skills: skillIds.filter(id => id !== skillId)
-            }
-        });
-    }
-
-    prepareDerivedData() {
-        super.prepareDerivedData();
     }
 
 }

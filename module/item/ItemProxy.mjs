@@ -6,7 +6,6 @@ import {Shield} from "./shield/Shield.mjs";
 import {Weapon} from "./weapon/Weapon.mjs";
 import {Spell} from "./spell/Spell.mjs";
 import {Job} from "./job/Job.mjs";
-import {Skill} from "./skill/Skill.mjs";
 import {BaseItem} from "./BaseItem.mjs";
 
 export const itemMappings = {
@@ -15,7 +14,6 @@ export const itemMappings = {
     job: Job,
     misc: MiscItem,
     shield: Shield,
-    skill: Skill,
     spell: Spell,
     weapon: Weapon
 };

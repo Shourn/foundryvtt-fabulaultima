@@ -1,10 +1,11 @@
 import Templates from "../../Templates.mjs";
 import {createCheckMessage, rollCheck} from "../../checks/Checks.mjs";
+import {BaseItem} from "../BaseItem.mjs";
 
 /**
  * @property {SpellData} system
  */
-export class Spell extends Item {
+export class Spell extends BaseItem {
 
     static getDefaultArtwork(itemData) {
         return {img: "systems/fabulaultima/assets/game-icons/magic-palm.svg"};

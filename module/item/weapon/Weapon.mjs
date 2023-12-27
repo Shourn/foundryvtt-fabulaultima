@@ -1,9 +1,10 @@
 import {createCheckMessage, rollCheck} from "../../checks/Checks.mjs";
+import {BaseItem} from "../BaseItem.mjs";
 
 /**
  * @property {WeaponData} system
  */
-export class Weapon extends Item {
+export class Weapon extends BaseItem {
 
     static getDefaultArtwork(itemData) {
         return {img: "systems/fabulaultima/assets/game-icons/plain-dagger.svg"};

@@ -1,6 +1,6 @@
 import Templates from "../../Templates.mjs";
-import {Spell} from "../spell/Spell.mjs";
-import {Skill} from "../skill/Skill.mjs";
+import {Skill} from "./Skill.mjs";
+import {SkillSheet} from "./SkillSheet.mjs";
 
 
 export class JobSheet extends ItemSheet {
@@ -41,36 +41,26 @@ export class JobSheet extends ItemSheet {
 
     activateListeners(html) {
         super.activateListeners(html);
-
-        html.find("[data-action=delete][data-type=item]").click(event => this.deleteItem(event))
-        html.find("[data-action=delete][data-type=item]").click(event => this.deleteItem(event))
-
+        html.find("[data-action=delete][data-type=skill]").click(event => this.deleteSkill(event))
+        html.find("[data-action=add][data-type=skill]").click(event => this.addSkill(event))
     }
 
-    async deleteItem(event) {
-        const itemId = $(event.currentTarget).parents("[data-item-id]").data("itemId");
-        const item = Item.get(itemId);
-        if (item instanceof Skill) {
-            await this.item.system.removeSkill(itemId);
-        }
-        if (item instanceof Spell) {
-            await this.item.system.removeSpell(itemId);
-        }
+    async deleteSkill(event) {
+        const skillId = $(event.currentTarget).parents("[data-skill-id]").data("skillId");
+
+        const skills = this.item.toObject().system.skills.filter(skill => skill._id !== skillId);
+
+        this.item.update({"system.skills": skills})
         this.render(true)
+
     }
 
-    async _onDrop(event) {
-        const dragEventData = TextEditor.getDragEventData(event);
-        const document = await fromUuid(dragEventData.uuid);
-
-        if (document instanceof Skill) {
-            await this.item.system.addSkill(document);
-        }
-
-        if (document instanceof Spell) {
-            await this.item.system.addSpell(document)
-        }
-
-        this.render(true)
+    async addSkill(event) {
+        const skill = new Skill(undefined, {parent: this.item});
+        const skills = this.item.toObject().system.skills.concat(skill.toObject())
+        await this.item.update({"system.skills": skills})
+        const find = this.item.system.skills.find(v => v._id === skill._id);
+        new SkillSheet(find, {}).render(true)
     }
+
 }

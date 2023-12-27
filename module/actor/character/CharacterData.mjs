@@ -2,7 +2,6 @@ import {CommonData} from "../CommonData.mjs";
 import {Accessory} from "../../item/accessory/Accessory.mjs";
 import {Armor} from "../../item/armor/Armor.mjs";
 import {feelings1, feelings2, feelings3} from "../../Constants.mjs";
-import {Skill} from "../../item/skill/Skill.mjs";
 import {Weapon} from "../../item/weapon/Weapon.mjs";
 import {Shield} from "../../item/shield/Shield.mjs";
 

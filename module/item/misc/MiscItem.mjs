@@ -1,4 +1,5 @@
+import {BaseItem} from "../BaseItem.mjs";
 
-export class MiscItem extends Item {
+export class MiscItem extends BaseItem {
 
 }
