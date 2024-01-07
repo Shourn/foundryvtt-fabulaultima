@@ -1,5 +1,4 @@
 import Templates from "../../Templates.mjs";
-import {registerCollapse} from "../../utils/helper.mjs";
 import {activateStatusEffectListeners, extractStatusEffects} from "../../StatusEffects.mjs";
 import {promptCheck} from "../../checks/Checks.mjs";
 
@@ -27,6 +26,15 @@ export class CharacterSheet extends ActorSheet {
 
     async getData(options = {}) {
         const data = super.getData(options);
+        const skillDescriptions = {}
+        for (const /** @type Job */ job of this.actor.itemTypes.job) {
+            for (const [id, skill] of Object.entries(job.skills)) {
+                if (skill.level > 0){
+                    skillDescriptions[id] = await TextEditor.enrichHTML(skill.description, {rollData: skill.getRollData(true)})
+                }
+            }
+        }
+
         return foundry.utils.mergeObject(data, {
             system: data.actor.system,
             partials: {
@@ -36,7 +44,8 @@ export class CharacterSheet extends ActorSheet {
                 shield: "shieldEquipment"
             },
             enrichedHtml: {
-                description: await TextEditor.enrichHTML(data.actor.system.description)
+                description: await TextEditor.enrichHTML(data.actor.system.description),
+                skillDescriptions
             },
             statusEffects: extractStatusEffects(this.actor)
         });
@@ -58,10 +67,7 @@ export class CharacterSheet extends ActorSheet {
         html.find("[data-action=delete][data-type=item]").click(event => this.deleteItem(event))
         html.find("[data-action=equip]").click(event => this.equipItem(event))
         html.find("[data-action=roll][data-type=item]").click(event => this.rollItem(event))
-        html.find("[data-action=edit][data-type=item]").click(event => this.editItem(event))
         activateStatusEffectListeners(html, this.actor)
-
-        registerCollapse(html);
     }
 
     async addBond() {

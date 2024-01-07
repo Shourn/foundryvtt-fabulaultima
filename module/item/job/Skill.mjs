@@ -78,12 +78,16 @@ export class Skill extends foundry.abstract.DataModel {
      * @param changes
      */
     async update(changes) {
-        this.job.updateSkill(this.id, changes)
+        await this.job.updateSkill(this.id, changes)
         return this
     }
 
+    getRollData(level = false) {
+        return {SL: level ? this.level : "SL"}
+    }
+
     /**
-     * Render all of the Application instances which are connected to this advancement.
+     * Render all Application instances which are connected to this skill.
      * @param {boolean} [force=false]     Force rendering
      * @param {object} [context={}]       Optional context
      */

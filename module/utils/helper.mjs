@@ -21,16 +21,3 @@ export function toObject(source, getValue) {
     })
     return result;
 }
-
-/**
- *
- * @param {jQuery} jquery
- */
-export function registerCollapse(jquery) {
-    const collapseTriggers = jquery.find("[data-collapse-toggle]");
-    collapseTriggers.click(event => {
-        const collapseId = $(event.currentTarget).data("collapseToggle");
-        const collapse = jquery.find(`.collapse[data-collapse="${collapseId}"]`);
-        collapse.toggleClass("show");
-    })
-}

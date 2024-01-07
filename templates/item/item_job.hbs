@@ -1,3 +1,4 @@
+{{log this}}
 <form class="{{cssClass}}" autocomplete="off">
     <header class="sheet-header">
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
@@ -59,25 +60,24 @@
             </fieldset>
         </section>
         <section data-tab="skills" data-group="primary" class="form-group-stacked tab">
-            <a data-action="add" data-type="skill">Add new Skill</a>
-            <ol>
+            <a data-action="add" data-type="skill"><i class="fas fa-plus"></i>Add new Skill</a>
+            <ul>
                 {{#each system.skills as | skill |}}
                     <li data-skill-id="{{skill.id}}">
-                        <span>{{skill.name}}</span>
-                        <span>
-                            <a data-action="edit" data-type="skill"><i class="fas fa-edit"></i></a>
-                            <a data-action="delete" data-type="skill"><i class="fas fa-trash"></i></a>
-                        </span>
+                        <div class="flexrow">
+                            <span class="flex3">{{skill.name}}</span>
+                            <span>(<i class="fas fa-star"></i>{{skill.maxLevel}})</span>
+                        </div>
+                        <div class="flexrow">
+                            <div>{{{lookup @root.enrichedHtml.skillDescriptions skill.id}}}</div>
+                            <span class="flex0">
+                                    <a data-action="edit" data-type="skill"><i class="fas fa-edit"></i></a>
+                                    <a data-action="delete" data-type="skill"><i class="fas fa-trash"></i></a>
+                            </span>
+                        </div>
                     </li>
                 {{/each}}
-            </ol>
-        </section>
-        <section data-tab="spells" data-group="primary" class="form-group-stacked tab">
-            <ol>
-                {{#each system.spells as | spell |}}
-                    <li data-item-id="{{spell.id}}">{{spell.name}}<a data-action="delete" data-type="item"><i class="fas fa-trash"></i></a></li>
-                {{/each}}
-            </ol>
+            </ul>
         </section>
     </div>
 </form>

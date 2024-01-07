@@ -30,11 +30,18 @@ export class JobSheet extends ItemSheet {
 
     async getData(options = {}) {
         const data = super.getData(options);
+
+        const skillDescriptions = {};
+        for (let [id, skill] of Object.entries(this.item.skills)) {
+            skillDescriptions[id] = await TextEditor.enrichHTML(skill.description, {rollData: skill.getRollData()})
+        }
+
         return foundry.utils.mergeObject(data, {
             system: data.item.system,
             enrichedHtml: {
                 description: await TextEditor.enrichHTML(data.item.system.description),
-                questions: await TextEditor.enrichHTML(data.item.system.questions)
+                questions: await TextEditor.enrichHTML(data.item.system.questions),
+                skillDescriptions
             }
         });
     }
@@ -51,7 +58,7 @@ export class JobSheet extends ItemSheet {
 
         const skills = this.item.toObject().system.skills.filter(skill => skill._id !== skillId);
 
-        this.item.update({"system.skills": skills})
+        await this.item.update({"system.skills": skills})
         this.render(true)
 
     }
@@ -61,7 +68,7 @@ export class JobSheet extends ItemSheet {
         const skills = this.item.toObject().system.skills.concat(skill.toObject())
         await this.item.update({"system.skills": skills})
         const find = this.item.skills[skill.id];
-        new SkillSheet(find, {}).render(true)
+        new SkillSheet(find).render(true)
     }
 
     editSkill(event) {

@@ -26,7 +26,10 @@ export const rollVariables = toObject(c.rollTypes, value => `FABULA_ULTIMA.rollV
 
 export const damageTypes = toObject(c.damageTypes, value => `FABULA_ULTIMA.damageType.${value}`);
 
-export const statusEffects = toObject(c.statusEffects, value => `FABULA_ULTIMA.statusEffect.${value}`);
+export const statusEffects = toObject(c.statusEffects, value => ({
+    key: value,
+    name: `FABULA_ULTIMA.statusEffect.${value}`
+}));
 
 
 export const rollTypes = toObject(c.rollTypes, value => ({

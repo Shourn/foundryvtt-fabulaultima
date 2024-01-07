@@ -19,6 +19,16 @@ export class Job extends BaseItem {
         }
     }
 
+    getEmbeddedDocument(embeddedName, id, options) {
+        if ( embeddedName !== "Skill" ) return super.getEmbeddedDocument(embeddedName, id, options);
+        const skill = this.skills[id];
+        if ( options?.strict && (skill === undefined) ) {
+            throw new Error(`The key ${id} does not exist in the ${embeddedName} Collection`);
+        }
+        return skill;
+    }
+
+
     async updateSkill(id, changes, {source = false} = {}) {
         const idx = this.system.skills.findIndex(a => a._id === id);
         if (idx === -1) throw new Error(`Skill with ID ${id} could not be found to update`);

@@ -32,7 +32,7 @@ export class JobData extends foundry.abstract.TypeDataModel {
         return {
             description: new HTMLField(),
             questions: new HTMLField(),
-            level: new NumberField({initial: 1, min: 1, max: 10}),
+            level: new NumberField({initial: 0, min: 0, max: 10}),
             benefits: new SchemaField({
                 hp: new NumberField({initial: 0, min: 0, integer: true}),
                 mp: new NumberField({initial: 0, min: 0, integer: true}),

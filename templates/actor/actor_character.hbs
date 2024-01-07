@@ -265,37 +265,32 @@
                             </div>
                         </fieldset>
                     </li>
-                    {{#each actor.itemTypes.job}}
+                    {{#each actor.itemTypes.job as | job |}}
                         <li class="flexrow">
-                            <fieldset data-item-id="{{id}}">
+                            <fieldset data-item-id="{{job.id}}">
                                 <div class="flexrow">
-                                    <a data-collapse-toggle="{{id}}"><i class="fas fa-chevron-circle-down"></i></a>
-                                    <label>{{name}}</label>
-                                    <label>{{localize 'FABULA_ULTIMA.level'}}: {{system.level}}/10</label>
+                                    <label class="flex3">{{name}}</label>
+                                    <label>{{localize 'FABULA_ULTIMA.level'}}: {{job.system.level}}/10</label>
                                     <div class="flex0">
-                                        <a data-action="delete" data-type="job">
+                                        <a data-action="delete" data-type="item">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
                                 </div>
-                                <div class="collapse" data-collapse="{{id}}">
-                                    <div>
-                                        {{localize 'FABULA_ULTIMA.sheet.pc.job.skills'}}
-                                    </div>
+                                <div>
                                     <ul>
-                                        {{#each system.skills as | skill |}}
+                                        {{#each job.system.skills as | skill |}}
+                                            {{#if (gt skill.level 0)}}
                                             <li class="flexcol">
-                                                <fieldset class="flexrow">
-                                                    <a class="content-link" draggable="true"
-                                                       data-uuid="{{skill.uuid}}" data-id="{{skill.id}}"
-                                                       data-type="{{skill.documentName}}"
-                                                       data-tooltip="{{skill.documentName}} {{skill.name}}"><i
-                                                            class="fas fa-suitcase"></i>{{skill.name}}</a>
-                                                    <label>{{skill.name}}</label>
-                                                    <label>{{localize
-                                                            'FABULA_ULTIMA.character.job.skill.level'}} {{skill.level}}</label>
+                                                <fieldset class="flexcol">
+                                                    <div class="flexrow">
+                                                        <label class="flex3">{{skill.name}}</label>
+                                                        <label><i class="fas fa-star"></i> {{skill.level}} / {{skill.maxLevel}}</label>
+                                                    </div>
+                                                    <div>{{{lookup @root.enrichedHtml.skillDescriptions skill.id}}}</div>
                                                 </fieldset>
                                             </li>
+                                            {{/if}}
                                         {{/each}}
                                     </ul>
                                 </div>

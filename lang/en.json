@@ -345,7 +345,7 @@
         "quality": "Quality"
       },
       "skill": {
-        "level": "Level"
+        "maxLevel": "Max. Level"
       },
       "job": {
         "tab": {
