@@ -1,5 +1,4 @@
 import Templates from "../../Templates.mjs";
-import {getAdvancementTypes} from "./Advancements.mjs";
 
 /**
  * @extends {FormApplication}
@@ -33,18 +32,6 @@ export class SkillSheet extends FormApplication {
         });
     }
 
-    /**
-     *
-     * @param {jQuery} html
-     */
-    activateListeners(html) {
-        super.activateListeners(html);
-        html.find("[data-type=advancement][data-action=add]").click(event => this.addAdvancement(event))
-        html.find("[data-type=advancement][data-action=edit]").click(event => this.editAdvancement(event))
-        html.find("[data-type=advancement][data-action=delete]").click(event => this.deleteAdvancement(event))
-    }
-
-
     async _updateObject(event, formData) {
         this.object.update(formData)
     }
@@ -59,40 +46,5 @@ export class SkillSheet extends FormApplication {
         delete this.object.apps[this.appId]
         return super.close(options);
     }
-
-    async addAdvancement(event) {
-        const advancementTypes = Object.entries(getAdvancementTypes()).map(([key, value]) => ({
-            value: key,
-            title: value.metadata.title
-        }));
-        const type = await Dialog.prompt({
-            title: game.i18n.localize("FABULA_ULTIMA.job.skill.advancement.title"),
-            content: await renderTemplate(Templates.dialogAdvancementType, advancementTypes),
-            rejectClose: false,
-            callback: html => html.find("select[name=type]").val()
-        });
-
-        if (type) {
-            const advancement = await this.object.addAdvancement(type);
-            if (advancement) {
-                new advancement.constructor.metadata.apps.config(advancement).render(true)
-            }
-        }
-    }
-
-    async editAdvancement(event) {
-        const advancementId = $(event.currentTarget).parents("[data-advancement-id]").data("advancementId");
-        const advancement = this.object.advancementById[advancementId];
-
-        if (advancement){
-            new advancement.constructor.metadata.apps.config(advancement).render(true);
-        }
-    }
-
-    async deleteAdvancement(event) {
-        const advancementId = $(event.currentTarget).parents("[data-advancement-id]").data("advancementId");
-        await this.object.deleteAdvancement(advancementId)
-    }
-
 
 }

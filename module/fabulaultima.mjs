@@ -28,7 +28,6 @@ import {SystemControlsLayer} from "./ui/controls/SystemControlsLayer.mjs";
 import {CombatFU} from "./ui/combat/CombatFU.mjs";
 import {CombatTrackerFU} from "./ui/combat/CombatTrackerFU.mjs";
 import {CombatantFU} from "./ui/combat/CombatantFU.mjs";
-import {registerAdvancementTypes} from "./item/job/Advancements.mjs";
 
 function initActors() {
     CONFIG.Actor.documentClass = ActorProxy;
@@ -163,7 +162,6 @@ Hooks.once('init', async () => {
 
     console.log('fabulaultima | Initializing items');
     initItems();
-    registerAdvancementTypes()
 
     console.log('fabulaultima | Initializing status effects');
     CONFIG.ActiveEffect.legacyTransferral = false;
