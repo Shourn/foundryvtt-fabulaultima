@@ -12,6 +12,20 @@
             <input type="number" name="maxLevel" value="{{object.maxLevel}}" min="1">
         </fieldset>
     </section>
+    <section>
+        <a class="fas fa-plus" data-type="advancement" data-action="add"></a>
+    </section>
+    <section class="form-group">
+        {{#each object.advancement}}
+            <fieldset class="form-fields" data-advancement-id="{{this.id}}">
+                <span>{{this.type}}</span>
+                <span>
+                    <a data-type="advancement" data-action="edit"><i class="fas fa-edit"></i></a>
+                    <a data-type="advancement" data-action="delete"><i class="fas fa-trash"></i></a>
+                </span>
+            </fieldset>
+        {{/each}}
+    </section>
     <nav class="sheet-tabs tabs">
         <a class="item">{{localize 'FABULA_ULTIMA.description'}}</a>
     </nav>

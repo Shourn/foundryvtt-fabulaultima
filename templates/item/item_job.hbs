@@ -61,9 +61,14 @@
         <section data-tab="skills" data-group="primary" class="form-group-stacked tab">
             <a data-action="add" data-type="skill">Add new Skill</a>
             <ol>
-                {{log system.skills}}
                 {{#each system.skills as | skill |}}
-                    <li data-skill-id="{{skill.id}}">{{skill.name}}<a data-action="delete" data-type="skill"><i class="fas fa-trash"></i></a></li>
+                    <li data-skill-id="{{skill.id}}">
+                        <span>{{skill.name}}</span>
+                        <span>
+                            <a data-action="edit" data-type="skill"><i class="fas fa-edit"></i></a>
+                            <a data-action="delete" data-type="skill"><i class="fas fa-trash"></i></a>
+                        </span>
+                    </li>
                 {{/each}}
             </ol>
         </section>

@@ -14,7 +14,7 @@ const Templates = {
     itemSpell: "systems/fabulaultima/templates/item/item_spell.hbs",
     itemWeapon: "systems/fabulaultima/templates/item/item_weapon.hbs",
     itemJob: "systems/fabulaultima/templates/item/item_job.hbs",
-    itemSkill: "systems/fabulaultima/templates/item/item_skill.hbs",
+    dataSkill: "systems/fabulaultima/templates/data/data_skill.hbs",
     itemShield: "systems/fabulaultima/templates/item/item_shield.hbs",
     itemMisc: "systems/fabulaultima/templates/item/item_misc.hbs",
     dialogNpcAddTrait: "systems/fabulaultima/templates/dialog/dialog_npc_trait_add.hbs",
@@ -23,7 +23,9 @@ const Templates = {
     metaCurrencyTracker: "systems/fabulaultima/templates/ui/metacurrency_tracker.hbs",
     chatExpAward: "systems/fabulaultima/templates/chat/chat_exp_award.hbs",
     combatTracker: "systems/fabulaultima/templates/ui/combat_tracker.hbs",
-    dialogFirstTurn: "systems/fabulaultima/templates/dialog/dialog_first_turn.hbs"
+    dialogFirstTurn: "systems/fabulaultima/templates/dialog/dialog_first_turn.hbs",
+    dialogAdvancementType: "systems/fabulaultima/templates/dialog/dialog_advancement_types.hbs",
+    dataAdvancement: "systems/fabulaultima/templates/data/data_advancement_grantSpell.hbs"
 
 };
 

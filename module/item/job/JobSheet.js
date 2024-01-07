@@ -43,6 +43,7 @@ export class JobSheet extends ItemSheet {
         super.activateListeners(html);
         html.find("[data-action=delete][data-type=skill]").click(event => this.deleteSkill(event))
         html.find("[data-action=add][data-type=skill]").click(event => this.addSkill(event))
+        html.find("[data-action=edit][data-type=skill]").click(event => this.editSkill(event))
     }
 
     async deleteSkill(event) {
@@ -59,8 +60,16 @@ export class JobSheet extends ItemSheet {
         const skill = new Skill(undefined, {parent: this.item});
         const skills = this.item.toObject().system.skills.concat(skill.toObject())
         await this.item.update({"system.skills": skills})
-        const find = this.item.system.skills.find(v => v._id === skill._id);
+        const find = this.item.skills[skill.id];
         new SkillSheet(find, {}).render(true)
+    }
+
+    editSkill(event) {
+        const skillId = $(event.currentTarget).parents("[data-skill-id]").data("skillId");
+        const skill = this.item.skills[skillId];
+        if (skill) {
+            new SkillSheet(skill).render(true)
+        }
     }
 
 }
