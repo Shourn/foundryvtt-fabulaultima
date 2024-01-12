@@ -1,6 +1,6 @@
 # Unofficial Fabula Ultima system for FoundryVTT
 
-Manifest: [https://github.com/Shourn/foundryvtt-fabulaultima/main/system.json](https://github.com/Shourn/foundryvtt-fabulaultima/main/system.json)
+Manifest: [https://github.com/Shourn/foundryvtt-fabulaultima/releases/latest/download/system.json](https://github.com/Shourn/foundryvtt-fabulaultima/releases/latest/download/system.json)
 
 ## General Information (Read before playing)
 
