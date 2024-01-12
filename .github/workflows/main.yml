@@ -33,7 +33,7 @@ jobs:
           VERSION: ${{steps.get_version.outputs.version-without-v}}
           URL: ${{ env.project_url }}
           MANIFEST: ${{ env.latest_manifest_url }}
-          DOWNLOAD: ${{ env.release_module_url }}
+          DOWNLOAD: ${{ env.release_archive_url }}
 
       - name: Create Archive
         run: |
