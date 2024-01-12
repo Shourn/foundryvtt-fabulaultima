@@ -27,6 +27,10 @@ export class Character extends BaseActor {
        }
     }
 
+    isEquipped(itemId) {
+        return this.equipped[itemId] ?? false
+    }
+
     async equip(itemId) {
         const item = this.items.get(itemId);
         if (item instanceof Accessory) {
@@ -49,6 +53,7 @@ export class Character extends BaseActor {
         const item = this.items.get(itemId);
         const data = {}
         for (let [key, value] of Object.entries(this.system.equipment)) {
+            console.log(key, item, value)
             if (value === item) {
                 data[`system.equipment.${key}`] = null;
             }

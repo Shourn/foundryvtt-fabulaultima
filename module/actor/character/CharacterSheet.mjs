@@ -65,7 +65,7 @@ export class CharacterSheet extends ActorSheet {
         html.find("[data-action=add][data-type=item]").click(event => this.addItem(event))
         html.find("[data-action=edit][data-type=item]").click(event => this.editItem(event))
         html.find("[data-action=delete][data-type=item]").click(event => this.deleteItem(event))
-        html.find("[data-action=equip]").click(event => this.equipItem(event))
+        html.find("[data-action=equip]").click(event => this.toggleEquipment(event))
         html.find("[data-action=roll][data-type=item]").click(event => this.rollItem(event))
         activateStatusEffectListeners(html, this.actor)
     }
@@ -138,9 +138,13 @@ export class CharacterSheet extends ActorSheet {
         promptCheck(this.actor)
     }
 
-    async equipItem(event) {
+    async toggleEquipment(event) {
         const itemId = $(event.currentTarget).parents("[data-item-id]").data("itemId");
-        await this.actor.equip(itemId);
+        if (this.actor.isEquipped(itemId)){
+            await this.actor.unequip(itemId)
+        } else {
+            await this.actor.equip(itemId);
+        }
         this.render(true)
     }
 }
